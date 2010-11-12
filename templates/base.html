@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            {% block title %}Lumen Kávé{% endblock %}
+        </title>
+        {% block meta %}{% endblock %}
+        <link rel="stylesheet" href="/yui/build/cssreset/reset.css">
+        <link rel="stylesheet" href="/yui/build/cssbase/base.css">
+        <link rel="stylesheet" href="/yui/build/cssfonts/fonts.css">
+        <link rel="stylesheet" href="/css/site.css">
+        {% block css %}
+        {% endblock %}
+    </head>
+    <body>
+        {% block navigation_main %}{% endblock %}
+        {% block content %}{% endblock %}
+        {% block footer %}{% endblock %}
+        <script src="/yui/build/yui/yui.js"></script>
+        {% block js %}
+        {% endblock %}
+    </body>
+</html>

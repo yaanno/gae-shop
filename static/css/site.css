@@ -1,0 +1,7 @@
+/* =layout */
+
+ul li, ol li { list-style: none; }
+
+/* =tags */
+
+.tags li { display: inline-block; }

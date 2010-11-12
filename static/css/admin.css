@@ -1,0 +1,40 @@
+/* =blog */
+
+.tipfy-form li {
+    padding: .5em 0;
+}
+
+.tipfy-form label {
+    display: block;
+    width: 5em;
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 0 0 .3em;
+    cursor: pointer;
+}
+
+.tipfy-form label abbr {
+    color: red;
+}
+
+.tipfy-form .descr {
+    display: block;
+    font-style: italic;
+    font-size: .9em;
+    padding: .2em;
+}
+
+.tipfy-form input[type=text] {
+    width: 25em;
+    padding: .2em;
+}
+
+.tipfy-form input[type=checkbox] {
+    float: left;
+    margin-right: .5em;
+}
+
+.tipfy-form textarea {
+    width: 25em;
+    height: 20em;
+}

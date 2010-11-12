@@ -1,0 +1,34 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}
+    {{ _('Blog') }} | {{ super() }}
+{% endblock %}
+{% block content %}
+    
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('admin/index') }}">Administration main page</a></li>
+            <li><a href="{{ url_for('admin/blog/new') }}" title="">Create new blog post</a></li>
+        </ul>
+    </nav>
+    <h1>{{ _('Manage Blog Posts') }}</h1>
+    {% if posts %}
+        <ul>
+        {% for post in posts %}
+            <li>
+                <div>
+                    <h3><a href="/admin/blog/edit/{{ post.key().id() }}/">{{ post.title }}</a></h3>
+                    <p>
+                        {{ format_datetime(post.modified, 'short', 'hu', 'Europe/Budapest') }}
+                    </p>
+                    <p>
+                        {{ post.lead }}
+                    </p>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>{{ _('No blog posts yet.') }}</p>
+    {% endif %}
+    
+{% endblock %}

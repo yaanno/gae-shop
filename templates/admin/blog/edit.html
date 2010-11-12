@@ -1,0 +1,22 @@
+{% extends "admin/admin_base.html" %}
+
+{% from 'form_macros.html' import form_field %}
+
+{% block title %}
+    {{ _('Edit Blog Post') }} | {{ super() }}
+{% endblock %}
+
+{% block content %}
+    {{ post }}
+    <h1>{{ _('Edit Blog Post') }}</h1>
+    <form method="post" action="" enctype="multipart/form-data" class="tipfy-form">
+        <ul>
+            <li>{{ form_field(form.title, required='true') }}</li>
+            <li>{{ form_field(form.lead, required='true') }}</li>
+            <li>{{ form_field(form.content, required='true') }}</li>
+            <li>{{ form_field(form.live) }}</li>
+            <li>{{ form_field(form.tags) }}</li>
+        </ul>
+        <input type="submit" name="submit" value="Save blog post" class="submit"> or <a href="{{ url_for('admin/blog/index') }}">cancel</a>
+    </form>
+{% endblock %}

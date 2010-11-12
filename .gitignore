@@ -1,0 +1,6 @@
+*.pyc
+distlib/*
+lib/*
+locale/*
+static/yui/*
+index.yaml

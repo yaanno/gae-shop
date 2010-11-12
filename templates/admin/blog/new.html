@@ -1,0 +1,21 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}
+    {{ _('Create new blog post') }} | {{ super() }}
+{% endblock %}
+
+{% from 'form_macros.html' import form_field %}
+
+{% block content %}
+    <h1>{{ _('Create new blog post') }}</h1>
+    <form method="post" action="" enctype="multipart/form-data" class="tipfy-form">
+        <ul>
+            <li>{{ form_field(form.title, required='true') }}</li>
+            <li>{{ form_field(form.lead, required='true') }}</li>
+            <li>{{ form_field(form.content, required='true') }}</li>
+            <li>{{ form_field(form.live) }}</li>
+            <li>{{ form_field(form.tags) }}</li>
+        </ul>
+        <input type="submit" name="submit" value="Create blog post" class="submit"> or <a href="{{ url_for('admin/blog/index') }}">cancel</a>
+    </form>
+{% endblock %}
