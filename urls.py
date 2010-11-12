@@ -5,7 +5,7 @@
 
     URL definitions.
 
-    :copyright: 2009 by tipfy.org.
+    :copyright: 2010 Janos Hardi.
     :license: BSD, see LICENSE.txt for more details.
 """
 from tipfy import Rule, import_string

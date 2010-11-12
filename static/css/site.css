@@ -5,3 +5,20 @@ ul li, ol li { list-style: none; }
 /* =tags */
 
 .tags li { display: inline-block; }
+
+/* =nav */
+
+body > nav ul {
+    margin: 2em 0;
+    text-align: center;
+}
+
+body > nav li {
+    display: inline-block;
+}
+
+body > nav li a {
+    display: inline-block;
+    font-size: 1.2em;
+    padding: .2em .5em;
+}

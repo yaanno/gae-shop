@@ -1,0 +1,15 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}
+    {{ _('Shop') }} | {{ super() }}
+{% endblock %}
+{% block content %}
+    
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('admin/index') }}">Administration main page</a></li>
+            <li><a href="{{ url_for('admin/product/new') }}" title="">Create new product</a></li>
+        </ul>
+    </nav>
+    <h1>{{ _('Manage Shop') }}</h1>
+    
+{% endblock %}

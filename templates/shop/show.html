@@ -1,0 +1,24 @@
+{% extends "shop/shop_base.html" %}
+
+{% block title %}
+    {{ product.name }} | {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ product.name }}</h1>
+    <p>
+        {{ product.description }}
+    </p>
+    <p>
+        {{ product.price }} / {{ product.unit }}
+    </p>
+    {% if product.tags %}
+    <ul>
+        {% for tag in product.tags %}
+            <li>
+                {{ tag }}
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}

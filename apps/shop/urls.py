@@ -20,6 +20,7 @@ def get_rules(app):
     rules = [
         HandlerPrefix('apps.shop.handlers.', [
             Rule('/shop/', endpoint='shop/index', handler='ShopIndexHandler'),
+            Rule('/shop/product/<slug>/', endpoint='shop/product', handler='ProductHandler'),
             Rule('/shop/tag/<tag>/', endpoint='shop/tag', handler='ShopTagListHandler'),
         ]),
     ]

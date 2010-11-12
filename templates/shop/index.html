@@ -1,1 +1,23 @@
 {% extends "shop/shop_base.html" %}
+
+{% block content %}
+    
+    <h1>Products:</h1>
+    
+    {% for product in products %}
+        <li>
+            <div class="product">
+                <h2><a href="/shop/product/{{ product.slug }}/">{{ product.name }}</a></h2>
+                <p>
+                    {{ product.description }}
+                </p>
+                <p>
+                    <small>
+                        {{ product.price }} / {{ product.unit }}
+                    </small>
+                </p>
+            </div>
+        </li>
+    {% endfor %}
+    
+{% endblock %}

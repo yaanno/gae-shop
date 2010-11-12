@@ -18,7 +18,7 @@ from apps.tagging.models import Taggable
 class BlogPost(Taggable):
     title = db.StringProperty(required=True)
     slug = SlugProperty(title)
-    lead = db.StringProperty(required=True)
+    lead = db.TextProperty(required=True)
     content = db.TextProperty(required=True)
     live = db.BooleanProperty(required=True)
     created = db.DateTimeProperty(required=True, auto_now_add=True)
