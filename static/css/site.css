@@ -36,6 +36,13 @@ body > nav li a {
     padding: .2em .5em;
 }
 
+/* =footer */
+
+footer {
+    display: block;
+    text-align: center;
+}
+
 /* =welcome */
 
 #content_main {

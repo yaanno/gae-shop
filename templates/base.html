@@ -18,7 +18,11 @@
         <div id="content_main">
             {% block content %}{% endblock %}
         </div>
-        {% block footer %}{% endblock %}
+        {% block footer %}
+            <footer>
+                <a href="/admin/">admin</a>
+            </footer>
+        {% endblock %}
         <script src="/yui/build/yui/yui.js"></script>
         {% block js %}
         {% endblock %}

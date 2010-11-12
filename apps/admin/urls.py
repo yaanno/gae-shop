@@ -25,9 +25,9 @@ def get_rules(app):
             Rule('/admin/blog/edit/<int:post_id>/', endpoint='admin/blog/edit', handler='BlogPostHandler'),
             
             Rule('/admin/shop/', endpoint='admin/shop/index', handler='ShopIndexHandler'),
-            Rule('/admin/shop/products/', endpoint='admin/products/index', handler='ProductHandler'),
+            Rule('/admin/shop/products/', endpoint='admin/products/index', handler='ProductsIndexHandler'),
             Rule('/admin/shop/products/new/', endpoint='admin/products/new', handler='ProductHandler'),
-            Rule('/admin/shop/orders/', endpoint='admin/orders/index', handler='ProductHandler'),
+            Rule('/admin/shop/orders/', endpoint='admin/orders/index', handler='OrdersIndexHandler'),
         ]),
     ]
 
