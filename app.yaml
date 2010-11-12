@@ -1,4 +1,4 @@
-application: gae-shop
+application: lumen-shop
 version: 1
 runtime: python
 api_version: 1
@@ -16,9 +16,6 @@ handlers:
 
 - url: /js
   static_dir: static/js
-
-- url: /yui
-  static_dir: static/yui
 
 - url: /remote_api
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
