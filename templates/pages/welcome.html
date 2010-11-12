@@ -1,1 +1,26 @@
 {% extends "pages/page_base.html" %}
+
+{% block content %}
+    <h1>Welcome to the Shop!</h1>
+    
+    <div id="daily_offer">
+        <div id="daily_coffee">
+            <h2>Daily Coffee</h2>
+            
+        </div>
+        <div id="daily_menu">
+            <h2>Daily Menu</h2>
+        </div>
+    </div>
+    
+    <div id="latest_posts">
+        <h3>Latest Blog Posts</h3>
+        
+        {% if posts %}
+            {% include "partials/post.html" %}
+        {% else %}
+        {% endif %}
+        
+    </div>
+    
+{% endblock %}

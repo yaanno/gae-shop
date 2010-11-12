@@ -5,3 +5,26 @@
 {% block css %}
     <link rel="stylesheet" href="/css/admin.css">
 {% endblock %}
+{% block navigation_main %}
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('pages/welcome') }}">Home</a></li>
+            <li><a href="{{ url_for('shop/index') }}">Shop</a></li>
+            <li><a href="{{ url_for('blog/index') }}">Blog</a></li>
+        </ul>
+    </nav>
+{% endblock %}
+{% block content %}
+    <h1>Hello!</h1>
+    <div>
+        <h2>Latest orders:</h2>
+    </div>
+    <div>
+        <h3>Manage Content:</h3>
+        <ul>
+            <li><a href="{{ url_for('admin/blog/index') }}">Blog Posts</a></li>
+            <li><a href="{{ url_for('admin/orders/index') }}">Orders</a></li>
+            <li><a href="{{ url_for('admin/products/index') }}">Products</a></li>
+        </ul>
+    </div>
+{% endblock %}

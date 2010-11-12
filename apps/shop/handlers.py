@@ -33,6 +33,11 @@ class ProductHandler(RequestHandler):
 
 
 class ShopTagListHandler(RequestHandler):
-    def get(self, **kwargs):
-        context = {}
-        return render_response('shop/tags.html', **context)
+    def get(self, tag=None, **kwargs):
+        products = Product.get_products_by_tag(tag)
+        context = {
+            'products': products
+        }
+        return render_response('shop/index.html', **context)
+
+

@@ -15,7 +15,9 @@
     </head>
     <body>
         {% block navigation_main %}{% endblock %}
-        {% block content %}{% endblock %}
+        <div id="content_main">
+            {% block content %}{% endblock %}
+        </div>
         {% block footer %}{% endblock %}
         <script src="/yui/build/yui/yui.js"></script>
         {% block js %}

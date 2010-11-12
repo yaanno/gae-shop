@@ -16,7 +16,7 @@
     <ul>
         {% for tag in product.tags %}
             <li>
-                {{ tag }}
+                <a href="/shop/tag/{{ tag }}/">{{ tag }}</a>
             </li>
         {% endfor %}
     </ul>

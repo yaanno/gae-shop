@@ -12,21 +12,25 @@
     </nav>
     <h1>{{ _('Manage Blog Posts') }}</h1>
     {% if posts %}
-        <ul>
-        {% for post in posts %}
-            <li>
-                <div>
-                    <h3><a href="/admin/blog/edit/{{ post.key().id() }}/">{{ post.title }}</a></h3>
-                    <p>
-                        {{ format_datetime(post.modified, 'short', 'hu', 'Europe/Budapest') }}
-                    </p>
-                    <p>
-                        {{ post.lead }}
-                    </p>
-                </div>
-            </li>
-        {% endfor %}
-        </ul>
+        <table>
+            <caption>Blog Posts</caption>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Live</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                <tr>
+                    <td><a title="{{ post.lead }}" href="/admin/blog/edit/{{ post.key().id() }}/">{{ post.title }}</a></td>
+                    <td>{{ format_datetime(post.modified, 'short', 'hu', 'Europe/Budapest') }}</td>
+                    <td><input type="checkbox" {% if post.live %}checked{% endif %} name="" value=""></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% else %}
         <p>{{ _('No blog posts yet.') }}</p>
     {% endif %}

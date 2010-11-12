@@ -1,5 +1,7 @@
 /* =layout */
 
+html { background: #f5f5f5; }
+
 ul li, ol li { list-style: none; }
 
 /* =tags */
@@ -8,13 +10,24 @@ ul li, ol li { list-style: none; }
 
 /* =nav */
 
-body > nav ul {
-    margin: 2em 0;
+body > nav {
+    display: block;
     text-align: center;
+    margin-top: 1em;
+}
+
+body > nav ul {
+    margin: 0;
 }
 
 body > nav li {
     display: inline-block;
+    background: #fff;
+    border: .3em solid rgba(0,0,0,.4);
+    border-bottom: none;
+    -webkit-border-radius: 1em 1em 0 0;
+    -moz-border-radius: 1em 1em 0 0;
+    border-radius: 1em 1em 0 0;
 }
 
 body > nav li a {
@@ -22,3 +35,36 @@ body > nav li a {
     font-size: 1.2em;
     padding: .2em .5em;
 }
+
+/* =welcome */
+
+#content_main {
+    width: 50em;
+    padding: 1em;
+    background: #fff;
+    border: .3em solid rgba(0,0,0,.4);
+    margin: 0 auto;
+    -webkit-border-radius: 1em;
+    -moz-border-radius: 1em;
+    border-radius: 1em;
+}
+
+#daily_offer {
+    overflow: hidden;
+    padding: .5em;
+}
+
+#daily_offer h2 {
+    text-align: center;
+}
+
+#daily_coffee {
+    float: left;
+    width: 24em;
+}
+
+#daily_menu {
+    float: right;
+    width: 24em;
+}
+
