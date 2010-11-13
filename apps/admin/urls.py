@@ -3,7 +3,7 @@
     urls
     ~~~~
 
-    URL definitions.
+    URL definitions for the Admin application.
 
 """
 from tipfy import Rule, HandlerPrefix
@@ -27,6 +27,7 @@ def get_rules(app):
             Rule('/admin/shop/', endpoint='admin/shop/index', handler='ShopIndexHandler'),
             Rule('/admin/shop/products/', endpoint='admin/products/index', handler='ProductsIndexHandler'),
             Rule('/admin/shop/products/new/', endpoint='admin/products/new', handler='ProductHandler'),
+            Rule('/admin/shop/products/<int:product_id>/', endpoint='admin/products/edit', handler='ProductHandler'),
             Rule('/admin/shop/orders/', endpoint='admin/orders/index', handler='OrdersIndexHandler'),
         ]),
     ]

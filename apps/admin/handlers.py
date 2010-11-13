@@ -33,6 +33,16 @@ class ShopIndexHandler(RequestHandler):
         return render_response('admin/shop/index.html', **context)
 
 
+class ProductsIndexHandler(RequestHandler):
+    def get(self, **kwargs):
+        products = Product.all().order('-modified')
+        result = products.fetch(10)
+        context = {
+            'products': result,
+        }
+        return render_response('admin/product/index.html', **context)
+
+
 class ProductHandler(RequestHandler):
     def get(self, product_id=None, **kwargs):
         """Return a product to edit or an empty form to create"""

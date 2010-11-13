@@ -41,3 +41,12 @@ class Product(Taggable):
         return query.fetch(count)
 
 
+class Order(db.Model):
+    """
+    should hold:
+        - a list of items
+        - user reference
+        - datetime posted
+        - comment
+    """
+

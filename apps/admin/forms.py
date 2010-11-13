@@ -10,6 +10,7 @@ from tipfy.ext.wtforms import Form, fields, validators
 from tipfy.ext.i18n import gettext as _
 
 class BlogPostForm(Form):
+    """Form class for Blog post validation"""
     title = fields.TextField(
         label=_('Title'),
         description=_('The title of your blog post'),

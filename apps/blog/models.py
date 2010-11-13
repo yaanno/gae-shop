@@ -8,7 +8,6 @@
 """
 from datetime import datetime
 import calendar
-import logging
 
 from google.appengine.ext import db
 from tipfy.ext.db import SlugProperty
@@ -16,6 +15,7 @@ from tipfy.ext.db import SlugProperty
 from apps.tagging.models import Taggable
 
 class BlogPost(Taggable):
+    """Model for Blog posts"""
     title = db.StringProperty(required=True)
     slug = SlugProperty(title)
     lead = db.TextProperty(required=True)
@@ -34,16 +34,19 @@ class BlogPost(Taggable):
     
     @classmethod
     def get_latest_posts(self, count=10):
+        """Return posts"""
         query = self.all().filter('live =', True).order('-modified')
         return query.fetch(count)
     
     @classmethod
     def get_post_by_slug(self, slug=None):
+        """Return a post by slug given"""
         query = self.all().filter('slug =', slug).filter('live =', True)
         return query.get()
     
     @classmethod
     def get_posts_by_date(self, year=None, month=None, day=None):
+        """Return posts by date given"""
         # prepare dates for filtering
         start_month = end_month = month
         start_day = end_day = day

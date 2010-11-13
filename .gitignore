@@ -4,3 +4,4 @@ lib/*
 locale/*
 static/yui/*
 index.yaml
+.build/*
