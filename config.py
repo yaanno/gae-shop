@@ -24,3 +24,7 @@ config['tipfy'] = {
     ],
     'locale': 'en_US',
 }
+
+config['tipfy.ext.session'] = {
+    'secret_key': 'ROtbnD8SEjPbUiOgcanANFE6eKKulwMExPM60rM7UMvKBBjAmFjx396r0YgCfyN',
+}

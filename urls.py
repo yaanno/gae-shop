@@ -20,8 +20,6 @@ def get_rules(app):
     :return:
         A list of class:`tipfy.Rule` instances.
     """
-    #  Here we show an example of joining all rules from the
-    # ``apps_installed`` definition set in config.py.
     rules = []
 
     for app_module in app.get_config('tipfy', 'apps_installed'):

@@ -6,21 +6,32 @@
     Shop Application Handlers
 
 """
+import logging
+
 from tipfy import RequestHandler, Response, redirect_to
 from tipfy.ext.jinja2 import render_response
+from tipfy.ext.session import SessionMixin, SessionMiddleware
 
 from models import Product
+from helpers import get_cart_content
 
-class ShopIndexHandler(RequestHandler):
+class BaseHandler(RequestHandler, SessionMixin):
+    middleware = [SessionMiddleware]
+    pass
+
+
+class ShopIndexHandler(BaseHandler):
     def get(self, **kwargs):
+        cart = get_cart_content()
         products = Product.get_latest_products()
         context = {
-            'products': products
+            'products': products,
+            'cart': cart,
         }
         return render_response('shop/index.html', **context)
 
 
-class ProductHandler(RequestHandler):
+class ProductHandler(BaseHandler):
     def get(self, slug=None, **kwargs):
         product = Product.get_product_by_slug(slug)
         if product is not None:
@@ -32,7 +43,7 @@ class ProductHandler(RequestHandler):
             return redirect_to('notfound')
 
 
-class ShopTagListHandler(RequestHandler):
+class ShopTagListHandler(BaseHandler):
     def get(self, tag=None, **kwargs):
         products = Product.get_products_by_tag(tag)
         context = {
@@ -41,3 +52,6 @@ class ShopTagListHandler(RequestHandler):
         return render_response('shop/index.html', **context)
 
 
+class CartHandler(BaseHandler):
+    def get(self, **kwargs):
+        pass

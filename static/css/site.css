@@ -46,6 +46,7 @@ footer {
 /* =welcome */
 
 #content_main {
+    position: relative;
     width: 50em;
     padding: 1em;
     background: #fff;
@@ -73,5 +74,33 @@ footer {
 #daily_menu {
     float: right;
     width: 24em;
+}
+
+#cart {
+    position: absolute;
+    top: -2em;
+    right: 1em;
+}
+
+#cart ul {
+    margin: 0;
+}
+
+#cart > ul > li {
+    position: relative;
+}
+
+.cartitems {
+    display: none;
+    position: absolute;
+    background: #fff;
+    width: 10em;
+    right: -1em;
+    padding: .5em;
+    border: .3em solid rgba(0,0,0,.4);
+}
+
+#cart > ul > li:hover .cartitems {
+    display: block;
 }
 

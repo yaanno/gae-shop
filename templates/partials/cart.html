@@ -1,0 +1,12 @@
+<ul>
+    <li>
+        <a href="/shop/cart/">Cart</a>
+        {% if cart %}
+            <ul class="cartitems">
+                {% for item in cart %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </li>
+</ul>

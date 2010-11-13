@@ -16,6 +16,9 @@
     <body>
         {% block navigation_main %}{% endblock %}
         <div id="content_main">
+            <div id="cart">
+                {% include "partials/cart.html" %}
+            </div>
             {% block content %}{% endblock %}
         </div>
         {% block footer %}
@@ -24,6 +27,7 @@
             </footer>
         {% endblock %}
         {% block js %}
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
         {% endblock %}
     </body>
 </html>

@@ -138,7 +138,6 @@ class BlogPostHandler(RequestHandler):
             content = self.form.content.data
             live = self.form.live.data
             tags = self.form.tags.data
-            print content
             if tags is not None:
                 tags = [tag.strip() for tag in tags.split(',') if tag != '']
             # saving edited

@@ -2,7 +2,7 @@
 {% for post in posts %}
     <li>
         <div>
-            <h4><a href="/blog/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/">{{ post.title }}</a></h4>
+            <h1><a href="/blog/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/">{{ post.title }}</a></h1>
             <p>
                 {{ format_datetime(post.modified, 'short', 'hu', 'Europe/Budapest') }}, Lumen
             </p>

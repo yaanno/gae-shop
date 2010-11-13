@@ -1,7 +1,12 @@
 /* =blog */
 
+.tipfy-form ul {
+    margin: 0 1em;
+}
+
 .tipfy-form li {
     padding: .5em 0;
+    position: relative;
 }
 
 .tipfy-form label {
@@ -22,6 +27,7 @@
     font-style: italic;
     font-size: .9em;
     padding: .2em;
+    color: green;
 }
 
 .tipfy-form input[type=text] {
@@ -35,10 +41,18 @@
 }
 
 .tipfy-form textarea {
-    width: 25em;
+    width: 100%;
     height: 20em;
 }
 
 table {
     width: 100%;
+}
+
+.errors {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 16em;
+    color: red;
 }

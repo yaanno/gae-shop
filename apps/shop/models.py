@@ -44,9 +44,20 @@ class Product(Taggable):
 class Order(db.Model):
     """
     should hold:
-        - a list of items
+        - a list of items + amount ( [ [5,10], [10,10] ] )
         - user reference
         - datetime posted
         - comment
+        - delivered (default False)
+        - delivery info
+    eg. 5 pack of Black Coffee and 2 pack of Green Tea ordered by Anna at 2010.10.11. 20:00 and she wants it to be delivered at 2010.10.15. 1102-Budapest Körösi Csoma Sándor út 43.
+    
     """
+    items = db.ListProperty(item_type=str, required=True)
+    user = db.IntegerProperty(required=True, default=1)
+    comment = db.TextProperty()
+    date = db.DateTimeProperty(auto_now_add=True)
+    delivered = db.BooleanProperty(default=False)
+    delivery_info = db.TextProperty(required=True)
+
 

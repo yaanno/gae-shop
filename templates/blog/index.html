@@ -7,23 +7,7 @@
 {% block content %}
     <h1>Blog posts</h1>
     {% if posts %}
-        <ul>
-        {% for post in posts %}
-            <li>
-                <div>
-                    <h3><a href="/blog/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/">{{ post.title }}</a></h3>
-                    <p>
-                        {{ format_datetime(post.modified, 'short', 'hu', 'Europe/Budapest') }}, Lumen
-                    </p>
-                    <p>
-                        {{ post.lead }}
-                        <br>
-                        <span><a href="/blog/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/">Read more ...</a></span>
-                    </p>
-                </div>
-            </li>
-        {% endfor %}
-        </ul>
+        {% include "partials/post.html" %}
     {% else %}
         <p>{{ _('No blog posts yet.') }}</p>
     {% endif %}
