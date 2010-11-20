@@ -1,0 +1,26 @@
+<ul class="products">
+    {% for product in products %}
+        <li>
+            <div class="product">
+                <img src="/img/default.jpg" width="100" height="150">
+                <h2><a href="/shop/product/{{ product.slug }}/">{{ product.name }}</a></h2>
+                <p>
+                    {{ product.description }}
+                </p>
+                <p class="buy">
+                    <span class="price">{{ product.price }} HUF / {{ product.unit }}</span>
+                    <span>
+                        <select name="amount" id="amount">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <button type="button">Buy</button>
+                    </span>
+                </p>
+            </div>
+        </li>
+    {% endfor %}
+</ul>

@@ -1,8 +1,8 @@
 /* =layout */
 
-html { background: #D4C098; }
+html { background: rgba(212,192,152,.3) }
 
-body { background: -webkit-gradient(linear, right bottom, right top, color-stop(0.10, #D4C098), color-stop(1, #F7F6E4)); }
+body { background: -webkit-gradient(linear, right bottom, right top, color-stop(0.10, rgba(212,192,152,0)), color-stop(1, rgba(212,192,152,1))); }
 
 ul li, ol li { list-style: none; }
 
@@ -47,6 +47,21 @@ body > nav li {
 body > nav li a {
     display: block;
     font-size: 1.2em;
+}
+
+/* =footer */
+
+footer {
+    margin-top: 1em;
+}
+
+footer ul {
+    margin: 0;
+}
+
+footer li {
+    display: inline-block;
+    padding: 0 .5em;
 }
 
 /* =branding */
@@ -139,15 +154,20 @@ footer {
 
 .products {
     margin: 0;
+    padding: 0 2em;
     overflow: hidden;
 }
 
 .products > li {
     float: left;
     width: 20em;
-    margin: 0 1em 1em 0;
+    margin: 0 2.5em 2em 0;
     -webkit-border-radius: 1em;
     background: -webkit-gradient(linear, right top, right bottom, color-stop(0, #D4C098), color-stop(1, #F7F6E4));
+}
+
+.products > li:nth-child(3n+3) {
+    margin-right: 0;
 }
 
 .products > li:hover {

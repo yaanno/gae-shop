@@ -21,6 +21,8 @@ def get_rules(app):
         HandlerPrefix('apps.pages.handlers.', [
             Rule('/', endpoint='pages/welcome', handler='WelcomePageHandler'),
             Rule('/notfound/', endpoint='notfound', handler='NotFoundHandler'),
+            Rule('/contact/', endpoint='pages/contact', handler='NotFoundHandler'),
+            Rule('/menu/', endpoint='pages/menu', handler='NotFoundHandler'),
         ]),
     ]
 

@@ -15,7 +15,7 @@ from apps.blog.models import BlogPost
 
 class NotFoundHandler(RequestHandler):
     def get(self):
-        return Response('Page not found')
+        return render_response('pages/404.html')
 
 
 class WelcomePageHandler(RequestHandler):

@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="/css/base-min.css">
         <link rel="stylesheet" href="/css/fonts-min.css">
         <link rel="stylesheet" href="/css/site.css">
-        <link href='http://fonts.googleapis.com/css?family=Lobster&subset=latin' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Lobster&amp;subset=latin' rel='stylesheet' type='text/css'>
         {% block css %}
         {% endblock %}
     </head>
@@ -27,7 +27,11 @@
         </div>
         {% block footer %}
             <footer>
-                <a href="/admin/">admin</a>
+                <ul>
+                    <li>&copy; <a href="{{ url_for('pages/welcome') }}">Lumen Kávé</a></li>
+                    <li><a href="{{ url_for('pages/contact') }}">Contact</a></li>
+                    <li><a href="{{ url_for('pages/menu') }}">Menu</a></li>
+                </ul>
             </footer>
         {% endblock %}
         {% block js %}

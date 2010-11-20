@@ -6,16 +6,20 @@
     <div id="daily_offer">
         <div id="daily_coffee">
             <h2>Daily Coffee</h2>
-            
+            <p>
+                <a href="{{ url_for('shop/index') }}">Browse Products</a>
+            </p>
         </div>
         <div id="daily_menu">
-            <h2>Daily Menu</h2>
+            <h2>Daily Food and Drink</h2>
+            <p>
+                <a href="{{ url_for('pages/menu') }}">Menu</a>
+            </p>
         </div>
     </div>
     
     <div id="latest_posts">
-        <h3>Latest Blog Posts</h3>
-        
+        <h3><a href="{{ url_for('blog/index') }}">Latest Blog Posts</a></h3>
         {% if posts %}
             {% include "partials/post.html" %}
         {% else %}
