@@ -33,9 +33,12 @@ class BlogPost(Taggable):
         return query.fetch(10)
     
     @classmethod
-    def get_latest_posts(self, count=10):
+    def get_latest_posts(self, count=10, live=True):
         """Return posts"""
-        query = self.all().filter('live =', True).order('-modified')
+        query = self.all()
+        if live:
+            query.filter('live =', live)
+        query.order('-modified')
         return query.fetch(count)
     
     @classmethod

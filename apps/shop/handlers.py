@@ -47,9 +47,10 @@ class ShopTagListHandler(BaseHandler):
     def get(self, tag=None, **kwargs):
         products = Product.get_products_by_tag(tag)
         context = {
-            'products': products
+            'products': products,
+            'tag': tag
         }
-        return render_response('shop/index.html', **context)
+        return render_response('shop/by_tag.html', **context)
 
 
 class CartHandler(BaseHandler):

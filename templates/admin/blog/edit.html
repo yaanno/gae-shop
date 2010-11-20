@@ -3,12 +3,12 @@
 {% from 'form_macros.html' import form_field %}
 
 {% block title %}
-    {{ _('Edit Blog Post') }} | {{ super() }}
+    {{ _('Edit Blog Post') }} | {{ form.title.data }} | {{ super() }}
 {% endblock %}
 
 {% block content %}
     {{ post }}
-    <h1>{{ _('Edit Blog Post') }}</h1>
+    <h1>{{ _('Edit Blog Post') }}: {{ form.title.data }}</h1>
     <form method="post" action="" enctype="multipart/form-data" class="tipfy-form">
         <ul>
             <li>{{ form_field(form.title, required='true') }}</li>

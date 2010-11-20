@@ -13,7 +13,7 @@
         {{ product.price }} / {{ product.unit }}
     </p>
     {% if product.tags %}
-    <ul>
+    <ul class="tags">
         {% for tag in product.tags %}
             <li>
                 <a href="/shop/tag/{{ tag }}/">{{ tag }}</a>

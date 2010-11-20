@@ -10,12 +10,16 @@
         <link rel="stylesheet" href="/css/base-min.css">
         <link rel="stylesheet" href="/css/fonts-min.css">
         <link rel="stylesheet" href="/css/site.css">
+        <link href='http://fonts.googleapis.com/css?family=Lobster&subset=latin' rel='stylesheet' type='text/css'>
         {% block css %}
         {% endblock %}
     </head>
     <body>
         {% block navigation_main %}{% endblock %}
         <div id="content_main">
+            <div id="branding">
+                <h1><a href="/">Lumen Kávé</a></h1>
+            </div>
             <div id="cart">
                 {% include "partials/cart.html" %}
             </div>

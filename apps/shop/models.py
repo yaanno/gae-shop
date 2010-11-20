@@ -36,8 +36,11 @@ class Product(Taggable):
         return query.get()
     
     @classmethod
-    def get_latest_products(self, count=10):
-        query = self.all().filter('live =', True).order('-modified')
+    def get_latest_products(self, count=10, live=True):
+        query = self.all()
+        if live:
+            query.filter('live =', live)
+        query.order('-modified')
         return query.fetch(count)
 
 

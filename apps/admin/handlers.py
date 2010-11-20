@@ -35,10 +35,9 @@ class ShopIndexHandler(RequestHandler):
 
 class ProductsIndexHandler(RequestHandler):
     def get(self, **kwargs):
-        products = Product.all().order('-modified')
-        result = products.fetch(10)
+        products = Product.get_latest_products(10, False)
         context = {
-            'products': result,
+            'products': products,
         }
         return render_response('admin/product/index.html', **context)
 
@@ -88,7 +87,7 @@ class ProductHandler(RequestHandler):
             else:
                 product = Product(name=name, description=description, price=price, unit=unit, live=live, tags=tags)
             if product.put():
-                return redirect('admin/shop')
+                return redirect('/admin/shop/products/')
         return self.get(**kwargs)
         
     @cached_property

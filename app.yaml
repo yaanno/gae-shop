@@ -17,6 +17,9 @@ handlers:
 - url: /js
   static_dir: static/js
 
+- url: /img
+  static_dir: static/img
+
 - url: /remote_api
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
   login: admin
