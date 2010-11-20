@@ -1,0 +1,40 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}
+    {{ _('Manage Products') }}
+{% endblock %}
+{% block content %}
+    
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('admin/index') }}">Administration main page</a></li>
+            <li><a href="{{ url_for('admin/products/new') }}" title="">Create new product</a></li>
+        </ul>
+    </nav>
+    <h1>{{ _('Manage Products') }}</h1>
+    {% if products %}
+        <table>
+            <caption>Products</caption>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Price / Unit</th>
+                    <th>Live</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td><a title="{{ product.description }}" href="/admin/shop/products/edit/{{ product.key().id() }}/">{{ product.name }}</a></td>
+                    <td>{{ format_datetime(product.modified, 'short', 'hu', 'Europe/Budapest') }}</td>
+                    <td>{{ product.price }} HUF / {{ product.unit }}</td>
+                    <td><input type="checkbox" {% if product.live %}checked{% endif %} name="" value=""></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>{{ _('No products yet.') }}</p>
+    {% endif %}
+    
+{% endblock %}
