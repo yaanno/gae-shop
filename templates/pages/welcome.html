@@ -1,30 +1,29 @@
 {% extends "pages/page_base.html" %}
 
 {% block content %}
-    <h1>Welcome to the Shop!</h1>
+    <h1>{{ _('Welcome to Lumen Kávé!') }}</h1>
     
     <div id="daily_offer">
         <div id="daily_coffee">
-            <h2>Daily Coffee</h2>
+            <h2>{{ _('Daily Coffee') }}</h2>
             <p>
-                <a href="{{ url_for('shop/index') }}">Browse Products</a>
+                <a href="{{ url_for('shop/index') }}">{{ _('Browse Products') }}</a>
             </p>
         </div>
         <div id="daily_menu">
-            <h2>Daily Food and Drink</h2>
+            <h2>{{ _('Daily Food and Drink') }}</h2>
             <p>
-                <a href="{{ url_for('pages/menu') }}">Menu</a>
+                <a href="{{ url_for('pages/menu') }}">{{ _('Menu') }}</a>
             </p>
         </div>
     </div>
     
     <div id="latest_posts">
-        <h3><a href="{{ url_for('blog/index') }}">Latest Blog Posts</a></h3>
+        <h3><a href="{{ url_for('blog/index') }}">{{ _('Latest Blog Posts') }}</a></h3>
         {% if posts %}
             {% include "partials/post.html" %}
         {% else %}
         {% endif %}
-        
     </div>
     
 {% endblock %}

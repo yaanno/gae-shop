@@ -20,6 +20,12 @@
             <div id="branding">
                 <h1><a href="/">Lumen Kávé</a></h1>
             </div>
+            <div id="language">
+                <ul>
+                    <li><a href="?lang=en_US">English</a></li>
+                    <li><a href="?lang=hu_HU">Magyar</a></li>
+                </ul>
+            </div>
             <div id="cart">
                 {% include "partials/cart.html" %}
             </div>
@@ -29,8 +35,8 @@
             <footer>
                 <ul>
                     <li>&copy; <a href="{{ url_for('pages/welcome') }}">Lumen Kávé</a></li>
-                    <li><a href="{{ url_for('pages/contact') }}">Contact</a></li>
-                    <li><a href="{{ url_for('pages/menu') }}">Menu</a></li>
+                    <li><a href="{{ url_for('pages/contact') }}">{{ _('Contact') }}</a></li>
+                    <li><a href="{{ url_for('pages/menu') }}">{{ _('Menu') }}</a></li>
                 </ul>
             </footer>
         {% endblock %}

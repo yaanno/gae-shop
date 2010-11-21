@@ -4,12 +4,12 @@
         <div>
             <h1><a href="/blog/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/">{{ post.title }}</a></h1>
             <p>
-                {{ format_datetime(post.modified, 'short', 'hu', 'Europe/Budapest') }}, Lumen
+                {{ format_datetime(post.modified, 'short', 'hu', 'Europe/Budapest') }}, {{ _('Lumen') }}
             </p>
             <p>
                 {{ post.lead }}
                 <br>
-                <span><a href="/blog/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/">Read more ...</a></span>
+                <span><a href="/blog/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/">{{ _('Read more ...') }}</a></span>
             </p>
         </div>
     </li>

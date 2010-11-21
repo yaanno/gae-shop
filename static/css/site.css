@@ -86,6 +86,22 @@ footer li {
     text-decoration: none;
 }
 
+/* =language */
+
+#language {
+    position: absolute;
+    top: -2em;
+    right: 7em;
+}
+
+#language ul {
+    margin: 0;
+}
+
+#language li {
+    display: inline-block;
+}
+
 /* =footer */
 
 footer {

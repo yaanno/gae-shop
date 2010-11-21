@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Blog posts</h1>
+    <h1>{{ _('Latest Blog Posts') }}</h1>
     {% if posts %}
         {% include "partials/post.html" %}
     {% else %}

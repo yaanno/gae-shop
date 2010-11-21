@@ -22,7 +22,7 @@ config['tipfy'] = {
         'apps.pages',
         'apps.shop',
     ],
-    'locale': 'en_US',
+    'locale': ['hu_HU', 'en_US'],
 }
 
 config['tipfy.ext.session'] = {
