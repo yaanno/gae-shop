@@ -57,6 +57,7 @@ class BlogTagListHandler(RequestHandler):
         posts = BlogPost.get_posts_by_tag(tag)
         context = {
             'posts': posts,
+            'tag': tag,
         }
         if len(posts) > 0:
             return render_response('blog/archive.html', **context)

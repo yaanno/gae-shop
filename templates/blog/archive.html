@@ -4,6 +4,11 @@
     Archive | {{ super() }}
 {% endblock %}
 
+{% block meta %}
+    <link rel="alternate" href="/feed/blog/tag/{{ tag }}/" type="application/atom+xml" title="{{ _('Blog posts tagged with') }} {{ tag }}">
+    {{ super() }}
+{% endblock %}
+
 {% block content %}
     <h1>Archive</h1>
     {% if posts %}

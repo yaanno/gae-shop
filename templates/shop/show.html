@@ -6,11 +6,22 @@
 
 {% block content %}
     <h1>{{ product.name }}</h1>
+    <img src="/img/default.jpg" width="100" height="150">
     <p>
         {{ product.description }}
     </p>
-    <p>
-        {{ product.price }} / {{ product.unit }}
+    <p class="buy">
+        <span class="price">{{ product.price }} HUF / {{ product.unit }}</span>
+        <span>
+            <select name="amount" id="amount">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <button type="button">{{ _('Buy') }}</button>
+        </span>
     </p>
     {% if product.tags %}
     <ul class="tags">
@@ -22,3 +33,23 @@
     </ul>
     {% endif %}
 {% endblock %}
+<div class="product">
+    <img src="/img/default.jpg" width="100" height="150">
+    <h2><a href="/shop/product/{{ product.slug }}/">{{ product.name }}</a></h2>
+    <p>
+        {{ product.description }}
+    </p>
+    <p class="buy">
+        <span class="price">{{ product.price }} HUF / {{ product.unit }}</span>
+        <span>
+            <select name="amount" id="amount">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <button type="button">{{ _('Buy') }}</button>
+        </span>
+    </p>
+</div>

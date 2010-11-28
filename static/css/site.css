@@ -2,7 +2,10 @@
 
 html { background: rgba(212,192,152,.3) }
 
-body { background: -webkit-gradient(linear, right bottom, right top, color-stop(0.10, rgba(212,192,152,0)), color-stop(1, rgba(212,192,152,1))); }
+body {
+    background: -moz-linear-gradient(top, rgba(212,192,152,1), rgba(212,192,152,0));
+    background: -webkit-gradient(linear, right bottom, right top, color-stop(0.10, rgba(212,192,152,0)), color-stop(1, rgba(212,192,152,1)));
+}
 
 ul li, ol li { list-style: none; }
 
@@ -117,6 +120,7 @@ footer {
     padding: 1em;
     background: #fff;
     margin: -33px auto 0;
+    -moz-border-radius: 0 0 1em 1em;
     border-bottom-left-radius: 1em;
     border-bottom-right-radius: 1em;
 }
@@ -178,7 +182,9 @@ footer {
     float: left;
     width: 20em;
     margin: 0 2.5em 2em 0;
-    -webkit-border-radius: 1em;
+    -moz-border-radius: 1em;
+    border-radius: 1em;
+    background: -moz-linear-gradient(top, #D4C098, #F7F6E4);
     background: -webkit-gradient(linear, right top, right bottom, color-stop(0, #D4C098), color-stop(1, #F7F6E4));
 }
 
@@ -187,6 +193,7 @@ footer {
 }
 
 .products > li:hover {
+    background: -moz-linear-gradient(top, #D4C098 0%, #F7F6E4 50%);
     background: -webkit-gradient(linear, right top, right bottom, color-stop(0, #D4C098), color-stop(0.50, #F7F6E4));
 }
 
@@ -201,7 +208,8 @@ footer {
     float: left;
     margin: 0 .7em .2em 0;
     border: .3em solid #F6F6E2;
-    -webkit-border-radius: .2em;
+    -moz-border-radius: .2em;
+    border-radius: .2em;
 }
 
 .product > h2 {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>
+        {% block title %}Lumen Kávé{% endblock %}
+    </title>
+    <id>http://localhost:8080/</id>
+    <author>
+        <name>Lumen Kávé</name>
+        <uri>http://localhost:8080/</uri>
+        <email>contact@lumenkave.hu</email>
+    </author>
+    {% block entries %}{% endblock %}
+</feed>

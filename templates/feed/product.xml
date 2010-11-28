@@ -1,0 +1,27 @@
+{% extends 'feed/feed_base.xml' %}
+{% block title %}
+{% if tag %}
+{{ _('Products tagged with') }} {{ tag }}
+{% else%}
+{{ _('Latest products') }} 
+{% endif %}
+| {{ super() }}
+
+{% endblock %}
+{% block entries %}
+    {% for product in products %}
+    <entry>
+        <title>{{ product.name }}</title>
+        <link href="/shop/product/{{ product.slug }}/"/>
+        <id>http://localhost:8080/shop/product/{{ product.slug }}/</id>
+        <summary>{{ product.description }}</summary>
+        <updated>{{ format_datetime(product.modified, 'y-M-d%sH:M:S%s' % ('T', 'Z')) }}</updated>
+        <published>{{ format_datetime(product.created, 'y-M-d%sH:M:S%s' % ('T', 'Z')) }}</published>
+        {% if product.tags %}
+        {% for tag in product.tags %}
+        <category term="{{ tag }}" />
+        {% endfor %}
+        {% endif %}
+    </entry>
+    {% endfor %}
+{% endblock %}

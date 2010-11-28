@@ -1,7 +1,7 @@
 {% extends 'user/user_base.html' %}
 
 {% block title %}
-    Hello {{ current_user }}
+    Hello {{ current_user }} | {{ super() }}
 {% endblock %}
 
 {% block content %}

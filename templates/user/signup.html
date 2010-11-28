@@ -6,11 +6,9 @@
     <h1>Signup</h1>
     <p>Please choose a nickname.</p>
     <form method="post" action="{{ current_url }}" enctype="multipart/form-data" class="tipfy-form">
-        <ol>
-            <li>{{ form_field(form.nickname, class='medium') }}</li>
-        </ol>
-        <fieldset class="submit">
-            <input type="submit" name="submit" value="{{ _('Save') }}">
-        </fieldset>
+        <ul>
+            <li>{{ form_field(form.nickname) }}</li>
+        </ul>
+        <input type="submit" name="submit" value="{{ _('Save') }}">
     </form>
 {% endblock %}

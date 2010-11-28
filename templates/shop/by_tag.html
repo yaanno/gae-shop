@@ -1,6 +1,10 @@
 {% extends "shop/shop_base.html" %}
 
+{% block title %}
+    {{ _('Products tagged with') }}: {{ tag }} | {{ super() }}
+{% endblock %}
+
 {% block content %}
-    <h1>{{ _('Products tagged with') }} <span class="tag">{{ tag }}</span></h1>
+    <h1>{{ _('Products tagged with') }}: <span class="tag">{{ tag }}</span></h1>
     {% include "partials/product.html" %}
 {% endblock %}
