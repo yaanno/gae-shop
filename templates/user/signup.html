@@ -1,0 +1,16 @@
+{% extends 'user/user_base.html' %}
+
+{% from 'form_macros.html' import form_field %}
+
+{% block content %}
+    <h1>Signup</h1>
+    <p>Please choose a nickname.</p>
+    <form method="post" action="{{ current_url }}" enctype="multipart/form-data" class="tipfy-form">
+        <ol>
+            <li>{{ form_field(form.nickname, class='medium') }}</li>
+        </ol>
+        <fieldset class="submit">
+            <input type="submit" name="submit" value="{{ _('Save') }}">
+        </fieldset>
+    </form>
+{% endblock %}
