@@ -22,6 +22,7 @@ def get_rules(app):
             Rule('/shop/', endpoint='shop/index', handler='ShopIndexHandler'),
             Rule('/shop/product/<slug>/', endpoint='shop/product', handler='ProductHandler'),
             Rule('/shop/tag/<tag>/', endpoint='shop/tag', handler='ShopTagListHandler'),
+            Rule('/shop/cart/', endpoint='shop/cart', handler='CartHandler'),
         ]),
     ]
 

@@ -55,4 +55,4 @@ class ShopTagListHandler(BaseHandler):
 
 class CartHandler(BaseHandler):
     def get(self, **kwargs):
-        pass
+        return Response('cart goes here')
