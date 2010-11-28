@@ -15,8 +15,8 @@
         <link href="/shop/product/{{ product.slug }}/"/>
         <id>http://localhost:8080/shop/product/{{ product.slug }}/</id>
         <summary>{{ product.description }}</summary>
-        <updated>{{ format_datetime(product.modified, 'y-M-d%sH:M:S%s' % ('T', 'Z')) }}</updated>
-        <published>{{ format_datetime(product.created, 'y-M-d%sH:M:S%s' % ('T', 'Z')) }}</published>
+        <updated>{{ format_datetime(product.modified, 'y-M-dTH:M:sZ', 'hu', 'Europe/Budapest') }}</updated>
+        <published>{{ format_datetime(product.created, 'y-M-dTH:M:sZ', 'hu', 'Europe/Budapest') }}</published>
         {% if product.tags %}
         {% for tag in product.tags %}
         <category term="{{ tag }}" />

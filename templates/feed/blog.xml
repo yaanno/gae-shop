@@ -15,8 +15,8 @@
         <link href="/blog/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/"/>
         <id>http://localhost:8080/blog/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/</id>
         <summary>{{ post.lead }}</summary>
-        <updated>{{ format_datetime(post.modified, 'y-M-d%sH:M:S%s' % ('T', 'Z')) }}</updated>
-        <published>{{ format_datetime(post.created, 'y-M-d%sH:M:S%s' % ('T', 'Z')) }}</published>
+        <updated>{{ format_datetime(post.modified, 'y-M-dTH:M:sZ', 'hu', 'Europe/Budapest') }}</updated>
+        <published>{{ format_datetime(post.created, 'y-M-dTH:M:sZ', 'hu', 'Europe/Budapest') }}</published>
         {% if post.tags %}
         {% for tag in post.tags %}
         <category term="{{ tag }}" />

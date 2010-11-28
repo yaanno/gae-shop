@@ -4,6 +4,11 @@
     {{ _('Products tagged with') }}: {{ tag }} | {{ super() }}
 {% endblock %}
 
+{% block meta %}
+    <link rel="alternate" href="/feed/product/tag/{{ tag }}/" type="application/atom+xml" title="{{ _('Products tagged with') }} {{ tag }}">
+    {{ super() }}
+{% endblock %}
+
 {% block content %}
     <h1>{{ _('Products tagged with') }}: <span class="tag">{{ tag }}</span></h1>
     {% include "partials/product.html" %}

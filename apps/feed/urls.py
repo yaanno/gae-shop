@@ -10,7 +10,7 @@ from tipfy import Rule, HandlerPrefix
 
 
 def get_rules(app):
-    """Returns a list of URL rules for the Users application.
+    """Returns a list of URL rules for the Feed application.
 
     :param app:
         The WSGI application instance.

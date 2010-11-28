@@ -3,7 +3,7 @@
     handlers
     ~~~~~~~~
 
-    User Handlers
+    Feed Handlers
 
 """
 from tipfy import RequestHandler, Response, redirect_to
