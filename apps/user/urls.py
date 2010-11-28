@@ -19,10 +19,10 @@ def get_rules(app):
     """
     rules = [
         HandlerPrefix('apps.user.handlers.', [
-            Rule('/login/', endpoint='auth/login', handler='LoginHandler'),
-            Rule('/logout/', endpoint='auth/logout', handler='LogoutHandler'),
-            Rule('/signup/', endpoint='auth/signup', handler='SignupHandler'),
-            Rule('/register/', endpoint='auth/register', handler='RegisterHandler'),
+            Rule('/sign-in/', endpoint='auth/login', handler='LoginHandler'),
+            Rule('/sign-out/', endpoint='auth/logout', handler='LogoutHandler'),
+            Rule('/sign-up/', endpoint='auth/signup', handler='SignupHandler'),
+            Rule('/create-account/', endpoint='auth/register', handler='RegisterHandler'),
             
             Rule('/auth/facebook/', endpoint='auth/facebook', handler='FacebookHandler'),
             Rule('/auth/google/', endpoint='auth/google', handler='GoogleHandler'),

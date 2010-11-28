@@ -9,17 +9,16 @@
 {% block content %}
     <h1>{{ _('Sign in') }}</h1>
     <form method="post" action="{{ current_url }}" enctype="multipart/form-data" class="tipfy-form">
+        <p>You can sign in with your 
+            <a href="{{ facebook_login_url }}" title="Sign in with Facebook">Facebook</a> or 
+            <a href="{{ google_login_url }}" title="Sign in with Google">Google</a> account.
+        </p>
         <ul>
             <li>{{ form_field(form.username) }}</li>
             <li>{{ form_field(form.password) }}</li>
             <li>{{ form_field(form.remember) }}</li>
         </ul>
-        <input type="submit" name="submit" value="{{ _('Sign in') }}">
+        <p><input type="submit" name="submit" value="{{ _('Sign in') }}"> or <a href="{{ url_for('auth/register') }}">{{ _('Create an account') }}</a>.</p>
+        
     </form>
-    <p><a href="{{ url_for('auth/register') }}">{{ _('Create account') }}</a>.</p>
-    
-    <p>Sign in with your 
-        <a href="{{ facebook_login_url }}" title="Sign in with Facebook">Facebook account</a> or 
-        <a href="{{ google_login_url }}" title="Sign in with Google">Google account</a>
-    </p>
 {% endblock %}

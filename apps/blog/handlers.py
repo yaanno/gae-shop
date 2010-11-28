@@ -9,20 +9,26 @@
 from tipfy import RequestHandler, Response, redirect_to
 from tipfy.ext.jinja2 import render_response
 
+from apps.user.handlers import AuthHandler
 from models import BlogPost
 from helpers import dateformatter, group_by_date
 
-class BlogIndexHandler(RequestHandler):
+
+class BaseHandler(AuthHandler):
+    pass
+
+
+class BlogIndexHandler(BaseHandler):
     """Return date ordered blog posts"""
     def get(self, **kwargs):
         posts = BlogPost.get_latest_posts(10)
         context = {
             'posts': posts,
         }
-        return render_response('blog/index.html', **context)
+        return self.render_response('blog/index.html', **context)
 
 
-class BlogPostHandler(RequestHandler):
+class BlogPostHandler(BaseHandler):
     """Return an individual blog post"""
     def get(self, year=None, month=None, day=None, slug=None):
         post = BlogPost.get_post_by_slug(slug)
@@ -30,12 +36,12 @@ class BlogPostHandler(RequestHandler):
             context = {
                 'post': post
             }
-            return render_response('blog/show.html', **context)
+            return self.render_response('blog/show.html', **context)
         else:
             return redirect_to('notfound')
 
 
-class BlogArchiveHandler(RequestHandler):
+class BlogArchiveHandler(BaseHandler):
     """Return date ordered blog posts depending on archive filters"""
     def get(self, year=None, month=None, day=None):
         posts = BlogPost.get_posts_by_date(year, month, day)
@@ -46,12 +52,12 @@ class BlogArchiveHandler(RequestHandler):
             context = {
                 'posts': posts,
             }
-            return render_response('blog/archive.html', **context)
+            return self.render_response('blog/archive.html', **context)
         else:
             return redirect_to('notfound')
 
 
-class BlogTagListHandler(RequestHandler):
+class BlogTagListHandler(BaseHandler):
     """Return list of posts by tag name"""
     def get(self, tag=None):
         posts = BlogPost.get_posts_by_tag(tag)
@@ -60,7 +66,7 @@ class BlogTagListHandler(RequestHandler):
             'tag': tag,
         }
         if len(posts) > 0:
-            return render_response('blog/archive.html', **context)
+            return self.render_response('blog/archive.html', **context)
         else:
             return redirect_to('notfound')
 

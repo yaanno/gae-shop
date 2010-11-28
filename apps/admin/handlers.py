@@ -6,43 +6,51 @@
     Administration Application Handlers
 
 """
-from tipfy import RequestHandler, Response, cached_property, redirect
-from tipfy.ext.jinja2 import render_response
+from tipfy import Response, cached_property, redirect
 from tipfy.ext.i18n import gettext as _
+from tipfy.ext.auth import admin_required
 
 from forms import BlogPostForm, ProductForm
-
+from apps.user.handlers import AuthHandler
 from apps.blog.models import BlogPost
 from apps.shop.models import Product
 
 
-class AdminIndexHandler(RequestHandler):
+class BaseHandler(AuthHandler):
+    pass
+
+
+class AdminIndexHandler(BaseHandler):
     """Main view for Admin"""
+    @admin_required
     def get(self, **kwargs):
         context = {}
-        return render_response('admin/index.html', **context)
+        return self.render_response('admin/index.html', **context)
 
 
-class ShopIndexHandler(RequestHandler):
+class ShopIndexHandler(BaseHandler):
+    @admin_required
     def get(self, **kwargs):
         products = Product.all().order('-modified')
         result = products.fetch(10)
         context = {
             'products': result,
         }
-        return render_response('admin/shop/index.html', **context)
+        return self.render_response('admin/shop/index.html', **context)
 
 
-class ProductsIndexHandler(RequestHandler):
+class ProductsIndexHandler(BaseHandler):
+    @admin_required
     def get(self, **kwargs):
         products = Product.get_latest_products(10, False)
         context = {
             'products': products,
         }
-        return render_response('admin/product/index.html', **context)
+        return self.render_response('admin/product/index.html', **context)
 
 
-class ProductHandler(RequestHandler):
+class ProductHandler(BaseHandler):
+    @admin_required
     def get(self, product_id=None, **kwargs):
         """Return a product to edit or an empty form to create"""
         template = 'admin/product/new.html'
@@ -60,8 +68,9 @@ class ProductHandler(RequestHandler):
             else:
                 return redirect('/admin/shop/')
         # render new form
-        return render_response(template, **context)
+        return self.render_response(template, **context)
     
+    @admin_required
     def post(self, product_id=None, **kwargs):
         """Handle submitted form data"""
         # validate form
@@ -96,19 +105,21 @@ class ProductHandler(RequestHandler):
         return ProductForm(self.request)
 
 
-class BlogIndexHandler(RequestHandler):
+class BlogIndexHandler(BaseHandler):
     """Return date ordered blog posts"""
+    @admin_required
     def get(self, **kwargs):
         posts = BlogPost.all().order('-modified')
         result = posts.fetch(10)
         context = {
             'posts': result,
         }
-        return render_response('admin/blog/index.html', **context)
+        return self.render_response('admin/blog/index.html', **context)
 
 
-class BlogPostHandler(RequestHandler):
+class BlogPostHandler(BaseHandler):
     """Manage individual blog posts"""
+    @admin_required
     def get(self, post_id=None, **kwargs):
         """Return a post to edit or an empty form to create"""
         template = 'admin/blog/new.html'
@@ -126,8 +137,9 @@ class BlogPostHandler(RequestHandler):
             else:
                 return redirect('admin/blog/')
         # render new
-        return render_response(template, **context)
+        return self.render_response(template, **context)
     
+    @admin_required
     def post(self, post_id=None, **kwargs):
         """Handle submitted form data"""
         # validate form

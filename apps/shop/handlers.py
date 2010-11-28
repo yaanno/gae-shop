@@ -12,11 +12,11 @@ from tipfy import RequestHandler, Response, redirect_to
 from tipfy.ext.jinja2 import render_response
 from tipfy.ext.session import SessionMixin, SessionMiddleware
 
+from apps.user.handlers import AuthHandler
 from models import Product
 from helpers import get_cart_content
 
-class BaseHandler(RequestHandler, SessionMixin):
-    middleware = [SessionMiddleware]
+class BaseHandler(AuthHandler):
     pass
 
 
@@ -28,7 +28,7 @@ class ShopIndexHandler(BaseHandler):
             'products': products,
             'cart': cart,
         }
-        return render_response('shop/index.html', **context)
+        return self.render_response('shop/index.html', **context)
 
 
 class ProductHandler(BaseHandler):
@@ -38,7 +38,7 @@ class ProductHandler(BaseHandler):
             context = {
                 'product': product
             }
-            return render_response('shop/show.html', **context)
+            return self.render_response('shop/show.html', **context)
         else:
             return redirect_to('notfound')
 
@@ -50,7 +50,7 @@ class ShopTagListHandler(BaseHandler):
             'products': products,
             'tag': tag
         }
-        return render_response('shop/by_tag.html', **context)
+        return self.render_response('shop/by_tag.html', **context)
 
 
 class CartHandler(BaseHandler):

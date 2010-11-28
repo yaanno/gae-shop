@@ -2,17 +2,19 @@
 
 {% from 'form_macros.html' import form_field %}
 
+{% block title %}
+    {{ _('Create an account') }} | {{ super() }}
+{% endblock %}
+
 {% block content %}
-    <h1>Register</h1>
-    <p>Fill the form to create a new account, or <a href="{{ url_for('auth/login') }}">sign in with your existing one</a>.</p>
+    <h1>{{ _('Create an account') }}</h1>
+    <p>Fill the form to create a new account. If you already have an account, please <a href="{{ url_for('auth/login') }}">sign in here</a>.</p>
     <form method="post" action="{{ current_url }}" enctype="multipart/form-data" class="tipfy-form">
-        <ol>
-            <li>{{ form_field(form.username, class='medium') }}</li>
-            <li>{{ form_field(form.password, class='medium') }}</li>
-            <li>{{ form_field(form.password_confirm, class='medium') }}</li>
-        </ol>
-        <fieldset class="submit">
-            <input type="submit" name="submit" value="{{ _('Register') }}">
-        </fieldset>
+        <ul>
+            <li>{{ form_field(form.username) }}</li>
+            <li>{{ form_field(form.password) }}</li>
+            <li>{{ form_field(form.password_confirm) }}</li>
+        </ul>
+        <p><input type="submit" name="submit" value="{{ _('Create account') }}"></p>
     </form>
 {% endblock %}

@@ -1,0 +1,5 @@
+{% if current_user %}
+    Hi, {{ current_user }} | <a href="{{ url_for('user/profile') }}">Your profile</a> | <a href="{{ logout_url }}">Sign out</a>
+{% else %}
+    <a href="{{ login_url }}">Sign in</a>
+{% endif %}
