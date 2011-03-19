@@ -13,6 +13,15 @@
             <a href="{{ facebook_login_url }}" title="Sign in with Facebook">Facebook</a> or 
             <a href="{{ google_login_url }}" title="Sign in with Google">Google</a> account.
         </p>
+        {% if messages %}
+            <ul id="feedback">
+                {% for message in messages %}
+                    <li class="{{ message.level }}">
+                        {{ message.body }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <ul>
             <li>{{ form_field(form.username) }}</li>
             <li>{{ form_field(form.password) }}</li>

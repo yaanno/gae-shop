@@ -4,16 +4,13 @@
 {% endblock %}
 {% block css %}
     <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/tinymce/themes/simple/skins/default/ui.css" type="text/css">
 {% endblock %}
-{% block navigation_main %}
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('pages/welcome') }}">Home</a></li>
-            <li><a href="{{ url_for('shop/index') }}">Shop</a></li>
-            <li><a href="{{ url_for('blog/index') }}">Blog</a></li>
-        </ul>
-    </nav>
+
+{% block headjs %}
+    <script src="/tinymce/tiny_mce.js"></script>
 {% endblock %}
+
 {% block content %}
     <h1>Hello!</h1>
     <div>
@@ -30,4 +27,11 @@
 {% endblock %}
 {% block js %}
 {{ super() }}
+<script type="text/javascript" charset="utf-8">
+    tinyMCE.init({
+        mode: "textareas",
+        theme: "simple",
+        editor_selector : "mceEditor"
+    });
+</script>
 {% endblock %}

@@ -1,25 +1,40 @@
 {% extends "pages/page_base.html" %}
 
 {% block content %}
-    <h1>{{ _('Welcome to Lumen Kávé!') }}</h1>
     
     <div id="daily_offer">
         <div id="daily_coffee">
-            <h2>{{ _('Daily Coffee') }}</h2>
+            <h2><a href="{{ url_for('shop/index') }}">{{ _('Coffee Selection') }}</a></h2>
             <p>
-                <a href="{{ url_for('shop/index') }}">{{ _('Browse Products') }}</a>
+                <img src="/img/daily-illustration.png" alt="Winter Espresso">
+                <span class="daily-product">Winter Espresso</span>
+                <span class="daily-price">Price £7.00 (250g)</span>
+            </p>
+            <p>
+                On the nose this espresso abounds with notes of creme brulee and rich, sweet fruitcake aromatics. These precede a luscious chocolate mousse mouthfeel - at once both dense, and yet seemingly air-filled and supple. In the cup, the espresso yields generous amounts of muscavado sugar and toffee sweetness with gentle overtones of soft baking spices.
+            </p>
+            <p>
+                <strong><a href="{{ url_for('shop/index') }}">{{ _('Browse Products') }}</a></strong>
             </p>
         </div>
         <div id="daily_menu">
-            <h2>{{ _('Daily Food and Drink') }}</h2>
+            <h2><a href="{{ url_for('pages/menu') }}">{{ _('Menu Selection') }}</a></h2>
             <p>
-                <a href="{{ url_for('pages/menu') }}">{{ _('Menu') }}</a>
+                <img src="/img/daily-illustration.png" alt="Winter Espresso">
+                <span class="daily-product">Winter Espresso</span>
+                <span class="daily-price">Price £7.00 (250g)</span>
+            </p>
+            <p>
+                On the nose this espresso abounds with notes of creme brulee and rich, sweet fruitcake aromatics. These precede a luscious chocolate mousse mouthfeel - at once both dense, and yet seemingly air-filled and supple. In the cup, the espresso yields generous amounts of muscavado sugar and toffee sweetness with gentle overtones of soft baking spices.
+            </p>
+            <p>
+                <strong><a href="{{ url_for('pages/menu') }}">{{ _('See Menu Selection') }}</a></strong>
             </p>
         </div>
     </div>
     
     <div id="latest_posts">
-        <h3><a href="{{ url_for('blog/index') }}">{{ _('Latest Blog Posts') }}</a></h3>
+        <h3><a href="{{ url_for('blog/index') }}">{{ _('Latest News') }}</a></h3>
         {% if posts %}
             {% include "partials/post.html" %}
         {% else %}

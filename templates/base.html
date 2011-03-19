@@ -13,39 +13,67 @@
         <link rel="stylesheet" href="/css/base-min.css">
         <link rel="stylesheet" href="/css/fonts-min.css">
         <link rel="stylesheet" href="/css/site.css">
-        <link href='http://fonts.googleapis.com/css?family=Lobster&amp;subset=latin' rel='stylesheet' type='text/css'>
         {% block css %}
         {% endblock %}
+        {% block headjs %}{% endblock %}
     </head>
-    <body>
-        {% block navigation_main %}{% endblock %}
+    <body class="{% block pageclass %}{% endblock %}">
         <div id="content_main">
-            <div id="branding">
-                <h1><a href="/">Lumen Kávé</a></h1>
+            <div id="header">
+                
+                <div id="branding">
+                    <h1><a href="/">Lumen Kávé</a></h1>
+                    <p class="tagline">
+                        Fresh roasted coffee
+                    </p>
+                    <p class="foundation">
+                        <a href="http://www.photolumen.hu">Lumen Foundation</a>
+                    </p>
+                </div>
+                
+                {% block navigation_main %}
+                    <div id="navigation">
+                        <ul>
+                            <li id="menu-about">| <a href="{{ url_for('pages/about') }}">{{ _('About') }}</a> |</li>
+                            <li id="menu-shop"><a href="{{ url_for('shop/index') }}">{{ _('Products & Webshop') }}</a> |</li>
+                            <li id="menu-news"><a href="{{ url_for('blog/index') }}">{{ _('News') }}</a> |</li>
+                            <li id="menu-contact"><a href="{{ url_for('pages/contact') }}">{{ _('Contact') }}</a> |</li>
+                        </ul>
+                    </div>
+                {% endblock %}
+                
+                <div id="address">
+                    <p>
+                        address:<br>
+                        Mikszáth Kálmán tér 2.<br>
+                        H-1088 Budapest
+                    </p>
+                    <p>
+                        opening hours:<br>
+                        m-f: 9-19h<br>
+                        sat: 11-16h
+                    </p>
+                </div>
+                
+                <div id="language">
+                    <ul>
+                        <li>| <a href="?lang=hu_HU">HU</a></li>
+                        <li>| <a href="?lang=en_US">ENG</a> |</li>
+                    </ul>
+                </div>
             </div>
-            <div id="language">
-                <ul>
-                    <li><a href="?lang=en_US">English</a> |</li>
-                    <li><a href="?lang=hu_HU">Magyar</a></li>
-                </ul>
-            </div>
+            <!-- 
             <div id="cart">
                 {% include "partials/cart.html" %}
             </div>
             <div id="auth">
                 {% include "partials/auth.html" %}
             </div>
-            {% block content %}{% endblock %}
+            -->
+            <div id="content_sub">
+                {% block content %}{% endblock %}
+            </div>
         </div>
-        {% block footer %}
-            <footer>
-                <ul>
-                    <li>&copy; <a href="{{ url_for('pages/welcome') }}">Lumen Kávé</a></li>
-                    <li><a href="{{ url_for('pages/contact') }}">{{ _('Contact') }}</a></li>
-                    <li><a href="{{ url_for('pages/menu') }}">{{ _('Menu') }}</a></li>
-                </ul>
-            </footer>
-        {% endblock %}
         {% block js %}
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
         {% endblock %}

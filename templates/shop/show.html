@@ -4,26 +4,18 @@
     {{ product.name }} | {{ super() }}
 {% endblock %}
 
-{% block content %}
-    <h1>{{ product.name }}</h1>
-    <img src="/img/product_default.png" width="100" height="150">
-    <p>
+{% block pageclass %}{{ super() }} shop-product{% endblock %}
+
+{% block pagecontent %}
+<div id="pagecontent">
+    <h1><a href="{{ url_for('shop/index') }}">{{ _('Product Selection & Webshop') }}</a> > {{ product.name }}</h1>
+    <div>
+        <img src="/img/product_default.png" width="150" height="150">
         {{ product.description }}
-    </p>
-    <p class="buy">
-        <span class="price">{{ product.price }} HUF / {{ product.unit }}</span>
-        <span>
-            <select name="amount" id="amount">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <button type="button">{{ _('Buy') }}</button>
-        </span>
-    </p>
+    </div>
+    
     {% if product.tags %}
+    <strong>Tags:</strong>
     <ul class="tags">
         {% for tag in product.tags %}
             <li>
@@ -32,24 +24,5 @@
         {% endfor %}
     </ul>
     {% endif %}
-{% endblock %}
-<div class="product">
-    <img src="/img/product_default.png" width="100" height="150">
-    <h2><a href="/shop/product/{{ product.slug }}/">{{ product.name }}</a></h2>
-    <p>
-        {{ product.description }}
-    </p>
-    <p class="buy">
-        <span class="price">{{ product.price }} HUF / {{ product.unit }}</span>
-        <span>
-            <select name="amount" id="amount">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <button type="button">{{ _('Buy') }}</button>
-        </span>
-    </p>
 </div>
+{% endblock %}

@@ -11,7 +11,7 @@
     <form method="post" action="" enctype="multipart/form-data" class="tipfy-form">
         <ul>
             <li>{{ form_field(form.name, required='true') }}</li>
-            <li>{{ form_field(form.description, required='true') }}</li>
+            <li>{{ form_field(form.description, required='true', class='mceEditor') }}</li>
             <li>{{ form_field(form.price, required='true') }}</li>
             <li>{{ form_field(form.unit, required='true') }}</li>
             <li>{{ form_field(form.live) }}</li>
@@ -20,3 +20,4 @@
         <input type="submit" name="submit" value="Update product" class="submit"> or <a href="{{ url_for('admin/products/index') }}">cancel</a>
     </form>
 {% endblock %}
+

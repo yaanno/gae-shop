@@ -1,24 +1,16 @@
 <ul class="products">
     {% for product in products %}
-        <li>
+        <li class="{{ loop.cycle('odd', 'even') }}">
             <div class="product">
-                <img src="/img/product_default.png" width="100" height="150">
+                <img src="/img/product_default.png" width="150" height="150">
                 <h2><a href="/shop/product/{{ product.slug }}/">{{ product.name }}</a></h2>
-                <p>
-                    {{ product.description }}
+                <p class="price">
+                    Price &euro;{{ product.price }} (250g)
                 </p>
-                <p class="buy">
-                    <span class="price">{{ product.price }} HUF / {{ product.unit }}</span>
-                    <span>
-                        <select name="amount" id="amount">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                        <button type="button">{{ _('Buy') }}</button>
-                    </span>
+                <p>
+                    {{ product.description|truncate(125) }}
+                    <br>
+                    <a class="product-details" href="/shop/product/{{ product.slug }}/">Read more >>></a>
                 </p>
             </div>
         </li>

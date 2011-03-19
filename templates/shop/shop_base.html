@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {{ _('Shop') }} | {{ super() }}
+    {{ _('Products & Webshop') }} | {{ super() }}
 {% endblock %}
 
-{% block navigation_main %}
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('pages/welcome') }}">{{ _('Home') }}</a></li>
-            <li><a href="{{ url_for('shop/index') }}">{{ _('Shop') }}</a></li>
-            <li><a href="{{ url_for('blog/index') }}">{{ _('Blog') }}</a></li>
-        </ul>
-    </nav>
+{% block pageclass %}shop{% endblock %}
+
+{% block content %}
+    {% block pagecontent %}
+        
+    {% endblock %}
 {% endblock %}

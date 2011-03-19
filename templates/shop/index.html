@@ -1,6 +1,14 @@
 {% extends "shop/shop_base.html" %}
 
-{% block content %}
-    <h1>{{ _('Products') }}:</h1>
+{% block pagecontent %}
+<div id="pagecontent">
+    <h1>{{ _('Product Selection & Webshop') }}</h1>
+    <p>
+        Welcome to the Square Mile Coffee Roasters webshop. Below are our current offerings that will be updated as the seasons change and new crops arrive, or as we add new items of equipment for home brewing.<br>
+        Please note all retail bags are 350g (approx 12oz) and available as whole bean only. Click here for full shipping costs and Roasting information.
+    </p>
+    
     {% include "partials/product.html" %}
+</div>
+    
 {% endblock %}
