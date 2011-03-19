@@ -6,14 +6,13 @@
     User Handlers
 
 """
-from django.utils import simplejson
-
-from tipfy import RequestHandler, RequestRedirect, Response, abort, cached_property, redirect, url_for
+from tipfy import RequestHandler, Response, abort, cached_property, redirect, url_for
 from tipfy.ext.auth import MultiAuthMixin, login_required, user_required
 from tipfy.ext.auth.facebook import FacebookMixin
 from tipfy.ext.auth.google import GoogleMixin
 from tipfy.ext.session import AllSessionMixins, SessionMiddleware
 from tipfy.ext.jinja2 import Jinja2Mixin
+from tipfy.ext.i18n import gettext as _
 
 from forms import LoginForm, RegistrationForm, SignupForm
 
@@ -34,7 +33,9 @@ class AuthHandler(RequestHandler, MultiAuthMixin, Jinja2Mixin, AllSessionMixins)
             'current_url': self.request.url,
         })
         if self.messages:
-            self.request.context['messages'] = simplejson.dumps(self.messages)
+            self.request.context.update({
+                'messages': self.messages
+            })
         
         return super(AuthHandler, self).render_response(filename, **kwargs)
     
@@ -90,7 +91,7 @@ class LoginHandler(AuthHandler):
             if res:
                 return redirect(redirect_url)
         
-        self.set_message('error', 'Authentication failed', life=None)
+        self.set_message('error', _('Login failed. Please try again!'), life=None)
         return self.get(**kwargs)
     
     @cached_property
@@ -237,5 +238,7 @@ class ProfileHandler(AuthHandler):
     
     @user_required
     def get(self, **kwargs):
+        # if not admin:
+        # enable set/change:
+        # email, password
         return self.render_response('user/profile.html')
-        

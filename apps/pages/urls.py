@@ -23,6 +23,7 @@ def get_rules(app):
             Rule('/notfound/', endpoint='notfound', handler='NotFoundHandler'),
             Rule('/contact/', endpoint='pages/contact', handler='NotFoundHandler'),
             Rule('/menu/', endpoint='pages/menu', handler='NotFoundHandler'),
+            Rule('/about/', endpoint='pages/about', handler='NotFoundHandler'),
         ]),
     ]
 
