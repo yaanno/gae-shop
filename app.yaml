@@ -1,5 +1,5 @@
 application: lumen-shop
-version: 1
+version: 4
 runtime: python
 api_version: 1
 
@@ -19,6 +19,9 @@ handlers:
 
 - url: /img
   static_dir: static/img
+
+- url: /tinymce
+  static_dir: static/tinymce/jscripts/tiny_mce
 
 - url: /remote_api
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
