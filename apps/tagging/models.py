@@ -18,8 +18,6 @@
 from google.appengine.ext import db
 from google.appengine.ext.db import polymodel
 
-from tipfy.ext.db import SlugProperty
-
 
 class Taggable(polymodel.PolyModel):
     tags = db.StringListProperty()

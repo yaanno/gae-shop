@@ -6,7 +6,9 @@
     Feed Handlers
 
 """
-from tipfy import RequestHandler, Response, redirect_to
+import logging
+
+from tipfy import RequestHandler
 from tipfy.ext.jinja2 import render_response
 
 from apps.blog.models import BlogPost

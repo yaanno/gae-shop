@@ -8,6 +8,7 @@
 """
 from tipfy import RequestHandler, Response, redirect_to
 from tipfy.ext.jinja2 import render_response
+import tipfy.ext.i18n as i18n
 
 from apps.user.handlers import AuthHandler
 from models import BlogPost
@@ -15,13 +16,17 @@ from helpers import dateformatter, group_by_date
 
 
 class BaseHandler(AuthHandler):
-    pass
+    
+    @staticmethod
+    def get_locale():
+        return i18n.get_locale()
 
 
 class BlogIndexHandler(BaseHandler):
     """Return date ordered blog posts"""
     def get(self, **kwargs):
-        posts = BlogPost.get_latest_posts(10)
+        language = self.get_locale()
+        posts = BlogPost.get_latest_posts(10, language=language)
         context = {
             'posts': posts,
         }
@@ -31,7 +36,8 @@ class BlogIndexHandler(BaseHandler):
 class BlogPostHandler(BaseHandler):
     """Return an individual blog post"""
     def get(self, year=None, month=None, day=None, slug=None):
-        post = BlogPost.get_post_by_slug(slug)
+        language = self.get_locale()
+        post = BlogPost.get_post_by_slug(slug, language=language)
         if post is not None:
             context = {
                 'post': post
@@ -44,7 +50,8 @@ class BlogPostHandler(BaseHandler):
 class BlogArchiveHandler(BaseHandler):
     """Return date ordered blog posts depending on archive filters"""
     def get(self, year=None, month=None, day=None):
-        posts = BlogPost.get_posts_by_date(year, month, day)
+        language = self.get_locale()
+        posts = BlogPost.get_posts_by_date(year, month, day, language=language)
         # date = dateformatter(year, month, day)
         if year is None:
             posts = group_by_date(posts)
@@ -60,7 +67,8 @@ class BlogArchiveHandler(BaseHandler):
 class BlogTagListHandler(BaseHandler):
     """Return list of posts by tag name"""
     def get(self, tag=None):
-        posts = BlogPost.get_posts_by_tag(tag)
+        language = self.get_locale()
+        posts = BlogPost.get_posts_by_tag(tag, language=language)
         context = {
             'posts': posts,
             'tag': tag,

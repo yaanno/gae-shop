@@ -81,6 +81,7 @@ class ProductHandler(BaseHandler):
             unit = self.form.unit.data
             live = self.form.live.data
             tags = self.form.tags.data
+            language = self.form.language.data
             if tags is not None:
                 tags = [tag.strip() for tag in tags.split(',') if tag != '']
             # save edit form
@@ -92,9 +93,10 @@ class ProductHandler(BaseHandler):
                 product.unit = unit
                 product.live = live
                 product.tags = tags
+                product.language = language
             # save new form
             else:
-                product = Product(name=name, description=description, price=price, unit=unit, live=live, tags=tags)
+                product = Product(name=name, description=description, price=price, unit=unit, live=live, tags=tags, language=language)
             if product.put():
                 return redirect('/admin/shop/products/')
         return self.get(**kwargs)
@@ -149,6 +151,7 @@ class BlogPostHandler(BaseHandler):
             content = self.form.content.data
             live = self.form.live.data
             tags = self.form.tags.data
+            language = self.form.language.data
             if tags is not None:
                 tags = [tag.strip() for tag in tags.split(',') if tag != '']
             # saving edited
@@ -159,9 +162,10 @@ class BlogPostHandler(BaseHandler):
                 post.content = content
                 post.live = live
                 post.tags = tags
+                post.language = language
             # creating new
             else:
-                post = BlogPost(title=title, lead=lead, content=content, live=live, tags=tags)
+                post = BlogPost(title=title, lead=lead, content=content, live=live, tags=tags, language=language)
             if post.put():
                 return redirect('admin/blog')
         return self.get(**kwargs)

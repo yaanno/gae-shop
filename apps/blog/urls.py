@@ -19,13 +19,13 @@ def get_rules(app):
     """
     rules = [
         HandlerPrefix('apps.blog.handlers.', [
-            Rule('/blog/', endpoint='blog/index', handler='BlogIndexHandler'),
-            Rule('/blog/tag/<tag>/', endpoint='blog/tag', handler='BlogTagListHandler'),
-            Rule('/blog/archive/', endpoint='blog/archive', handler='BlogArchiveHandler'),
-            Rule('/blog/<int:year>/', endpoint='blog/archive/year', handler='BlogArchiveHandler'),
-            Rule('/blog/<int:year>/<int:month>/', endpoint='blog/archive/year/month', handler='BlogArchiveHandler'),
-            Rule('/blog/<int:year>/<int:month>/<int:day>/', endpoint='blog/archive/year/month/day', handler='BlogArchiveHandler'),
-            Rule('/blog/<int:year>/<int:month>/<int:day>/<slug>/', endpoint='blog/post', handler='BlogPostHandler'),
+            Rule('/news/', endpoint='blog/index', handler='BlogIndexHandler'),
+            Rule('/news/tag/<tag>/', endpoint='blog/tag', handler='BlogTagListHandler'),
+            Rule('/news/archive/', endpoint='blog/archive', handler='BlogArchiveHandler'),
+            Rule('/news/<int:year>/', endpoint='blog/archive/year', handler='BlogArchiveHandler'),
+            Rule('/news/<int:year>/<int:month>/', endpoint='blog/archive/year/month', handler='BlogArchiveHandler'),
+            Rule('/news/<int:year>/<int:month>/<int:day>/', endpoint='blog/archive/year/month/day', handler='BlogArchiveHandler'),
+            Rule('/news/<int:year>/<int:month>/<int:day>/<slug>/', endpoint='blog/post', handler='BlogPostHandler'),
         ]),
     ]
 

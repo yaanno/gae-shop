@@ -29,7 +29,12 @@ class BlogPostForm(Form):
     tags = fields.TextField(
         label=_('Tags'),
         description=_('List of tags, separated by comma (,)'))
-
+    language = fields.SelectField(
+        label = _('Language'),
+        description = _('The site language the product will appear'),
+        choices = [('hu_HU', _('Magyar')), ('en_US', _('English'))],
+        default = 'hu_HU',
+        validators=[validators.Required()])
 
 class ProductForm(Form):
     name = fields.TextField(
@@ -56,5 +61,11 @@ class ProductForm(Form):
     tags = fields.TextField(
         label=_('Tags'),
         description=_('List of tags, separated by comma (,)'))
+    language = fields.SelectField(
+        label = _('Language'),
+        description = _('The site language the product will appear'),
+        choices = [('hu_HU', _('Magyar')), ('en_US', _('English'))],
+        default = 'hu_HU',
+        validators=[validators.Required()])
 
 

@@ -8,22 +8,30 @@
 """
 import logging
 
-from tipfy import RequestHandler, Response, redirect_to
+from tipfy import RequestHandler, Response, redirect_to, render_json_response
 from tipfy.ext.jinja2 import render_response
 from tipfy.ext.session import SessionMixin, SessionMiddleware
+import tipfy.ext.i18n as i18n
 
 from apps.user.handlers import AuthHandler
 from models import Product
-from helpers import get_cart_content
 
 class BaseHandler(AuthHandler):
-    pass
+    
+    def get_cart_content(self):
+        products = self.session.setdefault('products', [])
+        return products
+    
+    @staticmethod
+    def get_locale():
+        return i18n.get_locale()
 
 
 class ShopIndexHandler(BaseHandler):
     def get(self, **kwargs):
-        cart = get_cart_content()
-        products = Product.get_latest_products()
+        language = self.get_locale()
+        cart = self.get_cart_content()
+        products = Product.get_latest_products(language=language)
         context = {
             'products': products,
             'cart': cart,
@@ -54,5 +62,36 @@ class ShopTagListHandler(BaseHandler):
 
 
 class CartHandler(BaseHandler):
+    
+    def _add_to_cart(self, product_id=None, product_quantity=None, product_name=None):
+        products = self.get_cart_content()
+        products.append({
+            'product_quantity': product_quantity,
+            'product_id': product_id,
+            'product_name': product_name,
+        })
+        
+        return products
+
+
     def get(self, **kwargs):
-        return Response('cart goes here')
+        products = self.session.get('products')
+        return Response('cart: %s' % products)
+    
+    def post(self, **kwargs):
+        product_quantity = self.request.form.get('product_quantity', type=int)
+        product_id = self.request.form.get('product_id', type=int)
+        
+        # check if product exists
+        product = Product.get_by_id(product_id)
+        product_name = product.name
+        
+        context = {}
+        
+        if product is not None:
+            cart = self._add_to_cart(product_id, product_quantity, product_name)
+            context = { 'success': True, 'products': cart }
+        else:
+            context = { 'success': False, 'products': [] }
+        return render_json_response(context)
+

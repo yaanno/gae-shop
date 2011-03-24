@@ -6,6 +6,8 @@
     Shop Application Models
 
 """
+import logging
+
 from google.appengine.ext import db
 from tipfy.ext.db import SlugProperty
 
@@ -21,25 +23,32 @@ class Product(Taggable):
     unit = db.StringProperty(required=True)
     created = db.DateTimeProperty(required=True, auto_now_add=True)
     modified = db.DateTimeProperty(required=True, auto_now=True)
+    language = db.StringProperty(required=True)
     
     @classmethod
-    def get_products_by_tag(self, tag):
+    def get_products_by_tag(self, tag, language=None):
         query = self.all()
         query.filter('live =', True)
         query.filter('tags IN', [tag])
+        if language:
+            query.filter('language =', language)
         query.order('-modified')
         return query.fetch(10)
     
     @classmethod
-    def get_product_by_slug(self, slug=None):
+    def get_product_by_slug(self, slug=None, language=None):
         query = self.all().filter('slug =', slug).filter('live =', True)
+        if language:
+            query.filter('language =', language)
         return query.get()
     
     @classmethod
-    def get_latest_products(self, count=10, live=True):
+    def get_latest_products(self, count=10, live=True, language=None):
         query = self.all()
         if live:
             query.filter('live =', live)
+        if language:
+            query.filter('language =', language)
         query.order('-modified')
         return query.fetch(count)
 

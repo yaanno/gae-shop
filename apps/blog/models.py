@@ -23,32 +23,37 @@ class BlogPost(Taggable):
     live = db.BooleanProperty(required=True)
     created = db.DateTimeProperty(required=True, auto_now_add=True)
     modified = db.DateTimeProperty(required=True, auto_now=True)
+    language = db.StringProperty(required=True)
     
     @classmethod
-    def get_posts_by_tag(self, tag):
+    def get_posts_by_tag(self, tag, language=None):
         query = self.all()
         query.filter('live =', True)
         query.filter('tags IN', [tag])
+        if language:
+            query.filter('language =', language)
         query.order('-modified')
         return query.fetch(10)
     
     @classmethod
-    def get_latest_posts(self, count=10, live=True):
+    def get_latest_posts(self, count=10, live=True, language=None):
         """Return posts"""
         query = self.all()
         if live:
             query.filter('live =', live)
+        if language:
+            query.filter('language =', language)
         query.order('-modified')
         return query.fetch(count)
     
     @classmethod
-    def get_post_by_slug(self, slug=None):
+    def get_post_by_slug(self, slug=None, language='en_US'):
         """Return a post by slug given"""
         query = self.all().filter('slug =', slug).filter('live =', True)
         return query.get()
     
     @classmethod
-    def get_posts_by_date(self, year=None, month=None, day=None):
+    def get_posts_by_date(self, year=None, month=None, day=None, language=None):
         """Return posts by date given"""
         # prepare dates for filtering
         start_month = end_month = month
@@ -71,5 +76,7 @@ class BlogPost(Taggable):
         query.filter('created >=', start_date)
         query.filter('created <=', end_date)
         query.filter('live =', True)
+        if language:
+            query.filter('language =', language)
         query.order('-created')
         return query.fetch(10)
