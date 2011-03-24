@@ -1,9 +1,14 @@
 /* =layout */
 
+html {
+    background: url("/img/content-nocolumn-bg.png") repeat-y scroll 50% 1em;
+}
+
 body {
     background: #fff;
     font: normal 11.25px/1 Arial, sans-serif;
     color: #000;
+    padding-top: 1em;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -127,7 +132,7 @@ a:hover {
 #content_main {
     position: relative;
     width: 800px;
-    margin: 1em auto;
+    margin: 0 auto;
 }
 
 
@@ -194,9 +199,19 @@ a:hover {
 
 /* =latest_posts */
 
+.blog h1 {
+    margin: 0 0 20px;
+    text-transform: uppercase;
+    color: #999;
+}
+
+.blog #pagecontent ul {
+    margin: 0;
+}
+
 #latest_posts {
     margin: 0 15px;
-    padding-top: 10px;
+    padding: 10px 0;
     background: #fff;
 }
 
@@ -219,11 +234,7 @@ a:hover {
 
 /* =cart */
 
-#cart {
-    position: absolute;
-    top: -2em;
-    right: 1em;
-}
+#cart { }
 
 #cart ul {
     margin: 0;
@@ -252,7 +263,7 @@ a:hover {
 .shop h1 {
     text-transform: uppercase;
     color: #999;
-    margin-bottom: 20px;
+    margin: 0 0 20px;
 }
 
 .shop h1 a {
