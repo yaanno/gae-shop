@@ -10,6 +10,8 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ _('Products tagged with') }}: <span class="tag">{{ tag }}</span></h1>
+<div id="pagecontent">
+    <h1><a href="{{ url_for('shop/index') }}">{{ _('Product Selection & Webshop') }}</a> > {{ _('Products tagged with') }}: <span class="tag">{{ tag }}</span></h1>
     {% include "partials/product.html" %}
+</div>
 {% endblock %}

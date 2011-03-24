@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ post.title }}</h1>
+<div id="pagecontent">
+    <h1><a href="{{ url_for('blog/index') }}">{{ _('News') }}</a> > {{ post.title }}</h1>
     <p>
         {{ format_datetime(post.modified, 'short', 'hu', 'Europe/Budapest') }}, Lumen
     </p>
@@ -19,10 +20,10 @@
     <div class="tags">
         <ul>
         {% for tag in post.tags %}
-            <li><a href="/blog/tag/{{ tag }}/">{{ tag }}</a></li>
+            <li><a href="/news/tag/{{ tag }}/">{{ tag }}</a></li>
         {% endfor %}
         </ul>
     </div>
     {% endif %}
-
+</div>
 {% endblock %}

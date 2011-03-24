@@ -25,7 +25,7 @@
             <tbody>
                 {% for product in products %}
                 <tr>
-                    <td><a title="{{ product.description }}" href="/admin/shop/products/edit/{{ product.key().id() }}/">{{ product.name }}</a></td>
+                    <td><a title="{{ product.description|escape }}" href="/admin/shop/products/edit/{{ product.key().id() }}/">{{ product.name }}</a></td>
                     <td>{{ format_datetime(product.modified, 'short', 'hu', 'Europe/Budapest') }}</td>
                     <td>{{ product.price }} HUF / {{ product.unit }}</td>
                     <td><input type="checkbox" {% if product.live %}checked{% endif %} name="" value=""></td>

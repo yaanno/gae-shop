@@ -14,6 +14,19 @@
         {{ product.description }}
     </div>
     
+    <form action="/cart/" id="add_form" method="post" accept-charset="utf-8">
+        <label for="product_quantity">Quantity:</label>
+        <select name="product_quantity" id="product_quantity">
+            <option value="250">250 gram</option>
+            <option value="350">350 gram</option>
+            <option value="350">500 gram</option>
+            <option value="350">750 gram</option>
+            <option value="350">1000 gram</option>
+        </select>
+        <input type="hidden" name="product_id" value="{{ product.key().id() }}" id="product_id">
+        <p><input type="submit" id="add_btn" value="Add to basket"></p>
+    </form>
+    
     {% if product.tags %}
     <strong>Tags:</strong>
     <ul class="tags">
@@ -25,4 +38,9 @@
     </ul>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script src="/js/cart.js"></script>
 {% endblock %}

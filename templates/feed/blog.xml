@@ -11,10 +11,10 @@
 {% block entries %}
     {% for post in posts %}
     <entry>
-        <title>{{ post.title }}</title>
+        <title type="html"><![CDATA[ {{ post.title }} ]]></title>
         <link href="/blog/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/"/>
         <id>http://localhost:8080/blog/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/</id>
-        <summary>{{ post.lead }}</summary>
+        <summary type="html"><![CDATA[ {{ post.lead }} ]]></summary>
         <updated>{{ format_datetime(post.modified, 'y-M-dTH:M:sZ', 'hu', 'Europe/Budapest') }}</updated>
         <published>{{ format_datetime(post.created, 'y-M-dTH:M:sZ', 'hu', 'Europe/Budapest') }}</published>
         {% if post.tags %}

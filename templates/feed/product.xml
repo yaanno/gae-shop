@@ -11,10 +11,10 @@
 {% block entries %}
     {% for product in products %}
     <entry>
-        <title>{{ product.name }}</title>
+        <title type="html"><![CDATA[ {{ product.name }} ]]></title>
         <link href="/shop/product/{{ product.slug }}/"/>
         <id>http://localhost:8080/shop/product/{{ product.slug }}/</id>
-        <summary>{{ product.description }}</summary>
+        <summary type="html"><![CDATA[ {{ product.description }} ]]></summary>
         <updated>{{ format_datetime(product.modified, 'y-M-dTH:M:sZ', 'hu', 'Europe/Budapest') }}</updated>
         <published>{{ format_datetime(product.created, 'y-M-dTH:M:sZ', 'hu', 'Europe/Budapest') }}</published>
         {% if product.tags %}

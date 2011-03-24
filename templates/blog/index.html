@@ -5,10 +5,12 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ _('Latest News') }}</h1>
-    {% if posts %}
-        {% include "partials/post.html" %}
-    {% else %}
-        <p>{{ _('No blog posts yet.') }}</p>
-    {% endif %}
+    <div id="pagecontent">
+        <h1>{{ _('Latest News') }}</h1>
+        {% if posts %}
+            {% include "partials/post.html" %}
+        {% else %}
+            <p>{{ _('No blog posts yet.') }}</p>
+        {% endif %}
+    </div>
 {% endblock %}

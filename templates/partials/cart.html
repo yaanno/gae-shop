@@ -4,7 +4,7 @@
         {% if cart %}
             <ul class="cartitems">
                 {% for item in cart %}
-                <li>{{ item }}</li>
+                <li>{{ item.product_quantity }} grams of {{ item.product_name }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
