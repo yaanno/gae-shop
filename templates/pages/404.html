@@ -1,7 +1,9 @@
 {% extends "pages/page_base.html" %}
 {% block title %}
-    Page not found | {{ super() }}
+    {{ _('Page not found') }} | {{ super() }}
 {% endblock %}
 {% block content %}
-    <h1>Page not found!</h1>
+<div id="pagecontent">
+    <h1>{{ _('Page not found') }}</h1>
+</div>
 {% endblock %}

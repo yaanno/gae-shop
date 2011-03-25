@@ -10,7 +10,7 @@ from tipfy import Rule, HandlerPrefix
 
 
 def get_rules(app):
-    """Returns a list of URL rules for the Hello, World! application.
+    """Returns a list of URL rules for the Administration application.
 
     :param app:
         The WSGI application instance.
@@ -25,6 +25,10 @@ def get_rules(app):
             Rule('/admin/blog/', endpoint='admin/blog/index', handler='BlogIndexHandler'),
             Rule('/admin/blog/new/', endpoint='admin/blog/new', handler='BlogPostHandler'),
             Rule('/admin/blog/edit/<int:post_id>/', endpoint='admin/blog/edit', handler='BlogPostHandler'),
+            # admin pages
+            Rule('/admin/page/', endpoint='admin/page/index', handler='PageIndexHandler'),
+            Rule('/admin/page/new/', endpoint='admin/page/new', handler='PageHandler'),
+            Rule('/admin/page/edit/<int:page_id>/', endpoint='admin/page/edit', handler='PageHandler'),
             # admin shop
             Rule('/admin/shop/', endpoint='admin/shop/index', handler='ShopIndexHandler'),
             # admin products

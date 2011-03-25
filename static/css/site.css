@@ -139,14 +139,13 @@ a:hover {
 /* =content */
 
 #content_sub {
-    background: url(/img/content-bg.png) repeat-y;
+    background: url(/img/content-nocolumn-bg.png) repeat-y;
     margin-top: 30px;
     overflow: hidden;
 }
 
-.blog #content_sub,
-.shop #content_sub {
-    background: url(/img/content-nocolumn-bg.png) repeat-y;
+.home #content_sub {
+    background: url(/img/content-bg.png) repeat-y;
 }
 
 /* =daily */

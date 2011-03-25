@@ -68,4 +68,22 @@ class ProductForm(Form):
         default = 'hu_HU',
         validators=[validators.Required()])
 
-
+class PageForm(Form):
+    title = fields.TextField(
+        label=_('Title'),
+        description=_('The title of the page'),
+        validators=[validators.Required()])
+    content = fields.TextAreaField(
+        label=_('Content'),
+        description=_('Content of the page'),
+        validators=[validators.Required()])
+    live = fields.BooleanField(
+        label=_('Set live'),
+        default=True,
+        description=_('Live products will appear immediately'))
+    language = fields.SelectField(
+        label = _('Language'),
+        description = _('The site language the page will appear'),
+        choices = [('hu_HU', _('Magyar')), ('en_US', _('English'))],
+        default = 'hu_HU',
+        validators=[validators.Required()])

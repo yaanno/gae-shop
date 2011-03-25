@@ -10,10 +10,11 @@ from tipfy import Response, cached_property, redirect
 from tipfy.ext.i18n import gettext as _
 from tipfy.ext.auth import admin_required
 
-from forms import BlogPostForm, ProductForm
+from forms import BlogPostForm, ProductForm, PageForm
 from apps.user.handlers import AuthHandler
 from apps.blog.models import BlogPost
 from apps.shop.models import Product
+from apps.pages.models import Page
 
 
 class BaseHandler(AuthHandler):
@@ -175,3 +176,64 @@ class BlogPostHandler(BaseHandler):
         """Form instance as cached_property"""
         return BlogPostForm(self.request)
 
+
+class PageIndexHandler(BaseHandler):
+    @admin_required
+    def get(self, **kwargs):
+        pages = Page.all()
+        result = pages.fetch(20)
+        context = {
+            'pages': result,
+        }
+        return self.render_response('admin/page/index.html', **context)
+
+
+class PageHandler(BaseHandler):
+    """Manage individual pages"""
+    
+    @admin_required
+    def get(self, page_id=None, **kwargs):
+        """Return a page to edit or an empty form to create"""
+        template = 'admin/page/new.html'
+        context = {
+            'form': self.form,
+        }
+        # render edit
+        if page_id is not None:
+            page = Page.get_by_id(page_id)
+            if page:
+                self.form = PageForm(obj=page)
+                context.update({ 'form': self.form })
+                template = 'admin/page/edit.html'
+            else:
+                return redirect('admin/page/')
+        # render new
+        return self.render_response(template, **context)
+
+    @admin_required
+    def post(self, page_id=None, **kwargs):
+        """Handle submitted form data"""
+        # validate form
+        if self.form.validate():
+            title = self.form.title.data
+            content = self.form.content.data
+            live = self.form.live.data
+            language = self.form.language.data
+            # saving edited
+            if page_id:
+                page = Page.get_by_id(page_id)
+                page.title = title
+                page.content = content
+                page.live = live
+                page.language = language
+            # creating new
+            else:
+                page = Page(title=title, content=content, live=live, language=language)
+            if page.put():
+                return redirect('admin/page')
+        return self.get(**kwargs)
+
+    @cached_property
+    def form(self):
+        """Form instance as cached_property"""
+        return PageForm(self.request)

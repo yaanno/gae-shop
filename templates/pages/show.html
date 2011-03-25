@@ -1,0 +1,14 @@
+{% extends "pages/page_base.html" %}
+
+{% block title %}
+    {{ page.title }} | {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div id="pagecontent">
+    <h1><a href="{{ url_for('pages/welcome') }}">{{ _('Home') }}</a> > {{ page.title }}</h1>
+    <div>
+        {{ page.content }}
+    </div>
+</div>
+{% endblock %}

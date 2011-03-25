@@ -1,0 +1,21 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}
+    {{ _('Edit page') }} | {{ form.title.data }} | {{ super() }}
+{% endblock %}
+
+{% from 'form_macros.html' import form_field %}
+
+{% block content %}
+    <h1>{{ _('Edit page') }}: {{ form.title.data }}</h1>
+    <form method="post" action="" enctype="multipart/form-data" class="tipfy-form">
+        <ul>
+            <li>{{ form_field(form.language, required='true') }}</li>
+            <li>{{ form_field(form.title, required='true') }}</li>
+            <li>{{ form_field(form.content, required='true', class='mceEditor') }}</li>
+            <li>{{ form_field(form.live) }}</li>
+        </ul>
+        <input type="submit" name="submit" value="Update page" class="submit"> or <a href="{{ url_for('admin/products/index') }}">cancel</a>
+    </form>
+{% endblock %}
+

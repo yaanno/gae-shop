@@ -5,3 +5,4 @@ locale/*
 static/yui/*
 index.yaml
 .build/*
+config.py

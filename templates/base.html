@@ -34,10 +34,10 @@
                 {% block navigation_main %}
                     <div id="navigation">
                         <ul>
-                            <li id="menu-about">| <a href="{{ url_for('pages/about') }}">{{ _('About') }}</a> |</li>
+                            <li id="menu-about">| <a href="/page/about/">{{ _('About') }}</a> |</li>
                             <li id="menu-shop"><a href="{{ url_for('shop/index') }}">{{ _('Products & Webshop') }}</a> |</li>
                             <li id="menu-news"><a href="{{ url_for('blog/index') }}">{{ _('News') }}</a> |</li>
-                            <li id="menu-contact"><a href="{{ url_for('pages/contact') }}">{{ _('Contact') }}</a> |</li>
+                            <li id="menu-contact"><a href="/page/contact/">{{ _('Contact') }}</a> |</li>
                         </ul>
                     </div>
                 {% endblock %}

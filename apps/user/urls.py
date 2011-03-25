@@ -23,10 +23,8 @@ def get_rules(app):
             Rule('/sign-out/', endpoint='auth/logout', handler='LogoutHandler'),
             Rule('/sign-up/', endpoint='auth/signup', handler='SignupHandler'),
             Rule('/create-account/', endpoint='auth/register', handler='RegisterHandler'),
-            
             Rule('/auth/facebook/', endpoint='auth/facebook', handler='FacebookHandler'),
             Rule('/auth/google/', endpoint='auth/google', handler='GoogleHandler'),
-            
             Rule('/your/', endpoint='user/profile', handler='ProfileHandler'),
         ]),
     ]

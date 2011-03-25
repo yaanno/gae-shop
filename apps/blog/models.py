@@ -47,7 +47,7 @@ class BlogPost(Taggable):
         return query.fetch(count)
     
     @classmethod
-    def get_post_by_slug(self, slug=None, language='en_US'):
+    def get_post_by_slug(self, slug=None, language=None):
         """Return a post by slug given"""
         query = self.all().filter('slug =', slug).filter('live =', True)
         return query.get()

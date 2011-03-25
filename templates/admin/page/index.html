@@ -1,0 +1,36 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}
+    {{ _('Manage pages') }}
+{% endblock %}
+{% block content %}
+    
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('admin/index') }}">Administration main page</a></li>
+            <li><a href="{{ url_for('admin/page/new') }}" title="">Create new page</a></li>
+        </ul>
+    </nav>
+    <h1>{{ _('Manage pages') }}</h1>
+    {% if pages %}
+        <table>
+            <caption>Products</caption>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Live</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for page in pages %}
+                <tr>
+                    <td><a href="/admin/page/edit/{{ page.key().id() }}/">{{ page.title }}</a></td>
+                    <td><input type="checkbox" {% if page.live %}checked{% endif %} name="" value=""></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>{{ _('No pages yet.') }}</p>
+    {% endif %}
+    
+{% endblock %}

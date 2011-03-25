@@ -1,5 +1,7 @@
 {% extends "pages/page_base.html" %}
 
+{% block pageclass %}home{% endblock %}
+
 {% block content %}
     
     <div id="daily_offer">
@@ -18,7 +20,7 @@
             </p>
         </div>
         <div id="daily_menu">
-            <h2><a href="{{ url_for('pages/menu') }}">{{ _('Menu Selection') }}</a></h2>
+            <h2><a href="/page/menu/">{{ _('Menu Selection') }}</a></h2>
             <p>
                 <img src="/img/daily-illustration.png" alt="Winter Espresso">
                 <span class="daily-product">Winter Espresso</span>
@@ -28,7 +30,7 @@
                 On the nose this espresso abounds with notes of creme brulee and rich, sweet fruitcake aromatics. These precede a luscious chocolate mousse mouthfeel - at once both dense, and yet seemingly air-filled and supple. In the cup, the espresso yields generous amounts of muscavado sugar and toffee sweetness with gentle overtones of soft baking spices.
             </p>
             <p>
-                <strong><a href="{{ url_for('pages/menu') }}">{{ _('See Menu Selection') }}</a></strong>
+                <strong><a href="/page/menu/">{{ _('See Menu Selection') }}</a></strong>
             </p>
         </div>
     </div>

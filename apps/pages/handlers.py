@@ -13,6 +13,7 @@ import tipfy.ext.i18n as i18n
 from apps.user.handlers import AuthHandler
 from apps.shop.models import Product
 from apps.blog.models import BlogPost
+from apps.pages.models import Page
 
 
 class BaseHandler(AuthHandler):
@@ -22,9 +23,12 @@ class BaseHandler(AuthHandler):
         return i18n.get_locale()
 
 
-class NotFoundHandler(BaseHandler):
-    def get(self):
-        return self.render_response('pages/404.html')
+class ErrorHandler(BaseHandler):
+    def get(self, error_code=None):
+        code = '404'
+        if error_code:
+            code = str(error_code)
+        return self.render_response('pages/%s.html' % code)
 
 
 class WelcomePageHandler(BaseHandler):
@@ -39,3 +43,14 @@ class WelcomePageHandler(BaseHandler):
         return self.render_response('pages/welcome.html', **context)
 
 
+class PageHandler(BaseHandler):
+    
+    def get(self, slug=None, **kwargs):
+        language = self.get_locale()
+        page = Page.get_page_by_slug(slug, language=language)
+        context = {
+            'page': page
+        }
+        if page is None:
+            return self.redirect_to('notfound')
+        return self.render_response('pages/show.html', **context)
