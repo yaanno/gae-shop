@@ -21,8 +21,6 @@ class Page(db.Model):
     
     @classmethod
     def get_page_by_slug(self, slug=None, language=None):
-        logging.info(dir(self.get_page_by_slug))
         query = self.all().filter('slug =', slug).filter('live =', True)
         query.filter('language =', language)
-        logging.info(query.get())
         return query.get()

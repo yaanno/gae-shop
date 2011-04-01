@@ -39,6 +39,7 @@ class WelcomePageHandler(BaseHandler):
         context = {
             'products': products,
             'posts': posts,
+            'language': language,
         }
         return self.render_response('pages/welcome.html', **context)
 

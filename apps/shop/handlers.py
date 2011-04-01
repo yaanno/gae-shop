@@ -30,21 +30,22 @@ class BaseHandler(AuthHandler):
 class ShopIndexHandler(BaseHandler):
     def get(self, **kwargs):
         language = self.get_locale()
-        cart = self.get_cart_content()
         products = Product.get_latest_products(language=language)
         context = {
             'products': products,
-            'cart': cart,
+            'language': language,
         }
         return self.render_response('shop/index.html', **context)
 
 
 class ProductHandler(BaseHandler):
     def get(self, slug=None, **kwargs):
-        product = Product.get_product_by_slug(slug)
+        language = self.get_locale()
+        product = Product.get_product_by_slug(slug, language=language)
         if product is not None:
             context = {
-                'product': product
+                'product': product,
+                'language': language,
             }
             return self.render_response('shop/show.html', **context)
         else:
@@ -53,22 +54,25 @@ class ProductHandler(BaseHandler):
 
 class ShopTagListHandler(BaseHandler):
     def get(self, tag=None, **kwargs):
+        language = self.get_locale()
         products = Product.get_products_by_tag(tag)
         context = {
             'products': products,
-            'tag': tag
+            'tag': tag,
+            'language': language,
         }
         return self.render_response('shop/by_tag.html', **context)
 
 
 class CartHandler(BaseHandler):
     
-    def _add_to_cart(self, product_id=None, product_quantity=None, product_name=None):
+    def _add_to_cart(self, product_id=None, product_quantity=None, product_name=None, product_price=None):
         products = self.get_cart_content()
         products.append({
             'product_quantity': product_quantity,
             'product_id': product_id,
             'product_name': product_name,
+            'product_price': product_price,
         })
         
         return products
@@ -76,7 +80,14 @@ class CartHandler(BaseHandler):
 
     def get(self, **kwargs):
         products = self.session.get('products')
-        return Response('cart: %s' % products)
+        language = self.get_locale()
+        logging.info(products)
+        context = {
+            'products': products,
+            'language': language,
+        }
+        
+        return self.render_response('shop/cart.html', **context)
     
     def post(self, **kwargs):
         product_quantity = self.request.form.get('product_quantity', type=int)
@@ -85,11 +96,12 @@ class CartHandler(BaseHandler):
         # check if product exists
         product = Product.get_by_id(product_id)
         product_name = product.name
+        product_price = product.price
         
         context = {}
         
         if product is not None:
-            cart = self._add_to_cart(product_id, product_quantity, product_name)
+            cart = self._add_to_cart(product_id, product_quantity, product_name, product_price)
             context = { 'success': True, 'products': cart }
         else:
             context = { 'success': False, 'products': [] }

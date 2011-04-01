@@ -29,6 +29,7 @@ class BlogIndexHandler(BaseHandler):
         posts = BlogPost.get_latest_posts(10, language=language)
         context = {
             'posts': posts,
+            'language': language,
         }
         return self.render_response('blog/index.html', **context)
 
@@ -40,7 +41,8 @@ class BlogPostHandler(BaseHandler):
         post = BlogPost.get_post_by_slug(slug, language=language)
         if post is not None:
             context = {
-                'post': post
+                'post': post,
+                'language': language,
             }
             return self.render_response('blog/show.html', **context)
         else:
@@ -58,6 +60,7 @@ class BlogArchiveHandler(BaseHandler):
         if posts is not None:
             context = {
                 'posts': posts,
+                'language': language,
             }
             return self.render_response('blog/archive.html', **context)
         else:
@@ -72,6 +75,7 @@ class BlogTagListHandler(BaseHandler):
         context = {
             'posts': posts,
             'tag': tag,
+            'language': language,
         }
         if len(posts) > 0:
             return self.render_response('blog/archive.html', **context)
