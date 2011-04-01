@@ -1,0 +1,24 @@
+{% extends "shop/shop_base.html" %}
+
+{% block title %}
+    {{ _('Cart') }} | {{ super() }}
+{% endblock %}
+
+{% block pageclass %}{{ super() }} shop-cart{% endblock %}
+
+{% block pagecontent %}
+<div id="pagecontent">
+    <h1><a href="{{ url_for('shop/index') }}">{{ _('Product Selection & Webshop') }}</a> > {{ _('Cart') }}</h1>
+    
+    {% if products %}
+        <ul>
+            {% for product in products %}
+            <li>{{ product.product_quantity }} grams of {{ product.product_name }}: {{ product.product_quantity / 250 * product.product_quantity }}HUF</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>{{ _('Your cart is empty.') }} <a href="{{ url_for('shop/index') }}">{{ _('Continue shopping.') }}</a></p>
+    {% endif %}
+    
+</div>
+{% endblock %}

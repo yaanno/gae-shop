@@ -24,7 +24,7 @@
                 <div id="branding">
                     <h1><a href="/">Lumen Kávé</a></h1>
                     <p class="tagline">
-                        Fresh roasted coffee
+                        {{ _('Fresh roasted coffee') }}
                     </p>
                     <p class="foundation">
                         <a href="http://www.photolumen.hu">Lumen Foundation</a>
@@ -34,43 +34,49 @@
                 {% block navigation_main %}
                     <div id="navigation">
                         <ul>
-                            <li id="menu-about">| <a href="/page/about/">{{ _('About') }}</a> |</li>
+                            {% if language == 'en_US' %}
+                                <li id="menu-about">| <a href="/page/about/">{{ _('About') }}</a> |</li>
+                            {% else %}
+                                <li id="menu-about">| <a href="/page/magunkrol/">{{ _('Magunkról') }}</a> |</li>
+                            {% endif %}
                             <li id="menu-shop"><a href="{{ url_for('shop/index') }}">{{ _('Products & Webshop') }}</a> |</li>
                             <li id="menu-news"><a href="{{ url_for('blog/index') }}">{{ _('News') }}</a> |</li>
-                            <li id="menu-contact"><a href="/page/contact/">{{ _('Contact') }}</a> |</li>
+                            {% if language == 'en_US' %}
+                                <li id="menu-contact"><a href="/page/contact/">{{ _('Contact') }}</a> |</li>
+                            {% else %}
+                                <li id="menu-contact"><a href="/page/kapcsolat/">{{ _('Kapcsolat') }}</a> |</li>
+                            {% endif %}
+                                <li id="menu-cart">
+                                    <a href="/shop/cart/">{{ _('Cart') }}</a> |
+                                </li>
                         </ul>
                     </div>
                 {% endblock %}
                 
                 <div id="address">
-                    <p>
-                        address:<br>
-                        Mikszáth Kálmán tér 2.<br>
-                        H-1088 Budapest
-                    </p>
-                    <p>
-                        opening hours:<br>
-                        m-f: 9-19h<br>
-                        sat: 11-16h
-                    </p>
+                    {{
+                        _('
+                        <p>
+                            address:<br>
+                            Mikszáth Kálmán tér 2.<br>
+                            H-1088 Budapest
+                        </p>
+                        <p>
+                            opening hours:<br>
+                            m-f: 9-19h<br>
+                            sat: 11-16h
+                        </p>
+                        ')
+                    }}
                 </div>
                 
                 <div id="language">
                     <ul>
-                        <li>| <a href="?lang=hu_HU">HU</a></li>
-                        <li>| <a href="?lang=en_US">ENG</a> |</li>
+                        <li>| <a href="/?lang=hu_HU">HU</a></li>
+                        <li>| <a href="/?lang=en_US">ENG</a> |</li>
                     </ul>
                 </div>
             </div>
-             
-            <div id="cart">
-                {% include "partials/cart.html" %}
-            </div>
-            <!--
-            <div id="auth">
-                {% include "partials/auth.html" %}
-            </div>
-            -->
             <div id="content_sub">
                 {% block content %}{% endblock %}
             </div>

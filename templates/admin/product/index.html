@@ -19,7 +19,7 @@
                     <th>Title</th>
                     <th>Date</th>
                     <th>Price / Unit</th>
-                    <th>Live</th>
+                    <th>Language</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +28,7 @@
                     <td><a title="{{ product.description|escape }}" href="/admin/shop/products/edit/{{ product.key().id() }}/">{{ product.name }}</a></td>
                     <td>{{ format_datetime(product.modified, 'short', 'hu', 'Europe/Budapest') }}</td>
                     <td>{{ product.price }} HUF / {{ product.unit }}</td>
-                    <td><input type="checkbox" {% if product.live %}checked{% endif %} name="" value=""></td>
+                    <td>{{ product.language }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

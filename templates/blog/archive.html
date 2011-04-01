@@ -1,7 +1,7 @@
 {% extends "blog/blog_base.html" %}
 
 {% block title %}
-    Archive | {{ super() }}
+    {{ _('Archive') }} | {{ super() }}
 {% endblock %}
 
 {% block meta %}
@@ -11,7 +11,7 @@
 
 {% block content %}
 <div id="pagecontent">
-    <h1><a href="{{ url_for('blog/index') }}">{{ _('News') }}</a> > Archive for {{ tag }}</h1>
+    <h1><a href="{{ url_for('blog/index') }}">{{ _('News') }}</a> > {{ tag }}</h1>
     {% if posts %}
         <ul>
         {% for post in posts %}

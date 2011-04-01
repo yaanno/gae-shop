@@ -2,10 +2,10 @@
     {% for product in products %}
         <li class="{{ loop.cycle('odd', 'even') }}">
             <div class="product">
-                <img src="/img/product_default.png" width="150" height="150">
+                <a href="/shop/product/{{ product.slug }}/"><img src="/img/product_default.png" width="150" height="150"></a>
                 <h2><a href="/shop/product/{{ product.slug }}/">{{ product.name }}</a></h2>
                 <p class="price">
-                    Price &euro;{{ product.price }} (250g)
+                    Price {{ product.price }}HUF (250g)
                 </p>
                 <p>
                     {{ product.description|truncate(125) }}

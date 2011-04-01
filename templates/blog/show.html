@@ -18,6 +18,9 @@
     </div>
     {% if post.tags %}
     <div class="tags">
+        <p>
+            {{ _('Tags') }}:
+        </p>
         <ul>
         {% for tag in post.tags %}
             <li><a href="/news/tag/{{ tag }}/">{{ tag }}</a></li>

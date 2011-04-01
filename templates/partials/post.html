@@ -2,12 +2,12 @@
 {% for post in posts %}
     <li>
         <div>
-            <h1><a href="/news/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/">{{ post.title }}</a></h1>
+            <h2><a href="/news/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/">{{ post.title }}</a></h2>
             <p>
                 {{ format_datetime(post.modified, 'short', 'hu', 'Europe/Budapest') }}, {{ _('Lumen') }}
             </p>
             <p>
-                {{ post.lead }}
+                {{ post.lead|truncate(300) }}
                 <br>
                 <span><a href="/news/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/">{{ _('Read more ...') }}</a></span>
             </p>
