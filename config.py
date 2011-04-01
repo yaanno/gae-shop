@@ -8,6 +8,9 @@
     :copyright: 2010 Janos Hardi.
     :license: BSD, see LICENSE for more details.
 """
+import local_config
+
+
 config = {}
 
 # Configurations for the 'tipfy' module.
@@ -24,14 +27,8 @@ config['tipfy'] = {
         'apps.user',
         'apps.feed',
     ],
-    'locale': ['hu_HU', 'en_US'],
-}
-
-config['tipfy.ext.session'] = {
-    'secret_key': 'ROtbnD8SEjPbUiOgcanANFE6eKKulwMExPM60rM7UMvKBBjAmFjx396r0YgCfyN',
-}
-
-config['tipfy.ext.auth.facebook'] = {
-    'api_key': '158238200885960',
-    'app_secret': '7c3fe7e5dd22ce9f73dc4966b54c8ac4',
+    'locale': [
+        'hu_HU',
+        'en_US',
+    ],
 }
