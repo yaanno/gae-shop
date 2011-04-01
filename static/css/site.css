@@ -50,10 +50,14 @@ a:hover {
 .about #menu-about a,
 .blog #menu-news a,
 .contact #menu-contact a,
-.shop #menu-shop a {
+.shop #menu-shop a,
+.shop-cart #menu-cart a {
     text-decoration: underline;
 }
 
+.shop-cart #menu-shop a {
+    text-decoration: none;
+}
 
 /* =header */
 
@@ -204,6 +208,10 @@ a:hover {
     color: #999;
 }
 
+.blog h1 a {
+    color: #999;
+}
+
 .blog #pagecontent ul {
     margin: 0;
 }
@@ -284,6 +292,7 @@ a:hover {
 .shop-product #pagecontent img {
     float: right;
     margin: 0 0 15px 15px;
+    border: 1px solid #000;
 }
 
 .products {
@@ -308,10 +317,14 @@ a:hover {
     position: relative;
 }
 
-.product > img {
+.product > a {
     float: left;
     margin: 0 15px 0 0;
     border: 1px solid #000;
+}
+
+.product > a:hover {
+    border-color: #999;
 }
 
 .product > h2 {
@@ -333,12 +346,22 @@ a.product-details {
 }
 
 
+/* =pages */
+
+.page h1 {
+    text-transform: uppercase;
+    color: #999;
+    margin: 0 0 20px;
+}
+
+.page h1 a {
+    color: #999;
+}
 
 
-
-
-
-
+.tags li {
+    display: inline;
+}
 
 .tag {
     color: #5F3711;
