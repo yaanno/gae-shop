@@ -1,0 +1,39 @@
+{% extends "shop/shop_base.html" %}
+
+{% from 'form_macros.html' import form_field %}
+
+{% block title %}
+    {{ _('Place order') }} | {{ super() }}
+{% endblock %}
+
+{% block css %}
+{{ super() }}
+    <link rel="stylesheet" href="/css/forms.css">
+{% endblock %}
+
+{% block content %}
+    <h1>{{ _('Place order') }}</h1>
+    
+    <p>{{ _('You are about to order the following products') }}:</p>
+    
+    <ul>
+        {% for product in products %}
+            <li>{{ product.product_name }} ({{ product.product_quantity }} {{ _('grams') }}) = {{ format_currency( ( (product.product_quantity / 250) * product.product_price), 'HUF', locale='hu_HU') }}</li>
+        {% endfor %}
+    </ul>
+    <p>
+        {{ _('Total') }} = {{ format_currency(total, 'HUF', locale='hu_HU') }}
+    </p>
+    
+    <form method="post" action="{{ current_url }}" enctype="multipart/form-data" class="tipfy-form">
+        <ul>
+            <li>{{ form_field(form.delivery_method) }}</li>
+            <li>{{ form_field(form.delivery_address) }}</li>
+            <li>{{ form_field(form.delivery_city) }}</li>
+            <li>{{ form_field(form.delivery_zip) }}</li>
+            <li>{{ form_field(form.delivery_info) }}</li>
+            <li>{{ form_field(form.comment) }}</li>
+        </ul>
+        <p><input type="submit" name="submit" value="{{ _('Place order') }}"></p>
+    </form>
+{% endblock %}
