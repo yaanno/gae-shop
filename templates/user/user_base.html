@@ -7,13 +7,3 @@
 {% block css %}
     <link rel="stylesheet" href="/css/forms.css">
 {% endblock %}
-
-{% block navigation_main %}
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('pages/welcome') }}">{{ _('Home') }}</a></li>
-            <li><a href="{{ url_for('shop/index') }}">{{ _('Shop') }}</a></li>
-            <li><a href="{{ url_for('blog/index') }}">{{ _('Blog') }}</a></li>
-        </ul>
-    </nav>
-{% endblock %}

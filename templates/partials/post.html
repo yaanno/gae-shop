@@ -8,7 +8,8 @@
             </p>
             <p>
                 {{ post.lead|truncate(300) }}
-                <br>
+            </p>
+            <p>
                 <span><a href="/news/{{ format_datetime(post.modified, 'y/M/d') }}/{{ post.slug }}/">{{ _('Read more ...') }}</a></span>
             </p>
         </div>

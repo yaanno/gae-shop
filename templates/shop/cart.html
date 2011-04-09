@@ -13,9 +13,17 @@
     {% if products %}
         <ul>
             {% for product in products %}
-            <li>{{ product.product_quantity }} grams of {{ product.product_name }}: {{ product.product_quantity / 250 * product.product_quantity }}HUF</li>
+            <li>{{ product.product_name }} ({{ product.product_quantity }} {{ _('grams') }}): 
+                {{ format_currency( ( (product.product_quantity / 250) * product.product_price), 'HUF', locale='hu_HU') }}
+            </li>
             {% endfor %}
         </ul>
+        <p>
+            {{ _('Total') }} = {{ format_currency(total, 'HUF', locale='hu_HU') }}
+        </p>
+        <p>
+            <a href="{{ url_for('shop/index') }}">{{ _('Continue shopping.') }}</a> {{ _('or') }} <a href="{{ url_for('shop/order') }}">{{ _('Place order') }}</a>.
+        </p>
     {% else %}
         <p>{{ _('Your cart is empty.') }} <a href="{{ url_for('shop/index') }}">{{ _('Continue shopping.') }}</a></p>
     {% endif %}

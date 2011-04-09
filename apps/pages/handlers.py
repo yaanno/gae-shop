@@ -25,10 +25,14 @@ class BaseHandler(AuthHandler):
 
 class ErrorHandler(BaseHandler):
     def get(self, error_code=None):
+        language = self.get_locale()
+        context = {
+            'language': language,
+        }
         code = '404'
         if error_code:
             code = str(error_code)
-        return self.render_response('pages/%s.html' % code)
+        return self.render_response('pages/%s.html' % code, **context)
 
 
 class WelcomePageHandler(BaseHandler):
@@ -50,7 +54,8 @@ class PageHandler(BaseHandler):
         language = self.get_locale()
         page = Page.get_page_by_slug(slug, language=language)
         context = {
-            'page': page
+            'page': page,
+            'language': language,
         }
         if page is None:
             return self.redirect_to('notfound')

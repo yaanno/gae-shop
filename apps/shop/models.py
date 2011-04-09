@@ -10,8 +10,10 @@ import logging
 
 from google.appengine.ext import db
 from tipfy.ext.db import SlugProperty
+from tipfy.ext.auth.model import User
 
 from apps.tagging.models import Taggable
+from helpers import calculate_total_price, make_list_from_string, extract_ids_from_product_list
 
 
 class Product(Taggable):
@@ -51,6 +53,13 @@ class Product(Taggable):
             query.filter('language =', language)
         query.order('-modified')
         return query.fetch(count)
+    
+    @classmethod
+    def get_product_list(self, products=None):
+        if products is None:
+            return []
+        result = self.get_by_id(products)
+        return result
 
 
 class Order(db.Model):
@@ -65,11 +74,42 @@ class Order(db.Model):
     eg. 5 pack of Black Coffee and 2 pack of Green Tea ordered by Anna at 2010.10.11. 20:00 and she wants it to be delivered at 2010.10.15. 1102-Budapest Körösi Csoma Sándor út 43.
     
     """
-    items = db.ListProperty(item_type=str, required=True)
-    user = db.IntegerProperty(required=True, default=1)
+    items = db.StringProperty(required=True)
+    user = db.ReferenceProperty(User)
     comment = db.TextProperty()
     date = db.DateTimeProperty(auto_now_add=True)
     delivered = db.BooleanProperty(default=False)
+    notified = db.BooleanProperty(default=False)
+    delivery_method = db.TextProperty(required=True)
+    delivery_address = db.StringProperty(required=True)
+    delivery_city = db.StringProperty(required=True)
+    delivery_zip = db.StringProperty(required=True)
     delivery_info = db.TextProperty(required=True)
-
-
+    
+    @classmethod
+    def get_orders_by_user(self, user_key=None):
+        query = self.all()
+        query.filter('user =', user_key)
+        result = query.get()
+        
+        if result is None:
+            return []
+        
+        items = make_list_from_string(result.items)
+        total = calculate_total_price(items)
+        #product_ids = extract_ids_from_product_list(items)
+        #products = Product.get_product_list(product_ids)
+        
+        order = {
+            'products': items,
+            'total': total,
+            'delivery': self.get_formatted_address(result),
+            'posted': result.date,
+        }
+        
+        return order
+    
+    @classmethod
+    def get_formatted_address(self, order):
+        address = "%s-%s %s" % (order.delivery_zip, order.delivery_city, order.delivery_address)
+        return address

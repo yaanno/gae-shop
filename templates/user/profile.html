@@ -6,4 +6,18 @@
 
 {% block content %}
     <h1>Hello {{ current_user }}!</h1>
+    
+    <p>
+        Your orders so far:
+    </p>
+    
+    {% if orders %}
+        <p>
+            {{ orders }}
+        </p>
+    {% endif %}
+    
+    <p>
+        <a href="{{ url_for('auth/logout') }}">{{ _('Log out') }}</a>
+    </p>
 {% endblock %}

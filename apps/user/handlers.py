@@ -6,7 +6,11 @@
     User Handlers
 
 """
-from tipfy import RequestHandler, Response, abort, cached_property, redirect, url_for
+import logging
+
+from google.appengine.api import taskqueue
+
+from tipfy import RequestHandler, Response, abort, cached_property, redirect, url_for, redirect_to
 from tipfy.ext.auth import MultiAuthMixin, login_required, user_required
 from tipfy.ext.auth.facebook import FacebookMixin
 from tipfy.ext.auth.google import GoogleMixin
@@ -14,7 +18,10 @@ from tipfy.ext.session import AllSessionMixins, SessionMiddleware
 from tipfy.ext.jinja2 import Jinja2Mixin
 from tipfy.ext.i18n import gettext as _
 
+from apps.shop.models import Order
+
 from forms import LoginForm, RegistrationForm, SignupForm
+from models import Profile
 
 
 class AuthHandler(RequestHandler, MultiAuthMixin, Jinja2Mixin, AllSessionMixins):
@@ -159,14 +166,24 @@ class RegisterHandler(AuthHandler):
             username = self.form.username.data
             password = self.form.password.data
             password_confirm = self.form.password_confirm.data
+            email = self.form.email.data
+            email_confirm = self.form.email_confirm.data
             
             if password != password_confirm:
                 self.set_message('error', 'Password doesnt match', life=None)
                 return self.get(**kwargs)
             
+            if email != email_confirm:
+                self.set_message('error', 'E-mail doesnt match', life=None)
+                return self.get(**kwargs)
+            
             auth_id = 'own|%s' % username
-            user = self.auth_create_user(username, auth_id, password=password)
+            user = self.auth_create_user(username, auth_id, password=password, email=email)
             if user:
+                profile = Profile.create(user.key())
+                if profile:
+                    url = '/mail/verify/%s/' % user.key()
+                    task = taskqueue.add(url=url, method='GET')
                 self.auth_set_session(user.auth_id, user.session_id, '1')
                 self.set_message('success', 'You are now registered', flash=True, life=5)
                 return redirect(redirect_url)
@@ -238,7 +255,20 @@ class ProfileHandler(AuthHandler):
     
     @user_required
     def get(self, **kwargs):
+        orders = Order.get_orders_by_user(self.auth_current_user)
+        
+        context = {
+            'orders': orders,
+        }
         # if not admin:
         # enable set/change:
         # email, password
-        return self.render_response('user/profile.html')
+        return self.render_response('user/profile.html', **context)
+
+class VerifyProfileHandler(AuthHandler):
+    
+    def get(self, verification_code):
+        verified = Profile.verify_code(verification_code)
+        logging.info(verified)
+        if verified:
+            return redirect_to('user/profile')

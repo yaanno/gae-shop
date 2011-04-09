@@ -8,6 +8,7 @@
 """
 from datetime import datetime
 import calendar
+import logging
 
 from google.appengine.ext import db
 from tipfy.ext.db import SlugProperty
@@ -60,7 +61,7 @@ class BlogPost(Taggable):
         start_day = end_day = day
         start_year = end_year = year
         if year is None:
-            start_year = 2009
+            start_year = 2011
             end_year = datetime.now().year
         if month is None:
             start_month = 01
@@ -71,6 +72,7 @@ class BlogPost(Taggable):
         
         start_date = datetime(start_year, start_month, start_day)
         end_date = datetime(end_year, end_month, end_day, 23, 59, 59)
+        
         # run query
         query = self.all()
         query.filter('created >=', start_date)
@@ -79,4 +81,5 @@ class BlogPost(Taggable):
         if language:
             query.filter('language =', language)
         query.order('-created')
-        return query.fetch(10)
+        result = query.fetch(10)
+        return result

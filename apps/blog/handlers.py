@@ -54,7 +54,7 @@ class BlogArchiveHandler(BaseHandler):
     def get(self, year=None, month=None, day=None):
         language = self.get_locale()
         posts = BlogPost.get_posts_by_date(year, month, day, language=language)
-        # date = dateformatter(year, month, day)
+        
         if year is None:
             posts = group_by_date(posts)
         if posts is not None:

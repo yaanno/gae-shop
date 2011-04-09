@@ -23,6 +23,8 @@ def get_rules(app):
             Rule('/shop/product/<slug>/', endpoint='shop/product', handler='ProductHandler'),
             Rule('/shop/tag/<tag>/', endpoint='shop/tag', handler='ShopTagListHandler'),
             Rule('/shop/cart/', endpoint='shop/cart', handler='CartHandler'),
+            Rule('/shop/order/', endpoint='shop/order', handler='OrderHandler'),
+            Rule('/shop/thankyou/', endpoint='shop/thankyou', handler='PostOrderHandler'),
         ]),
     ]
 

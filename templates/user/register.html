@@ -8,10 +8,12 @@
 
 {% block content %}
     <h1>{{ _('Create an account') }}</h1>
-    <p>Fill the form to create a new account. If you already have an account, please <a href="{{ url_for('auth/login') }}">sign in here</a>.</p>
+    <p>{{ _('Fill the form to create a new account. If you already have an account, please') }} <a href="{{ url_for('auth/login') }}">{{ _('sign in') }}</a>.</p>
     <form method="post" action="{{ current_url }}" enctype="multipart/form-data" class="tipfy-form">
         <ul>
             <li>{{ form_field(form.username) }}</li>
+            <li>{{ form_field(form.email) }}</li>
+            <li>{{ form_field(form.email_confirm) }}</li>
             <li>{{ form_field(form.password) }}</li>
             <li>{{ form_field(form.password_confirm) }}</li>
         </ul>

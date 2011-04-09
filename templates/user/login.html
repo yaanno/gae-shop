@@ -9,10 +9,13 @@
 {% block content %}
     <h1>{{ _('Sign in') }}</h1>
     <form method="post" action="{{ current_url }}" enctype="multipart/form-data" class="tipfy-form">
-        <p>You can sign in with your 
-            <a href="{{ facebook_login_url }}" title="Sign in with Facebook">Facebook</a> or 
-            <a href="{{ google_login_url }}" title="Sign in with Google">Google</a> account.
-        </p>
+        {#
+            <p>You can sign in with your 
+                <a href="{{ facebook_login_url }}" title="Sign in with Facebook">Facebook</a> {{ _('or') }} 
+                <a href="{{ google_login_url }}" title="Sign in with Google">Google</a> account.
+            </p>
+        #}
+        
         {% if messages %}
             <ul id="feedback">
                 {% for message in messages %}
@@ -27,7 +30,7 @@
             <li>{{ form_field(form.password) }}</li>
             <li>{{ form_field(form.remember) }}</li>
         </ul>
-        <p><input type="submit" name="submit" value="{{ _('Sign in') }}"> or <a href="{{ url_for('auth/register') }}">{{ _('Create an account') }}</a>.</p>
+        <p><input type="submit" name="submit" value="{{ _('Sign in') }}"> {{ _('or') }} <a href="{{ url_for('auth/register') }}">{{ _('Create an account') }}</a>.</p>
         
     </form>
 {% endblock %}

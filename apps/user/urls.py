@@ -26,6 +26,7 @@ def get_rules(app):
             Rule('/auth/facebook/', endpoint='auth/facebook', handler='FacebookHandler'),
             Rule('/auth/google/', endpoint='auth/google', handler='GoogleHandler'),
             Rule('/your/', endpoint='user/profile', handler='ProfileHandler'),
+            Rule('/verify/<verification_code>/', endpoint='user/verify', handler='VerifyProfileHandler'),
         ]),
     ]
     
