@@ -5,13 +5,18 @@
                 <a href="/shop/product/{{ product.slug }}/"><img src="/img/product_default.png" width="150" height="150"></a>
                 <h2><a href="/shop/product/{{ product.slug }}/">{{ product.name }}</a></h2>
                 <p class="price">
-                    Price {{ product.price }}HUF (250g)
+                    Price {{ product.price }}HUF
+                    {% if product.unit == "gram" %}
+                        (250 {{ _('grams') }})
+                    {% elif product.unit == "piece" %}
+                        ({{ _('piece') }})
+                    {% endif %}
                 </p>
-                <p>
+                <div>
                     {{ product.description|truncate(125) }}
-                    <br>
-                    <a class="product-details" href="/shop/product/{{ product.slug }}/">{{ _('Read more ...') }}</a>
-                </p>
+                    
+                    <p><a class="product-details" href="/shop/product/{{ product.slug }}/">{{ _('Read more ...') }}</a></p>
+                </div>
             </div>
         </li>
     {% endfor %}

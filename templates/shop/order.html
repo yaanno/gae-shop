@@ -12,18 +12,12 @@
 {% endblock %}
 
 {% block content %}
+<div id="pagecontent">
     <h1>{{ _('Place order') }}</h1>
     
     <p>{{ _('You are about to order the following products') }}:</p>
     
-    <ul>
-        {% for product in products %}
-            <li>{{ product.product_name }} ({{ product.product_quantity }} {{ _('grams') }}) = {{ format_currency( ( (product.product_quantity / 250) * product.product_price), 'HUF', locale='hu_HU') }}</li>
-        {% endfor %}
-    </ul>
-    <p>
-        {{ _('Total') }} = {{ format_currency(total, 'HUF', locale='hu_HU') }}
-    </p>
+    {% include "partials/cart.html" %}
     
     <form method="post" action="{{ current_url }}" enctype="multipart/form-data" class="tipfy-form">
         <ul>
@@ -36,4 +30,5 @@
         </ul>
         <p><input type="submit" name="submit" value="{{ _('Place order') }}"></p>
     </form>
+</div>
 {% endblock %}

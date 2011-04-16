@@ -8,23 +8,44 @@
 
 {% block pagecontent %}
 <div id="pagecontent">
-    <h1><a href="{{ url_for('shop/index') }}">{{ _('Product Selection & Webshop') }}</a> > {{ product.name }}</h1>
+    <h1><a href="{{ url_for('shop/index') }}">{{ _('Beans to your house') }}</a> > {{ product.name }}</h1>
     <div>
         <img src="/img/product_default.png" width="150" height="150">
         {{ product.description }}
     </div>
-    
     <form action="/cart/" id="add_form" method="post" accept-charset="utf-8">
         <label for="product_quantity">{{ _('Quantity') }}:</label>
         <select name="product_quantity" id="product_quantity">
-            <option value="250">250 {{ _('grams') }}</option>
-            <option value="350">350 {{ _('grams') }}</option>
-            <option value="500">500 {{ _('grams') }}</option>
-            <option value="750">750 {{ _('grams') }}</option>
-            <option value="1000">1000 {{ _('grams') }}</option>
+            
+            {% if product.unit == "gram" %}
+                <option value="250">250 </option>
+                <option value="350">350</option>
+                <option value="500">500</option>
+                <option value="750">750</option>
+                <option value="1000">1000</option>
+            
+            {% elif product.unit == "piece" %}
+                <option value="1">1 </option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            {% endif %}
         </select>
+        
+        {% if product.unit == "gram" %}
+            {{ _('grams') }}
+        {% elif product.unit == "piece" %}
+            {{ _('piece') }}
+        {% endif %}
+        
         <input type="hidden" name="product_id" value="{{ product.key().id() }}" id="product_id">
-        <p><input type="submit" id="add_btn" value="{{ _('Add to basket') }}"></p>
+        <input type="submit" id="add_btn" value="{{ _('Add to basket') }}">
     </form>
     
     {% if product.tags %}

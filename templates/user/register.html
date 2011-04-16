@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+<div id="pagecontent">
     <h1>{{ _('Create an account') }}</h1>
     <p>{{ _('Fill the form to create a new account. If you already have an account, please') }} <a href="{{ url_for('auth/login') }}">{{ _('sign in') }}</a>.</p>
     <form method="post" action="{{ current_url }}" enctype="multipart/form-data" class="tipfy-form">
@@ -19,4 +20,5 @@
         </ul>
         <p><input type="submit" name="submit" value="{{ _('Create account') }}"></p>
     </form>
+</div
 {% endblock %}

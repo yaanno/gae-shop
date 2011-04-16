@@ -27,7 +27,7 @@
                         {{ _('Fresh roasted coffee') }}
                     </p>
                     <p class="foundation">
-                        <a href="http://www.photolumen.hu">Lumen Foundation</a>
+                        <a href="http://www.photolumen.hu">{{ _('Lumen Photography Foundation') }}</a>
                     </p>
                 </div>
                 
@@ -35,20 +35,41 @@
                     <div id="navigation">
                         <ul>
                             {% if language == 'en_US' %}
-                                <li id="menu-about">| <a href="/page/about/">{{ _('About') }}</a> |</li>
+                                <li id="menu-about">| <a href="/page/about/">{{ _('About us') }}</a> |</li>
                             {% else %}
-                                <li id="menu-about">| <a href="/page/magunkrol/">{{ _('Magunkról') }}</a> |</li>
+                                <li id="menu-about">| <a href="/page/magunkrol/">{{ _('Rólunk') }}</a> |</li>
                             {% endif %}
-                            <li id="menu-shop"><a href="{{ url_for('shop/index') }}">{{ _('Products & Webshop') }}</a> |</li>
+                            
+                            <li id="menu-shop"><a href="{{ url_for('shop/index') }}">{{ _('Beans to your house') }}</a> |</li>
+                            
+                            {% if language == 'en_US' %}
+                                <li id="menu-cafe"> <a href="/page/cafe/">{{ _('Café') }}</a> |</li>
+                            {% else %}
+                                <li id="menu-cafe"> <a href="/page/kavezo/">{{ _('Kávézó') }}</a> |</li>
+                            {% endif %}                            
+                            
                             <li id="menu-news"><a href="{{ url_for('blog/index') }}">{{ _('News') }}</a> |</li>
+                            
                             {% if language == 'en_US' %}
                                 <li id="menu-contact"><a href="/page/contact/">{{ _('Contact') }}</a> |</li>
                             {% else %}
                                 <li id="menu-contact"><a href="/page/kapcsolat/">{{ _('Kapcsolat') }}</a> |</li>
                             {% endif %}
-                                <li id="menu-cart">
-                                    <a href="/shop/cart/">{{ _('Cart') }}</a> |
+                                
+                            <li id="menu-cart">
+                                <a href="/shop/cart/">{{ _('Cart') }}</a> |
+                            </li>
+                            
+                            {% if current_user %}
+                                <li id="menu-profile">
+                                    <a href="/your/">{{ _('Your profile') }}</a> |
                                 </li>
+                            {% else %}
+                                <li id="menu-profile">
+                                    <a href="/sign-in/">{{ _('Sign in') }}</a> |
+                                </li>
+                            {% endif %}
+                            
                         </ul>
                     </div>
                 {% endblock %}
@@ -82,7 +103,7 @@
             </div>
         </div>
         {% block js %}
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
         {% endblock %}
     </body>
 </html>

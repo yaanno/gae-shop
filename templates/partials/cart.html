@@ -1,11 +1,17 @@
 <ul>
+    {% for product in products %}
     <li>
-        {% if cart %}
-            <ul class="cartitems">
-                {% for item in cart %}
-                <li>{{ item.product_quantity }} grams of {{ item.product_name }}</li>
-                {% endfor %}
-            </ul>
+        {{ product.product_name }}
+        {% if product.product_unit == "gram" %}
+            ({{ product.product_quantity }} {{ _('grams') }}): 
+            {{ format_currency( ( (product.product_quantity / 250) * product.product_price), 'HUF', locale=language) }}
+        {% elif product.product_unit == "piece" %}
+            ({{ product.product_quantity }} {{ _('piece') }}): 
+            {{ format_currency( ( product.product_quantity * product.product_price), 'HUF', locale=language) }}
         {% endif %}
     </li>
+    {% endfor %}
 </ul>
+<p>
+    {{ _('Total') }} = {{ format_currency(total, 'HUF', locale=language) }}
+</p>

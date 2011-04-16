@@ -1,23 +1,31 @@
 {% extends 'user/user_base.html' %}
 
 {% block title %}
-    Hello {{ current_user }} | {{ super() }}
+    {{ _('Hello') }} {{ current_user }} | {{ super() }}
+{% endblock %}
+
+{% block pageclass %}
+    {{ super() }} user-profile
 {% endblock %}
 
 {% block content %}
-    <h1>Hello {{ current_user }}!</h1>
-    
-    <p>
-        Your orders so far:
-    </p>
-    
+<div id="pagecontent">
+    <h1>{{ _('Hello') }} {{ current_user }}!</h1>    
     {% if orders %}
-        <p>
-            {{ orders }}
-        </p>
+        <h2>
+            {{ _('Your orders so far') }}
+        </h2>
+        
+        {% include "user/_orders.html" %}
+        
+    {% else %}
+        <h2>
+            {{ _('You have not order anything yet.') }} <a href="{{ url_for('shop/index') }}">{{ _('Why not you check out our products?') }}</a>
+        </h2>
     {% endif %}
     
     <p>
         <a href="{{ url_for('auth/logout') }}">{{ _('Log out') }}</a>
     </p>
+</div>
 {% endblock %}
