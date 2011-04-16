@@ -6,15 +6,21 @@
     Administration Application Handlers
 
 """
-from tipfy import Response, cached_property, redirect
+import logging
+
+from google.appengine.ext import blobstore
+
+from tipfy import Response, cached_property, redirect, url_for, redirect_to
 from tipfy.ext.i18n import gettext as _
 from tipfy.ext.auth import admin_required
+from tipfy.ext.blobstore import BlobstoreUploadMixin
 
-from forms import BlogPostForm, ProductForm, PageForm
+from forms import BlogPostForm, ProductForm, PageForm, FileForm
 from apps.user.handlers import AuthHandler
 from apps.blog.models import BlogPost
 from apps.shop.models import Product
 from apps.pages.models import Page
+from apps.files.models import File
 
 
 class BaseHandler(AuthHandler):
@@ -27,6 +33,54 @@ class AdminIndexHandler(BaseHandler):
     def get(self, **kwargs):
         context = {}
         return self.render_response('admin/index.html', **context)
+
+
+class FileIndexHandler(BaseHandler):
+    
+    @admin_required
+    def get(self, **kwargs):
+        
+        files = File.get_latest_files(10)
+        context = {
+            'files': files
+        }
+        return self.render_response('admin/files/index.html', **context)
+
+
+class FileHandler(BaseHandler, BlobstoreUploadMixin):
+    
+    @admin_required
+    def get(self, file_key=None, **kwargs):
+        template = 'admin/files/new.html'
+        context = {
+            'form': self.form,
+            'upload_url': blobstore.create_upload_url(url_for('blobstore/upload'))
+        }
+        return self.render_response(template, **context)
+
+    @admin_required
+    def post(self, **kwargs):
+        
+        if self.form.validate():
+            title = self.form.title.data
+            file_data = self.form.file_data.data
+            
+            uploaded_files = self.get_uploads('file_data')
+            blob_info = uploaded_files[0]
+            
+            new_file = File(title=title, file_data=blob_info.key())
+            # checking the file
+            response = redirect_to('admin/files/index')
+            if new_file.put():
+                response.data = ''
+                return response
+            
+        return self.get(**kwargs)
+
+    @cached_property
+    def form(self):
+        """Form instance as cached_property"""
+        return FileForm(self.request)
 
 
 class ShopIndexHandler(BaseHandler):

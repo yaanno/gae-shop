@@ -1,0 +1,37 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}
+    {{ _('Manage files') }}
+{% endblock %}
+{% block content %}
+<div id="pagecontent">
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('admin/index') }}">Administration main page</a></li>
+            <li><a href="{{ url_for('blobstore/upload') }}" title="">Create new file</a></li>
+        </ul>
+    </nav>
+    <h1>{{ _('Manage files') }}</h1>
+    
+    {% if files %}
+        <table>
+            <caption>Files</caption>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Preview</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                <tr>
+                    <td><a target="new" href="{{ url_for('blobstore/serve', resource=file.file_data.key()) }}">{{ file.title }}</a></td>
+                    <td><img width="200" src="{{ url_for('blobstore/serve', resource=file.file_data.key()) }}" alt=""></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>{{ _('No files yet.') }}</p>
+    {% endif %}
+</div>
+{% endblock %}

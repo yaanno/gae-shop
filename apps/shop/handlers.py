@@ -23,6 +23,9 @@ class BaseHandler(AuthHandler):
         products = self.session.setdefault('products', [])
         return products
     
+    def reset_cart(self):
+        products = self.session['products'] = []
+    
     @staticmethod
     def get_locale():
         return i18n.get_locale()
@@ -70,7 +73,7 @@ class ShopTagListHandler(BaseHandler):
 
 class CartHandler(BaseHandler):
     
-    def _add_to_cart(self, product_id=None, product_quantity=None, product_name=None, product_price=None):
+    def _add_to_cart(self, product_id=None, product_quantity=None, product_name=None, product_price=None, product_unit=None):
         products = self.get_cart_content()
         
         # TODO: check if update, delete or new item
@@ -80,6 +83,7 @@ class CartHandler(BaseHandler):
             'product_id': product_id,
             'product_name': product_name,
             'product_price': product_price,
+            'product_unit': product_unit,
         })
         
         return products
@@ -106,11 +110,12 @@ class CartHandler(BaseHandler):
         product = Product.get_by_id(product_id)
         product_name = product.name
         product_price = product.price
+        product_unit = product.unit
         
         context = {}
         
         if product is not None:
-            cart = self._add_to_cart(product_id, product_quantity, product_name, product_price)
+            cart = self._add_to_cart(product_id, product_quantity, product_name, product_price, product_unit)
             context = { 'success': True, 'products': cart }
         else:
             context = { 'success': False, 'products': [] }
@@ -147,13 +152,8 @@ class OrderHandler(BaseHandler):
             delivery_city = self.form.delivery_city.data
             delivery_zip = self.form.delivery_zip.data
             comment = self.form.comment.data
-            
-            
-            
             items = str(products)
-            
             logging.info(items)
-            
             order = Order(items=items, user=user.key(), delivery_method=delivery_method, delivery_address=delivery_address, delivery_city=delivery_city, delivery_zip=delivery_zip, comment=comment, delivery_info=delivery_info)
             
             if order.put():
@@ -171,5 +171,6 @@ class PostOrderHandler(BaseHandler):
     @user_required
     def get(self, **kwargs):
         # empty the cart!
-        return redirect('pages/welcome')
+        self.reset_cart()
+        return redirect_to('pages/welcome')
 

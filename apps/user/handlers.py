@@ -17,6 +17,7 @@ from tipfy.ext.auth.google import GoogleMixin
 from tipfy.ext.session import AllSessionMixins, SessionMiddleware
 from tipfy.ext.jinja2 import Jinja2Mixin
 from tipfy.ext.i18n import gettext as _
+import tipfy.ext.i18n as i18n
 
 from apps.shop.models import Order
 
@@ -27,10 +28,16 @@ from models import Profile
 class AuthHandler(RequestHandler, MultiAuthMixin, Jinja2Mixin, AllSessionMixins):
     middleware = [SessionMiddleware]
     
+    @staticmethod
+    def get_locale():
+        return i18n.get_locale()
+    
     def render_response(self, filename, **kwargs):
         auth_session = None
         if 'id' in self.auth_session:
             auth_session = self.auth_session
+        
+        language = self.get_locale()
         
         self.request.context.update({
             'auth_session': auth_session,
@@ -38,6 +45,8 @@ class AuthHandler(RequestHandler, MultiAuthMixin, Jinja2Mixin, AllSessionMixins)
             'login_url': self.auth_login_url(),
             'logout_url': self.auth_logout_url(),
             'current_url': self.request.url,
+            'language': language,
+            'format_currency': i18n.format_currency,
         })
         if self.messages:
             self.request.context.update({
@@ -75,7 +84,6 @@ class LoginHandler(AuthHandler):
         redirect_url = self.redirect_path()
         if self.auth_current_user:
             return redirect(redirect_url)
-        
         opts = {'continue': self.redirect_path()}
         context = {
             'form': self.form,
@@ -103,6 +111,7 @@ class LoginHandler(AuthHandler):
     
     @cached_property
     def form(self):
+        language = self.get_locale()
         return LoginForm(self.request)
 
 
@@ -154,7 +163,6 @@ class RegisterHandler(AuthHandler):
         redirect_url = self.redirect_path()
         if self.auth_current_user:
             return redirect(redirect_url)
-        
         return self.render_response('user/register.html', form=self.form)
     
     def post(self, **kwargs):
@@ -256,7 +264,7 @@ class ProfileHandler(AuthHandler):
     @user_required
     def get(self, **kwargs):
         orders = Order.get_orders_by_user(self.auth_current_user)
-        
+        logging.info(orders)
         context = {
             'orders': orders,
         }
@@ -264,6 +272,7 @@ class ProfileHandler(AuthHandler):
         # enable set/change:
         # email, password
         return self.render_response('user/profile.html', **context)
+
 
 class VerifyProfileHandler(AuthHandler):
     

@@ -90,24 +90,26 @@ class Order(db.Model):
     def get_orders_by_user(self, user_key=None):
         query = self.all()
         query.filter('user =', user_key)
-        result = query.get()
-        
+        result = query.fetch(10)
         if result is None:
             return []
         
-        items = make_list_from_string(result.items)
-        total = calculate_total_price(items)
-        #product_ids = extract_ids_from_product_list(items)
-        #products = Product.get_product_list(product_ids)
+        orders = []
+        order_item = {}
         
-        order = {
-            'products': items,
-            'total': total,
-            'delivery': self.get_formatted_address(result),
-            'posted': result.date,
-        }
+        for order in result:
+            items = make_list_from_string(order.items)
+            total = calculate_total_price(items)
+            order_item = {
+                'products': items,
+                'total': total,
+                'delivery': self.get_formatted_address(order),
+                'posted': order.date,
+                'delivered': order.delivered,
+            }
+            orders.append(order_item)
         
-        return order
+        return orders
     
     @classmethod
     def get_formatted_address(self, order):

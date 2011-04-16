@@ -5,6 +5,8 @@
 import logging
 
 from tipfy.ext.auth.model import User, gen_salt
+import tipfy.ext.i18n as i18n
+
 from google.appengine.ext import db
 
 
@@ -14,13 +16,15 @@ class Profile(db.Model):
     first_name = db.StringProperty(default="")
     last_name = db.StringProperty(default="")
     user = db.ReferenceProperty(User)
+    language = db.StringProperty(default="hu_HU")
     
     @classmethod
     def create(self, user=None):
         
         def txn():
             code = gen_salt(20)
-            profile = Profile(user=user, verification_code=code)
+            language = i18n.get_locale()
+            profile = Profile(user=user, verification_code=code, language=language)
             profile.put()
             return profile
         

@@ -31,11 +31,16 @@ def calculate_total_price(products=None):
     price = 0
     quantity = 0
     subtotal = 0
+    divider = 1
     
     for item in products:
         price = float(item['product_price'])
         quantity = float(item['product_quantity'])
-        subtotal = quantity / 250 * price
+        if item['product_unit'] == 'gram':
+            divider = 250
+        elif item['product_unit'] == 'piece':
+            divider = 1
+        subtotal = quantity / divider * price
         total += subtotal
     
     return total

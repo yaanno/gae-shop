@@ -1,0 +1,26 @@
+<ol>
+    {% for order in orders %}
+    <li>
+        <div>
+            <ul>
+                {% for product in order.products %}
+                <li>
+                    {{ product.product_name }}
+                    {% if product.product_unit == "gram" %}
+                        ({{ product.product_quantity }} {{ _('grams') }}): 
+                        {{ format_currency( ( (product.product_quantity / 250) * product.product_price), 'HUF', locale=language) }}
+                    {% elif product.product_unit == "piece" %}
+                        ({{ product.product_quantity }} {{ _('piece') }}): 
+                        {{ format_currency( ( product.product_quantity * product.product_price), 'HUF', locale=language) }}
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            <p>
+                {{ _('Total') }} = {{ format_currency(order.total, 'HUF', locale=language) }}<br>
+                {{ _('Order posted at') }} {{ format_datetime(order.posted, 'y/M/d') }}
+            </p>
+        </div>
+    </li>
+    {% endfor %}
+</ol>

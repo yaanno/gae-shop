@@ -6,6 +6,8 @@
     Page Handlers
 
 """
+import logging
+
 from tipfy import RequestHandler, Response, redirect_to
 from tipfy.ext.jinja2 import render_response
 import tipfy.ext.i18n as i18n
@@ -36,6 +38,7 @@ class ErrorHandler(BaseHandler):
 
 
 class WelcomePageHandler(BaseHandler):
+    
     def get(self, **kwargs):
         language = self.get_locale()
         products = Product.get_latest_products(3, language=language)

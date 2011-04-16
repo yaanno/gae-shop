@@ -1,0 +1,8 @@
+{% from 'form_macros.html' import form_field %}
+<li>{{ form_field(form.language, required='true') }}</li>
+<li>{{ form_field(form.name, required='true') }}</li>
+<li>{{ form_field(form.description, class='mceEditor') }}</li>
+<li>{{ form_field(form.price, required='true') }}</li>
+<li>{{ form_field(form.unit, required='true') }}</li>
+<li>{{ form_field(form.live) }}</li>
+<li>{{ form_field(form.tags) }}</li>

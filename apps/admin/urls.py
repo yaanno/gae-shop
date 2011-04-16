@@ -38,6 +38,9 @@ def get_rules(app):
             # admin orders
             Rule('/admin/shop/orders/', endpoint='admin/orders/index', handler='OrdersIndexHandler'),
             Rule('/admin/shop/orders/<int:product_id>/', endpoint='admin/products/edit', handler='OrderHandler'),
+            # files
+            Rule('/admin/files/', endpoint='admin/files/index', handler='FileIndexHandler'),
+            Rule('/admin/files/new/', endpoint='blobstore/upload', handler='FileHandler'),
         ]),
     ]
 

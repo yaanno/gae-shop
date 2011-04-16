@@ -87,3 +87,15 @@ class PageForm(Form):
         choices = [('hu_HU', _('Magyar')), ('en_US', _('English'))],
         default = 'hu_HU',
         validators=[validators.Required()])
+
+
+class FileForm(Form):
+    title = fields.TextField(
+        label=_('Title'),
+        description=_('The title of the file'),
+        validators=[validators.Required()])
+    file_data = fields.FileField(
+        label=_('File to upload'),
+        description=_('Select file to upload'),
+        validators=[validators.Required()])
+

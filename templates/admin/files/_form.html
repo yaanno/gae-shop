@@ -1,0 +1,5 @@
+{% from 'form_macros.html' import form_field %}
+<ul>
+    <li>{{ form_field(form.title, required='true') }}</li>
+    <li>{{ form_field(form.file_data, required='true') }}</li>
+</ul>
