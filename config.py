@@ -8,10 +8,8 @@
     :copyright: 2010 Janos Hardi.
     :license: BSD, see LICENSE for more details.
 """
-import local_config
-
-
 config = {}
+
 
 # Configurations for the 'tipfy' module.
 config['tipfy'] = {
@@ -26,9 +24,15 @@ config['tipfy'] = {
         'apps.shop',
         'apps.user',
         'apps.feed',
+        'apps.mail',
+        'apps.files',
     ],
     'locale': [
         'hu_HU',
         'en_US',
     ],
+}
+
+config['tipfy.ext.session'] = {
+    'secret_key': 'ROtbnD8SEjPbUiOgcanANFE6eKKulwMExPM60rM7UMvKBBjAmFjx396r0YgCfyN',
 }

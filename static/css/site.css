@@ -2,6 +2,7 @@
 
 html {
     background: url("/img/content-nocolumn-bg.png") repeat-y scroll 50% 1em;
+    min-width: 820px;
 }
 
 body {
@@ -9,6 +10,7 @@ body {
     font: normal 11.25px/1 Arial, sans-serif;
     color: #000;
     padding-top: 1em;
+
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -29,7 +31,7 @@ a:hover {
 /* =navigation */
 
 #navigation {
-    width: 400px;
+    width: 415px;
     margin: -5px auto 15px;
     text-align: center;
 }
@@ -50,8 +52,10 @@ a:hover {
 .about #menu-about a,
 .blog #menu-news a,
 .contact #menu-contact a,
+.page-cafe #menu-cafe a,
 .shop #menu-shop a,
-.shop-cart #menu-cart a {
+.shop-cart #menu-cart a,
+.user-profile #menu-profile a {
     text-decoration: underline;
 }
 
@@ -375,8 +379,8 @@ a.product-details {
 
 #feedback {
     padding: .5em 1em;
-    background: #EEECBB;
-    border: 2px solid #AFA34E;
+    background: #fff;
+    border: 2px solid red;
     font-size: 120%;
 }
 
