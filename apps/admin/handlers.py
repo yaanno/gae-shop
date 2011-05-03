@@ -135,6 +135,7 @@ class ProductHandler(BaseHandler):
             price = self.form.price.data
             unit = self.form.unit.data
             live = self.form.live.data
+            promoted = self.form.promoted.data
             tags = self.form.tags.data
             language = self.form.language.data
             if tags is not None:
@@ -147,11 +148,12 @@ class ProductHandler(BaseHandler):
                 product.price = price
                 product.unit = unit
                 product.live = live
+                product.promoted = promoted
                 product.tags = tags
                 product.language = language
             # save new form
             else:
-                product = Product(name=name, description=description, price=price, unit=unit, live=live, tags=tags, language=language)
+                product = Product(name=name, description=description, price=price, unit=unit, live=live, promoted=promoted, tags=tags, language=language)
             if product.put():
                 return redirect('/admin/shop/products/')
         return self.get(**kwargs)

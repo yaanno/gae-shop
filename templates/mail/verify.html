@@ -1,13 +1,13 @@
 {% extends "mail/mail_base.html" %}
 
-{% block username %}{{ username }},{% endblock %}
+{% block username %}{{ user }},{% endblock %}
 
 {% block body %}
 
-Please verify your membership at Lumen Kávé by clicking this link:
+{{ _('Please verify your membership at Lumen Kávé by clicking this link:') }}
 
 http://www.lumenkave.hu/verify/{{ profile.verification_code }}/
 
-Thank you for registering at Lumen Kávé!
+{{ _('Thank you for registering at Lumen Kávé!') }}
 
 {% endblock %}

@@ -1,18 +1,18 @@
 {% extends "mail/mail_base.html" %}
 
-{% block username %}{{ username }},{% endblock %}
+{% block username %}{{ user }},{% endblock %}
 
 {% block body %}
-You ordered the following products at {{ format_datetime(order.posted, 'y.M.d') }} on our site, http://www.lumenkave.hu
+{{ _('You ordered the following products at') }} {{ format_datetime(order.posted, 'y.M.d') }} {{ _('on') }} http://www.lumenkave.hu
 {% for item in order.products %}
     {{ item.product_name }}: {{ item.product_quantity }} {{ _('grams') }} for {{ format_currency( ( (item.product_quantity / 250) * item.product_price), 'HUF', locale='hu_HU') }}
 {% endfor %}
 
-Total price: {{ format_currency( order.total, 'HUF', locale='hu_HU') }}
+{{ _('Total price') }}: {{ format_currency( order.total, 'HUF', locale='hu_HU') }}
 
-Your order will be delivered to:
+{{ _('Your order will be delivered to') }}:
 {{ order.delivery }}
 
-Thank you for ordering coffee from Lumen Kávé!
+{{ _('Thank you for ordering coffee from Lumen Kávé!') }}
 
 {% endblock %}

@@ -7,6 +7,7 @@
 
 """
 import logging
+from django.utils import simplejson as json
 
 from tipfy import redirect_to, render_json_response, cached_property, redirect
 import tipfy.ext.i18n as i18n
@@ -72,23 +73,36 @@ class ShopTagListHandler(BaseHandler):
 
 
 class CartHandler(BaseHandler):
+    # TODO: finish the update part: add / remove items / counts
     
     def _add_to_cart(self, product_id=None, product_quantity=None, product_name=None, product_price=None, product_unit=None):
         products = self.get_cart_content()
         
-        # TODO: check if update, delete or new item
+        #logging.warn(products)
         
-        products.append({
-            'product_quantity': product_quantity,
-            'product_id': product_id,
-            'product_name': product_name,
-            'product_price': product_price,
-            'product_unit': product_unit,
-        })
+        def do_add_to_cart():
+            products.append({
+                'product_quantity': product_quantity,
+                'product_id': product_id,
+                'product_name': product_name,
+                'product_price': product_price,
+                'product_unit': product_unit,
+            })
+        
+        existing_product = [p for p in products if p['product_id'] == product_id]
+        
+        if len(existing_product):
+            existing_product[0]['product_quantity'] += product_quantity
+        else:
+            do_add_to_cart()
         
         return products
-
-
+    
+    
+    def _update_cart(self):
+        pass
+    
+    
     def get(self, **kwargs):
         products = self.session.get('products')
         language = self.get_locale()
@@ -101,6 +115,31 @@ class CartHandler(BaseHandler):
         }
         
         return self.render_response('shop/cart.html', **context)
+    
+    def put(self,**kwargs):
+        products_cart = self.get_cart_content()
+        products = self.request.form.keys()
+        products = json.loads(products[0])
+        
+        for product in products['products']:
+            logging.warn(product['product_id'])
+            match = [p for p in products_cart if p['product_id'] == int(product['product_id'])]
+            logging.warn(match)
+            
+            q = int(product['product_quantity'])
+            
+            if q == 0:
+                products_cart.remove(match[0])
+            else:
+                match[0]['product_quantity'] = q
+        
+        context = {}
+        if products is not None:
+            context = { 'success': True, 'products': products }
+        else:
+            context = { 'success': False, 'products': [] }
+        return render_json_response(context)
+    
     
     def post(self, **kwargs):
         product_quantity = self.request.form.get('product_quantity', type=int)
@@ -120,6 +159,7 @@ class CartHandler(BaseHandler):
         else:
             context = { 'success': False, 'products': [] }
         return render_json_response(context)
+        
 
 
 class OrderHandler(BaseHandler):

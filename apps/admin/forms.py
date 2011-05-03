@@ -58,6 +58,10 @@ class ProductForm(Form):
         label=_('Set live'),
         default=True,
         description=_('Live products will appear immediately'))
+    promoted = fields.BooleanField(
+        label=_('Place on the front page'),
+        default=False,
+        description=_('It will appear on the front page'))
     tags = fields.TextField(
         label=_('Tags'),
         description=_('List of tags, separated by comma (,)'))

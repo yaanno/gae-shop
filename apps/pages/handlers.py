@@ -41,11 +41,13 @@ class WelcomePageHandler(BaseHandler):
     
     def get(self, **kwargs):
         language = self.get_locale()
-        products = Product.get_latest_products(3, language=language)
+        product = Product.get_promoted_product(language=language)
+        logging.warn(product)
         posts = BlogPost.get_latest_posts(5, language=language)
         context = {
-            'products': products,
+            'product': product,
             'posts': posts,
+            'format_currency': i18n.format_currency,
             'language': language,
         }
         return self.render_response('pages/welcome.html', **context)

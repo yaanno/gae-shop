@@ -277,7 +277,9 @@ class ProfileHandler(AuthHandler):
 class VerifyProfileHandler(AuthHandler):
     
     def get(self, verification_code):
-        verified = Profile.verify_code(verification_code)
-        logging.info(verified)
-        if verified:
+        verify = Profile.verify_code(verification_code)
+        logging.info(verify)
+        if verify == "verified" or "already_verified":
             return redirect_to('user/profile')
+        else:
+            return Response('Cannot verify you')

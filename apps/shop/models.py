@@ -21,11 +21,19 @@ class Product(Taggable):
     slug = SlugProperty(name)
     description = db.TextProperty(required=True)
     live = db.BooleanProperty(required=True)
+    promoted = db.BooleanProperty(required=True)
     price = db.FloatProperty(required=True)
     unit = db.StringProperty(required=True)
     created = db.DateTimeProperty(required=True, auto_now_add=True)
     modified = db.DateTimeProperty(required=True, auto_now=True)
     language = db.StringProperty(required=True)
+    
+    @classmethod
+    def get_promoted_product(self, language=None):
+        query = self.all().filter('live =', True).filter('promoted =', True)
+        if language:
+            query.filter('language =', language)
+        return query.get()
     
     @classmethod
     def get_products_by_tag(self, tag, language=None):
@@ -75,16 +83,16 @@ class Order(db.Model):
     
     """
     items = db.StringProperty(required=True)
-    user = db.ReferenceProperty(User)
+    user = db.ReferenceProperty(User, required=True)
     comment = db.TextProperty()
     date = db.DateTimeProperty(auto_now_add=True)
     delivered = db.BooleanProperty(default=False)
     notified = db.BooleanProperty(default=False)
     delivery_method = db.TextProperty(required=True)
-    delivery_address = db.StringProperty(required=True)
-    delivery_city = db.StringProperty(required=True)
-    delivery_zip = db.StringProperty(required=True)
-    delivery_info = db.TextProperty(required=True)
+    delivery_address = db.StringProperty()
+    delivery_city = db.StringProperty()
+    delivery_zip = db.StringProperty()
+    delivery_info = db.TextProperty()
     
     @classmethod
     def get_orders_by_user(self, user_key=None):
@@ -108,7 +116,7 @@ class Order(db.Model):
                 'delivered': order.delivered,
             }
             orders.append(order_item)
-        
+        logging.warn(orders)
         return orders
     
     @classmethod

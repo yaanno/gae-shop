@@ -10,13 +10,20 @@
 <div id="pagecontent">
     <h1><a href="{{ url_for('shop/index') }}">{{ _('Beans to your house') }}</a> > {{ _('Cart') }}</h1>
     {% if products %}
+        <form id="update_cart" name="products">
         {% include "partials/cart.html" %}
+        </form>
+        <button type="button" id="modify_cart">{{ _('Edit Cart Content') }}</button>
         <p>
-            <a href="{{ url_for('shop/index') }}">{{ _('Continue shopping.') }}</a> {{ _('or') }} <a href="{{ url_for('shop/order') }}">{{ _('Place order') }}</a>.
+            <a href="{{ url_for('shop/index') }}">{{ _('Continue shopping') }}</a> {{ _('or') }} <a href="{{ url_for('shop/order') }}">{{ _('Place order') }}</a>.
         </p>
     {% else %}
         <p>{{ _('Your cart is empty.') }} <a href="{{ url_for('shop/index') }}">{{ _('Continue shopping.') }}</a></p>
     {% endif %}
     
 </div>
+{% endblock %}
+{% block js %}
+    {{ super() }}
+    <script src="/js/cart.js"></script>
 {% endblock %}

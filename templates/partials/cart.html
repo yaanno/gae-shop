@@ -1,16 +1,18 @@
-<ul>
+<ul id="cart_item_list">
+    
     {% for product in products %}
     <li>
         {{ product.product_name }}
         {% if product.product_unit == "gram" %}
-            ({{ product.product_quantity }} {{ _('grams') }}): 
+            (<span data-product-price="{{ product.product_price }}" data-product-id="{{ product.product_id }}" data-product-unit="gram" data-product-quantity>{{ product.product_quantity }}</span> {{ _('grams') }}): 
             {{ format_currency( ( (product.product_quantity / 250) * product.product_price), 'HUF', locale=language) }}
         {% elif product.product_unit == "piece" %}
-            ({{ product.product_quantity }} {{ _('piece') }}): 
+            (<span data-product-price="{{ product.product_price }}" data-product-id="{{ product.product_id }}" data-product-unit="piece" data-product-quantity>{{ product.product_quantity }}</span> {{ _('piece') }}): 
             {{ format_currency( ( product.product_quantity * product.product_price), 'HUF', locale=language) }}
         {% endif %}
     </li>
     {% endfor %}
+    
 </ul>
 <p>
     {{ _('Total') }} = {{ format_currency(total, 'HUF', locale=language) }}

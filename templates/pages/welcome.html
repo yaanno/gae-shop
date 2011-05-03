@@ -7,14 +7,19 @@
     <div id="daily_offer">
         <div id="daily_coffee">
             <h2><a href="{{ url_for('shop/index') }}">{{ _('Beans and more') }}</a></h2>
-            <p>
-                <a href="{{ url_for('shop/index') }}"><img src="/img/daily-illustration.png" alt="Winter Espresso"></a>
-                <span class="daily-product">Winter Espresso</span>
-                <span class="daily-price">Price £7.00 (250g)</span>
-            </p>
-            <p>
-                On the nose this espresso abounds with notes of creme brulee and rich, sweet fruitcake aromatics. These precede a luscious chocolate mousse mouthfeel - at once both dense, and yet seemingly air-filled and supple. In the cup, the espresso yields generous amounts of muscavado sugar and toffee sweetness with gentle overtones of soft baking spices.
-            </p>
+            {% if product %}
+                <p>
+                    <a href="{{ url_for('shop/index') }}"><img src="/img/daily-illustration.png" alt="Winter Espresso"></a>
+
+                    <a href="/shop/product/{{ product.slug }}/"><span class="daily-product">{{ product.name }}</span></a>
+                    <span class="daily-price">{{ _('Price') }} {{ format_currency(product.price, 'HUF', locale=language) }} (250g)</span>
+                </p>
+                <p>
+                    {{ product.description|striptags|truncate(255) }}
+                </p>
+            {% endif %}
+            
+            
             <p>
                 <strong><a href="{{ url_for('shop/index') }}">{{ _('Browse Products') }}</a></strong>
             </p>

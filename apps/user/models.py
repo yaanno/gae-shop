@@ -36,10 +36,11 @@ class Profile(db.Model):
         query = self.all()
         query.filter("verification_code =", verification_code).filter("verified =", False)
         profile = query.get()
+        logging.warn(dir(profile))
         if profile:
-            self.set_verified(profile)
+            return self.set_verified(profile)
         else:
-            return True
+            return "already_verified"
     
     @classmethod
     def set_verified(self, profile=None):
@@ -48,8 +49,8 @@ class Profile(db.Model):
             _profile = Profile.get(profile.key())
             _profile.verified = True
             if _profile.put():
-                return True
-            return False
+                return "verified"
+            return "couldnt_verify"
         
         return db.run_in_transaction(txn)
 

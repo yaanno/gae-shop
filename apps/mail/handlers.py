@@ -25,7 +25,6 @@ from apps.user.models import Profile
 from apps.shop.models import Order
 
 
-
 class MailHandler(AuthHandler):
     pass
 
@@ -43,7 +42,7 @@ class OrderMailHandler(MailHandler, AuthHandler):
             'username': user.username,
             'format_currency': i18n.format_currency,
         }
-        
+        logging.warn(context)
         body = render_template('mail/order.html', **context)
         message = mail.EmailMessage()
         
@@ -64,6 +63,7 @@ class VerificationMailHandler(MailHandler):
         Send e-mail to user ordered a delivery and the admin
         '''
         user = User.get(user_key)
+        logging.warn(user)
         profile = Profile.all().filter('user =', user.key()).get()
         
         if profile.verified:
@@ -83,6 +83,7 @@ class VerificationMailHandler(MailHandler):
         message.sender = SENDER
         message.reply_to = REPLY_TO
         message.send()
+        
         return Response(body)
 
 
