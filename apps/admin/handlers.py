@@ -67,7 +67,7 @@ class FileHandler(BaseHandler, BlobstoreUploadMixin):
             
             uploaded_files = self.get_uploads('file_data')
             blob_info = uploaded_files[0]
-            
+            logging.warn(blob_info)
             new_file = File(title=title, file_data=blob_info.key())
             # checking the file
             response = redirect_to('admin/files/index')

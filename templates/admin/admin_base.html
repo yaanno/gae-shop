@@ -32,8 +32,13 @@
 <script type="text/javascript" charset="utf-8">
     tinyMCE.init({
         mode: "textareas",
-        theme: "simple",
+        theme: "advanced",
+        force_p_newlines : true,
+        document_base_url: '/',
+        external_image_list_url: "/file/list/images",
         editor_selector : "mceEditor"
-    });
+    })
+    
+    
 </script>
 {% endblock %}

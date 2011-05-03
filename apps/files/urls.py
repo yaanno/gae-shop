@@ -20,6 +20,7 @@ def get_rules(app):
     rules = [
         HandlerPrefix('apps.files.handlers.', [
             Rule('/file/<resource>', endpoint='blobstore/serve', handler='FileServe'),
+            Rule('/file/list/images', endpoint='list/images', handler='ImageBrowser'),
         ]),
     ]
 
