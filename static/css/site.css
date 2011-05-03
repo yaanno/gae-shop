@@ -186,7 +186,7 @@ a:hover {
     margin-top: 5px;
     color: #999;
     font-weight: bold;
-    display: block;
+    display: inline-block;
 }
 
 #daily_offer .daily-price {
@@ -269,6 +269,31 @@ a:hover {
     display: block;
 }
 
+#cart_item_list {
+    display: inline-block;
+    padding-bottom: .5em;
+    border-bottom: 1px solid #000;
+}
+
+#cart_item_list + p {
+    margin-left: 2em;
+}
+
+#cart_item_list input {
+    width: 40px;
+}
+
+/* =order */
+
+#delivery_method li {
+    display: inline-block;
+    margin-right: 1em;
+}
+
+#delivery_method li label {
+    display: inline-block;
+}
+
 /* =products */
 
 .shop h1 {
@@ -349,6 +374,9 @@ a.product-details {
     font-style: italic;
 }
 
+.shop-product #add_form {
+    margin: 1em 0;
+}
 
 /* =pages */
 
