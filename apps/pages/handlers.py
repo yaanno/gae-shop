@@ -16,7 +16,7 @@ from apps.user.handlers import AuthHandler
 from apps.shop.models import Product
 from apps.blog.models import BlogPost
 from apps.pages.models import Page
-
+from apps.daily.models import Offer
 
 class BaseHandler(AuthHandler):
     
@@ -42,11 +42,12 @@ class WelcomePageHandler(BaseHandler):
     def get(self, **kwargs):
         language = self.get_locale()
         product = Product.get_promoted_product(language=language)
-        logging.warn(product)
         posts = BlogPost.get_latest_posts(5, language=language)
+        offer = Offer.get_latest_offer(language=language)
         context = {
             'product': product,
             'posts': posts,
+            'offer': offer,
             'format_currency': i18n.format_currency,
             'language': language,
         }

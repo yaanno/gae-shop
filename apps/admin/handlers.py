@@ -15,12 +15,16 @@ from tipfy.ext.i18n import gettext as _
 from tipfy.ext.auth import admin_required
 from tipfy.ext.blobstore import BlobstoreUploadMixin
 
-from forms import BlogPostForm, ProductForm, PageForm, FileForm
+from apps.shop.forms import OrderForm
+from forms import BlogPostForm, ProductForm, PageForm, FileForm, OfferForm
 from apps.user.handlers import AuthHandler
 from apps.blog.models import BlogPost
-from apps.shop.models import Product
+from apps.shop.models import Product, Order
 from apps.pages.models import Page
 from apps.files.models import File
+from apps.daily.models import Offer
+
+from helpers import get_files
 
 
 class BaseHandler(AuthHandler):
@@ -57,7 +61,7 @@ class FileHandler(BaseHandler, BlobstoreUploadMixin):
             'upload_url': blobstore.create_upload_url(url_for('blobstore/upload'))
         }
         return self.render_response(template, **context)
-
+    
     @admin_required
     def post(self, **kwargs):
         
@@ -76,7 +80,7 @@ class FileHandler(BaseHandler, BlobstoreUploadMixin):
                 return response
             
         return self.get(**kwargs)
-
+    
     @cached_property
     def form(self):
         """Form instance as cached_property"""
@@ -105,20 +109,28 @@ class ProductsIndexHandler(BaseHandler):
 
 
 class ProductHandler(BaseHandler):
+    
     @admin_required
     def get(self, product_id=None, **kwargs):
         """Return a product to edit or an empty form to create"""
         template = 'admin/product/new.html'
+        files = get_files()
+        #print self.form.photo.choices
         context = {
+            'files': files,
             'form': self.form,
         }
+        
         # render edit form
         if product_id is not None:
             product = Product.get_by_id(product_id)
             if product:
                 self.form = ProductForm(obj=product)
                 self.form.tags.data = ', '.join(product.tags)
-                context.update({ 'form': self.form })
+                product_photo = ''
+                if product.photo:
+                    product_photo = product.photo.key().id()
+                context.update({ 'form': self.form, 'product_photo': product_photo })
                 template = 'admin/product/edit.html'
             else:
                 return redirect('/admin/shop/')
@@ -129,6 +141,10 @@ class ProductHandler(BaseHandler):
     def post(self, product_id=None, **kwargs):
         """Handle submitted form data"""
         # validate form
+        
+        photo = self.request.form.get('photo') or None
+        if photo:
+            photo = File.get_by_id(int(photo))
         if self.form.validate():
             name = self.form.name.data
             description = self.form.description.data
@@ -143,6 +159,7 @@ class ProductHandler(BaseHandler):
             # save edit form
             if product_id:
                 product = Product.get_by_id(product_id)
+                product.photo = photo
                 product.name = name
                 product.description = description
                 product.price = price
@@ -153,7 +170,7 @@ class ProductHandler(BaseHandler):
                 product.language = language
             # save new form
             else:
-                product = Product(name=name, description=description, price=price, unit=unit, live=live, promoted=promoted, tags=tags, language=language)
+                product = Product(name=name, description=description, price=price, unit=unit, live=live, promoted=promoted, tags=tags, language=language, photo=photo)
             if product.put():
                 return redirect('/admin/shop/products/')
         return self.get(**kwargs)
@@ -265,7 +282,7 @@ class PageHandler(BaseHandler):
                 return redirect('admin/page/')
         # render new
         return self.render_response(template, **context)
-
+    
     @admin_required
     def post(self, page_id=None, **kwargs):
         """Handle submitted form data"""
@@ -288,8 +305,131 @@ class PageHandler(BaseHandler):
             if page.put():
                 return redirect('admin/page')
         return self.get(**kwargs)
-
+    
     @cached_property
     def form(self):
         """Form instance as cached_property"""
         return PageForm(self.request)
+
+
+class OrdersIndexHandler(BaseHandler):
+    @admin_required
+    def get(self, **kwargs):
+        orders = Order.get_undelivered_orders()
+        context = {
+            'orders': orders,
+        }
+        return self.render_response('admin/orders/index.html', **context)
+
+
+class OrderStateHandler(BaseHandler):
+    @admin_required
+    def get(self, order_id=None, **kwargs):
+        order = Order.get_id(order_id)
+        logging.warn(order)
+        if order:
+            self.form = OrderForm(obj=order[0])
+        context = {
+            'form': self.form,
+            'info': order[1],
+        }
+        return self.render_response('admin/orders/edit.html', **context)
+    
+    @admin_required
+    def post(self, order_id=None, **kwargs):
+        """Handle submitted form data"""
+        # validate form
+        if self.request.form.get('delivered') == 'on':
+            delivered = True
+            logging.warn(delivered)
+            # saving edited
+            order = Order.get_by_id(order_id)
+            order.delivered = delivered
+            if order.put():
+                return redirect('admin/shop/orders')
+        return self.get(order_id)
+    
+    @cached_property
+    def form(self):
+        return OrderForm(self.request)
+
+
+class OfferIndexHandler(BaseHandler):
+    """Return date ordered blog posts"""
+    @admin_required
+    def get(self, **kwargs):
+        offers = Offer.all().order('-modified')
+        result = offers.fetch(10)
+        context = {
+            'offers': result,
+        }
+        return self.render_response('admin/daily/index.html', **context)
+
+
+class OfferHandler(BaseHandler):
+    """Manage individual blog posts"""
+    @admin_required
+    def get(self, offer_id=None, **kwargs):
+        """Return an offer to edit or an empty form to create"""
+        template = 'admin/daily/new.html'
+        files = get_files()
+        context = {
+            'form': self.form,
+            'files': files,
+        }
+        # render edit
+        if offer_id is not None:
+            offer = Offer.get_by_id(offer_id)
+            offer_photo = ''
+            if offer.photo:
+                offer_photo = offer.photo.key().id()
+            if offer:
+                self.form = OfferForm(obj=offer)
+                context.update({ 'form': self.form, 'offer_photo': offer_photo })
+                template = 'admin/daily/edit.html'
+            else:
+                return redirect('admin/daily/')
+        # render new
+        return self.render_response(template, **context)
+    
+    @admin_required
+    def post(self, offer_id=None, **kwargs):
+        """Handle submitted form data"""
+        photo = self.request.form.get('photo') or None
+        if photo:
+            photo = File.get_by_id(int(photo))
+        # validate form
+        if self.form.validate():
+            title = self.form.title.data
+            intro = self.form.intro.data
+            content = self.form.content.data
+            promoted = self.form.promoted.data
+            live = self.form.live.data
+            language = self.form.language.data
+            
+            if offer_id:
+                offer = Offer.get_by_id(offer_id)
+                offer.title = title
+                offer.intro = intro
+                offer.content = content
+                offer.live = live
+                offer.promoted = promoted
+                offer.language = language
+                offer.photo = photo
+            # creating new
+            else:
+                offer = Offer(title=title, intro=intro, content=content, live=live, promoted=promoted, language=language, photo=photo)
+            if offer.put():
+                return redirect('admin/daily')
+        return self.get(**kwargs)
+    
+    @cached_property
+    def form(self):
+        """Form instance as cached_property"""
+        return OfferForm(self.request)
+
+
+
+
+
+

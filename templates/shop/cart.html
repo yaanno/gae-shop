@@ -8,7 +8,7 @@
 
 {% block pagecontent %}
 <div id="pagecontent">
-    <h1><a href="{{ url_for('shop/index') }}">{{ _('Beans to your house') }}</a> > {{ _('Cart') }}</h1>
+    <h1><a href="{{ url_for('shop/index') }}">{{ _('Products') }}</a> > {{ _('Cart') }}</h1>
     {% if products %}
         <form id="update_cart" name="products">
         {% include "partials/cart.html" %}

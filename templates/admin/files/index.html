@@ -2,8 +2,8 @@
 {% block title %}
     {{ _('Manage files') }}
 {% endblock %}
-{% block content %}
-<div id="pagecontent">
+{% block subcontent %}
+
     <nav>
         <ul>
             <li><a href="{{ url_for('admin/index') }}">Administration main page</a></li>
@@ -33,5 +33,5 @@
     {% else %}
         <p>{{ _('No files yet.') }}</p>
     {% endif %}
-</div>
+
 {% endblock %}

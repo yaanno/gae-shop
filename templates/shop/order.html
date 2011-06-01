@@ -6,29 +6,95 @@
     {{ _('Place order') }} | {{ super() }}
 {% endblock %}
 
+{% block pageclass %}{{ super() }} order{% endblock %}
+
 {% block css %}
 {{ super() }}
     <link rel="stylesheet" href="/css/forms.css">
 {% endblock %}
 
 {% block content %}
-<div id="pagecontent">
+<div id="pagecontent" style="position:relative">
     <h1>{{ _('Place order') }}</h1>
     
-    <p>{{ _('You are about to order the following products') }}:</p>
+    <h2>{{ _('You are about to order the following products') }}:</h2>
     
     {% include "partials/cart.html" %}
+    
+    <p class="fee">
+        Delivery fee = Ft<span id="delivery_fee"></span>
+    </p>
+    <p class="payment">
+        Total price (delivery fee incl.) = Ft<span id="total_price"></span>
+    </p>
+    
+    <div id="order_info" style="position:absolute;width:300px;right:40px;top:20px;font-size:1.1em">
+        <h2>
+            {{ _('Order information') }}
+        </h2>
+        <p>
+            {{ _('There is a 10 percent discount on our products, if you <strong>order in advance and pick up</strong> your order in our shop.') }}
+        </p>
+        <p>
+            {{ _('In central Budapest by <strong>bike courier</strong>: 800 HUF') }}
+            <span style="font-size:.9em">
+                ({{ _('Payment at Receipt') }})
+            </span>
+        </p>
+        <p>
+            {{ _('To any other part of Hungary by our delivery partner: 1200 HUF') }}
+            <span style="font-size:.9em">
+                ({{ _('Payment at Receipt') }})
+            </span>
+        </p>
+    </div>
     
     <form method="post" action="{{ current_url }}" enctype="multipart/form-data" class="tipfy-form">
         <ul>
             <li>{{ form_field(form.delivery_method) }}</li>
-            <li>{{ form_field(form.delivery_address) }}</li>
-            <li>{{ form_field(form.delivery_city) }}</li>
-            <li>{{ form_field(form.delivery_zip) }}</li>
+            
+            <li id="delivery_method_options">
+                <ul style="margin:0">
+                    <li>
+                        <select id="select_delivery_area" name="select_delivery_area">
+                            <option value="">{{ _('Please select your location') }}</option>
+                            <optgroup label="{{ _('Out of Central Budapest') }}">
+                                <option value="Hungary">{{ _('Hungary') }}</option>
+                            </optgroup>
+                            <optgroup label="{{ _('Inner Districts of Budapest') }}">
+                                <option value="1">{{ _('District I') }}</option>
+                                <option value="2">{{ _('District II') }}</option>
+                                <option value="3">{{ _('District III') }}</option>
+                                <option value="5">{{ _('District V') }}</option>
+                                <option value="6">{{ _('District VI') }}</option>
+                                <option value="7">{{ _('District VII') }}</option>
+                                <option value="8">{{ _('District VIII') }}</option>
+                                <option value="9">{{ _('District IX') }}</option>
+                                <option value="11">{{ _('District XI') }}</option>
+                                <option value="12">{{ _('District XII') }}</option>
+                                <option value="13">{{ _('District XIII') }}</option>
+                                <option value="14">{{ _('District XIV') }}</option>
+                            </optgroup>
+                        </select>
+                        {{ form_field(form.delivery_area) }}
+                    </li>
+
+
+                    <li>{{ form_field(form.delivery_address) }}</li>
+                    <li>{{ form_field(form.delivery_city) }}</li>
+                    <li>{{ form_field(form.delivery_zip, maxlength='4') }}</li>
+                </ul>
+            </li>
+            
+            
             <li>{{ form_field(form.delivery_info) }}</li>
             <li>{{ form_field(form.comment) }}</li>
         </ul>
         <p><input type="submit" name="submit" value="{{ _('Place order') }}"></p>
     </form>
 </div>
+{% endblock %}
+{% block js %}
+    {{ super() }}
+    <script src="/js/order.js"></script>
 {% endblock %}

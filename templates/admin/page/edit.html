@@ -4,7 +4,7 @@
     {{ _('Edit page') }} | {{ form.title.data }} | {{ super() }}
 {% endblock %}
 
-{% block content %}
+{% block subcontent %}
     <h1>{{ _('Edit page') }}: {{ form.title.data }}</h1>
     <form method="post" action="" enctype="multipart/form-data" class="tipfy-form">
         {% include "admin/page/_form.html" %}

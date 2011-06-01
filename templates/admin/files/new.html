@@ -3,7 +3,8 @@
     {{ _('Create file upload') }} | {{ super() }}
 {% endblock %}
 
-{% block content %}
+{% block subcontent %}
+    <h1>{{ _('Create new file') }}</h1>
     <form method="post" action="{{ upload_url }}" enctype="multipart/form-data" class="tipfy-form">
         {% include "admin/files/_form.html" %}
         <input type="submit" name="submit" value="Upload file" class="submit"> or <a href="{{ url_for('admin/files/index') }}">cancel</a>

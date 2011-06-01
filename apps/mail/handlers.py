@@ -31,29 +31,35 @@ class MailHandler(AuthHandler):
 
 class OrderMailHandler(MailHandler, AuthHandler):
     
-    def get(self, **kwargs):
+    def post(self, **kwargs):
         '''
         Send e-mail to user ordered a delivery and the admin
         '''
-        user = self.auth_current_user # todo: use real user
-        order = Order.get_orders_by_user(user)
+        order_id = self.request.form.get('order_id')
+        order = Order.get_id(int(order_id))
+        user = order[0].user
+        language = self.get_locale()
+        
         context = {
-            'order': order,
-            'username': user.username,
+            'user': user,
+            'order': order[0],
+            'info': order[1],
+            'language': language,
             'format_currency': i18n.format_currency,
         }
-        logging.warn(context)
+        
         body = render_template('mail/order.html', **context)
         message = mail.EmailMessage()
-        
         message.to = user.email
         message.body = body
+        message.bcc = SHOP
         message.subject = SUBJECT_ORDER
         message.sender = SENDER
         message.reply_to = REPLY_TO
-        message.send()
+        if message.send():
+            logging.info(body)
         
-        return Response(body)
+        return Response('')
 
 
 class VerificationMailHandler(MailHandler):
@@ -76,14 +82,15 @@ class VerificationMailHandler(MailHandler):
         
         body = render_template('mail/verify.html', **context)
         message = mail.EmailMessage()
-
         message.to = user.email
         message.body = body
+        message.bcc = SHOP
         message.subject = SUBJECT_REGISTRATION
         message.sender = SENDER
         message.reply_to = REPLY_TO
-        message.send()
+        if message.send():
+            logging.info(body)
         
-        return Response(body)
+        return Response('')
 
 

@@ -14,6 +14,6 @@
     {% endfor %}
     
 </ul>
-<p>
-    {{ _('Total') }} = {{ format_currency(total, 'HUF', locale=language) }}
+<p class="total" data-total-price="{{ total }}">
+    {{ _('Total') }} = <span>{{ format_currency(total, 'HUF', locale=language) }}</span>
 </p>

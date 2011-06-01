@@ -9,6 +9,7 @@
 from tipfy.ext.wtforms import Form, fields, validators
 from tipfy.ext.i18n import gettext as _
 
+
 class BlogPostForm(Form):
     """Form class for Blog post validation"""
     title = fields.TextField(
@@ -22,6 +23,7 @@ class BlogPostForm(Form):
     content = fields.TextAreaField(
         label=_('Content'),
         description=_('The main text for your blog post'),
+        id="post_content",
         validators=[validators.Required()])
     live = fields.BooleanField(
         label=_('Set live'),
@@ -31,10 +33,39 @@ class BlogPostForm(Form):
         description=_('List of tags, separated by comma (,)'))
     language = fields.SelectField(
         label = _('Language'),
-        description = _('The site language the product will appear'),
+        description = _('The site language the post will appear'),
         choices = [('hu_HU', _('Magyar')), ('en_US', _('English'))],
         default = 'hu_HU',
         validators=[validators.Required()])
+
+
+class OfferForm(Form):
+    """Form class for Daily offer validation"""
+    title = fields.TextField(
+        label=_('Title'),
+        description=_('The title of your offer'),
+        validators=[validators.Required()])
+    intro = fields.TextAreaField(
+        label=_('Intro'),
+        description=_('A limited length lead text that will appear on the front page'),
+        validators=[validators.Required()])
+    content = fields.TextAreaField(
+        label=_('Content'),
+        description=_('The main text for your offer if you intend to make it available as a separate page.'),
+        id="offer_content")
+    live = fields.BooleanField(
+        label=_('Set live'),
+        description=_('Live offers will appear immediately'))
+    promoted = fields.BooleanField(
+        label=_('Promoted'),
+        description=_('Promoted offers will appear on the front page.'))
+    language = fields.SelectField(
+        label = _('Language'),
+        description = _('The site language the offer will appear'),
+        choices = [('hu_HU', _('Magyar')), ('en_US', _('English'))],
+        default = 'hu_HU',
+        validators=[validators.Required()])
+
 
 class ProductForm(Form):
     name = fields.TextField(
@@ -79,6 +110,7 @@ class PageForm(Form):
         validators=[validators.Required()])
     content = fields.TextAreaField(
         label=_('Content'),
+        id="page_content",
         description=_('Content of the page'),
         validators=[validators.Required()])
     live = fields.BooleanField(

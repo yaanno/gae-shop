@@ -7,6 +7,9 @@
 
 """
 import logging
+
+from google.appengine.api import taskqueue
+
 from django.utils import simplejson as json
 
 from tipfy import redirect_to, render_json_response, cached_property, redirect
@@ -187,17 +190,22 @@ class OrderHandler(BaseHandler):
         if self.form.validate():
             user = current_user
             delivery_method = self.form.delivery_method.data
+            delivery_area = self.form.delivery_area.data
             delivery_info = self.form.delivery_info.data
             delivery_address = self.form.delivery_address.data
             delivery_city = self.form.delivery_city.data
             delivery_zip = self.form.delivery_zip.data
             comment = self.form.comment.data
             items = str(products)
-            logging.info(items)
-            order = Order(items=items, user=user.key(), delivery_method=delivery_method, delivery_address=delivery_address, delivery_city=delivery_city, delivery_zip=delivery_zip, comment=comment, delivery_info=delivery_info)
+            order = Order(items=items, user=user.key(), delivery_method=delivery_method, delivery_address=delivery_address, delivery_city=delivery_city, delivery_zip=delivery_zip, comment=comment, delivery_info=delivery_info, delivery_area=delivery_area)
             
             if order.put():
+                url = '/mail/notify/order/'
+                order_id = str(order.key().id())
+                payload = { 'order_id': order_id }
+                task = taskqueue.add(url=url, params=payload)
                 return redirect('shop/thankyou')
+            
             
         return self.get(**kwargs)
     
@@ -210,7 +218,6 @@ class PostOrderHandler(BaseHandler):
     
     @user_required
     def get(self, **kwargs):
-        # empty the cart!
         self.reset_cart()
-        return redirect_to('pages/welcome')
-
+        context = {}
+        return self.render_response('shop/thankyou.html', **context)

@@ -2,7 +2,8 @@
     {% for product in products %}
         <li class="{{ loop.cycle('odd', 'even') }}">
             <div class="product">
-                <a href="/shop/product/{{ product.slug }}/"><img src="/img/product_default.png" width="150" height="150"></a>
+                
+                <a href="/shop/product/{{ product.slug }}/"><img src="{% if product.photo %}/file/{{ product.photo.file_data.key() }}{% else %}/img/product_default.png{% endif %}" width="150" height="150"></a>
                 <h2><a href="/shop/product/{{ product.slug }}/">{{ product.name }}</a></h2>
                 <p class="price">
                     {{ _('Price') }} {{ format_currency(product.price, 'HUF', locale=language) }}

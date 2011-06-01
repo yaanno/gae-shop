@@ -6,17 +6,20 @@
     
     <div id="daily_offer">
         <div id="daily_coffee">
-            <h2><a href="{{ url_for('shop/index') }}">{{ _('Beans and more') }}</a></h2>
+            <h2><a href="{{ url_for('shop/index') }}">{{ _('Webshop') }}</a></h2>
             {% if product %}
                 <p>
-                    <a href="{{ url_for('shop/index') }}"><img src="/img/daily-illustration.png" alt="Winter Espresso"></a>
-
+                    <a href="{{ url_for('shop/index') }}"><img src="/img/daily-illustration.png" alt="{{ _('Illustration for the Webshop') }}"></a>
+                </p>
+                <p>
                     <a href="/shop/product/{{ product.slug }}/"><span class="daily-product">{{ product.name }}</span></a>
                     <span class="daily-price">{{ _('Price') }} {{ format_currency(product.price, 'HUF', locale=language) }} (250g)</span>
                 </p>
-                <p>
+                <div class="product-description">
+                    <a class="product-illustration" href="/shop/product/{{ product.slug }}/"><img alt="{{ _('Product illustration for') }} {{ product.name }}" src="{% if product.photo %}/file/{{ product.photo.file_data.key() }}{% else %}/img/product_default.png{% endif %}" width="150" height="150"></a>
                     {{ product.description|striptags|truncate(255) }}
-                </p>
+                    <a href="/shop/product/{{ product.slug }}/" class="product-more"><strong>{{ _('Read more...') }}</strong></a>
+                </div>
             {% endif %}
             
             <p>
@@ -24,22 +27,54 @@
             </p>
         </div>
         <div id="daily_menu">
-            <h2><a href="/page/menu/">{{ _('Café') }}</a></h2>
-            <p>
-                <a href="/page/menu/"><img src="/img/daily-illustration.png" alt="Winter Espresso"></a>
-                <span class="daily-product">Winter Espresso</span>
-                <span class="daily-price">Price £7.00 (250g)</span>
+            
+            <h2>{% if language == 'en_US' %}
+                <a href="/page/menu/">
+                {% else %}
+                <a href="/page/etlap/">
+                {% endif %}
+                {{ _('Café') }}</a></h2>
+            <p>{% if language == 'en_US' %}
+                <a href="/page/menu/">
+                {% else %}
+                <a href="/page/etlap/">
+                {% endif %}
+                    <img src="/img/daily-illustration.png" alt="{{ _('Illustration for the Menu Selection') }}"></a>
             </p>
+            
+            
+            {% if offer %}
+                <p class="offer-title">{{ offer.title }}</p>
+                <div class="product-description">
+                    <a class="product-illustration" 
+                        {% if language == 'en_US' %}
+                        href="/page/menu/"
+                        {% else %}
+                        href="/page/etlap/"
+                        {% endif %}
+                        ><img alt="{{ _('Illustration for') }} {{ offer.title }}" src="{% if offer.photo %}/file/{{ offer.photo.file_data.key() }}{% else %}/img/product_default.png{% endif %}" width="150" height="150"></a>
+                    {{ offer.intro|striptags|truncate(255) }}
+                </div>
+            {% endif %}
+            
+            
             <p>
-                On the nose this espresso abounds with notes of creme brulee and rich, sweet fruitcake aromatics. These precede a luscious chocolate mousse mouthfeel - at once both dense, and yet seemingly air-filled and supple. In the cup, the espresso yields generous amounts of muscavado sugar and toffee sweetness with gentle overtones of soft baking spices.
-            </p>
-            <p>
-                <strong><a href="/page/menu/">{{ _('See Menu Selection') }}</a></strong>
+                <strong>
+                    {% if language == 'en_US' %}
+                    <a href="/page/menu/">
+                    {% else %}
+                    <a href="/page/etlap/">
+                    {% endif %}
+                        {{ _('See Menu Selection') }}</a></strong>
             </p>
         </div>
     </div>
     
     <div id="latest_posts">
+        <div style="position:relative">
+            <fb:like style="position:absolute;right:0" href="" send="false" width="270" show_faces="false" font=""></fb:like>
+        </div>
+        
         <h3><a href="{{ url_for('blog/index') }}">{{ _('Latest News') }}</a></h3>
         {% if posts %}
             {% include "partials/post.html" %}

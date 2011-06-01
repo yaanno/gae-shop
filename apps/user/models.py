@@ -36,7 +36,6 @@ class Profile(db.Model):
         query = self.all()
         query.filter("verification_code =", verification_code).filter("verified =", False)
         profile = query.get()
-        logging.warn(dir(profile))
         if profile:
             return self.set_verified(profile)
         else:

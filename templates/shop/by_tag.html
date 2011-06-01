@@ -11,7 +11,7 @@
 
 {% block content %}
 <div id="pagecontent">
-    <h1><a href="{{ url_for('shop/index') }}">{{ _('Beans to your house') }}</a> > {{ _('Products tagged with') }}: <span class="tag">{{ tag }}</span></h1>
+    <h1><a href="{{ url_for('shop/index') }}">{{ _('Products') }}</a> > {{ _('Products tagged with') }}: <span class="tag">{{ tag }}</span></h1>
     {% include "partials/product.html" %}
 </div>
 {% endblock %}

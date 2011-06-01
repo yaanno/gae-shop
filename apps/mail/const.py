@@ -9,9 +9,10 @@
 from tipfy.ext.i18n import gettext as _
 
 
-SENDER = "info@lumenkave.hu"
-REPLY_TO = "info@lumenkave.hu"
+SHOP = "peti@lumenkave.hu"
+SENDER = "noreply@lumenkave.hu"
+REPLY_TO = "noreply@lumenkave.hu"
 SUBJECT_ORDER = _("Order from Lumen Kave")
 SUBJECT_REGISTRATION = _("Registration at Lumen Kave")
 
-__all__ = ["SENDER", "REPLY_TO", "SUBJECT_ORDER", "SUBJECT_REGISTRATION"]
+__all__ = ["SENDER", "REPLY_TO", "SUBJECT_ORDER", "SUBJECT_REGISTRATION", "SHOP"]

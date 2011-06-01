@@ -12,20 +12,26 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Hello!</h1>
-    <div>
-        <h2>Latest orders:</h2>
+    <div id="pagecontent">
+        {% block subcontent %}
+            <h1>Hello!</h1>
+            <div>
+                <h2>Latest orders:</h2>
+            </div>
+            <div>
+                <h3>Manage Content:</h3>
+                <ul>
+                    <li><a href="{{ url_for('admin/blog/index') }}">Blog Posts</a></li>
+                    <li><a href="{{ url_for('admin/orders/index') }}">Orders</a></li>
+                    <li><a href="{{ url_for('admin/daily/index') }}">Daily Offers</a></li>
+                    <li><a href="{{ url_for('admin/products/index') }}">Products</a></li>
+                    <li><a href="{{ url_for('admin/page/index') }}">Pages</a></li>
+                    <li><a href="{{ url_for('admin/files/index') }}">Files</a></li>
+                </ul>
+            </div>
+        {% endblock %}
     </div>
-    <div>
-        <h3>Manage Content:</h3>
-        <ul>
-            <li><a href="{{ url_for('admin/blog/index') }}">Blog Posts</a></li>
-            <li><a href="{{ url_for('admin/orders/index') }}">Orders</a></li>
-            <li><a href="{{ url_for('admin/products/index') }}">Products</a></li>
-            <li><a href="{{ url_for('admin/page/index') }}">Pages</a></li>
-            <li><a href="{{ url_for('admin/files/index') }}">Files</a></li>
-        </ul>
-    </div>
+
 {% endblock %}
 {% block js %}
 {{ super() }}
@@ -34,7 +40,7 @@
         mode: "textareas",
         theme: "advanced",
         force_p_newlines : true,
-        document_base_url: '/',
+        relative_urls: false,
         external_image_list_url: "/file/list/images",
         editor_selector : "mceEditor"
     })

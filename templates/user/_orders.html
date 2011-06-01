@@ -1,7 +1,7 @@
 <ol>
     {% for order in orders %}
     <li>
-        <div>
+        <div style="border-bottom:1px solid #000;display:inline-block;">
             <ul>
                 {% for product in order.products %}
                 <li>
@@ -17,7 +17,16 @@
                 {% endfor %}
             </ul>
             <p>
-                {{ _('Total') }} = {{ format_currency(order.total, 'HUF', locale=language) }}<br>
+                {% if order.area == '' -%}
+                {{ _('Discount') }}: {{ format_currency( order.total / 10, 'HUF', locale=language) }}<br>
+                {{ _('Total') }} = {{ format_currency( (order.total - order.total / 10), 'HUF', locale=language) }}<br>
+                {% elif order.area == 'Hungary' %}
+                {{ _('Delivery fee') }}: {{ format_currency( 1200, 'HUF', locale=language) }}<br>
+                {{ _('Total') }} = {{ format_currency( (order.total + 1200) , 'HUF', locale=language) }}<br>
+                {% else %}
+                {{ _('Delivery fee') }}: {{ format_currency( 800, 'HUF', locale=language) }}<br>
+                {{ _('Total') }} = {{ format_currency( (order.total + 800), 'HUF', locale=language) }}<br>
+                {%- endif %}
                 {{ _('Order posted at') }} {{ format_datetime(order.posted, 'y/M/d') }}
             </p>
         </div>

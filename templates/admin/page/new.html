@@ -4,7 +4,7 @@
     {{ _('Create new page') }} | {{ super() }}
 {% endblock %}
 
-{% block content %}
+{% block subcontent %}
     <h1>{{ _('Create new page') }}</h1>
     <form method="post" enctype="multipart/form-data" class="tipfy-form">
         {% include "admin/page/_form.html" %}

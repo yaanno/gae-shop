@@ -1,18 +1,9 @@
 {% extends "mail/mail_base.html" %}
-
-{% block username %}{{ user }},{% endblock %}
-
+{% block username %}{{ user }}{% endblock %}
 {% block body %}
-{{ _('You ordered the following products at') }} {{ format_datetime(order.posted, 'y.M.d') }} {{ _('on') }} http://www.lumenkave.hu
-{% for item in order.products %}
-    {{ item.product_name }}: {{ item.product_quantity }} {{ _('grams') }} for {{ format_currency( ( (item.product_quantity / 250) * item.product_price), 'HUF', locale='hu_HU') }}
-{% endfor %}
+{{ _('You posted an order at') }} {{ format_datetime(info.posted, 'y/M/d') }}. {{ _('See your order details below:') }}
 
-{{ _('Total price') }}: {{ format_currency( order.total, 'HUF', locale='hu_HU') }}
+{% include "mail/_orders.html" %}
 
-{{ _('Your order will be delivered to') }}:
-{{ order.delivery }}
-
-{{ _('Thank you for ordering coffee from Lumen Kávé!') }}
-
+{{ _('Thank you for choosing Lumen Kávé!') }}
 {% endblock %}

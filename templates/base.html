@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:fb="http://www.facebook.com/2008/fbml">
     <head>
         <meta charset="utf-8">
         <title>
@@ -27,7 +27,7 @@
                         {{ _('Fresh roasted coffee') }}
                     </p>
                     <p class="foundation">
-                        <a href="http://www.photolumen.hu">{{ _('Lumen Photography Foundation') }}</a>
+                        <a href="http://www.photolumen.hu">{{ _('Lumen Photography Foundation') }} >>></a>
                     </p>
                 </div>
                 
@@ -35,12 +35,12 @@
                     <div id="navigation">
                         <ul>
                             {% if language == 'en_US' %}
-                                <li id="menu-about">| <a href="/page/about/">{{ _('About us') }}</a> |</li>
+                                <li id="menu-about">| <a href="/page/about-us/">{{ _('About us') }}</a> |</li>
                             {% else %}
-                                <li id="menu-about">| <a href="/page/magunkrol/">{{ _('Rólunk') }}</a> |</li>
+                                <li id="menu-about">| <a href="/page/bemutatkozas/">{{ _('Bemutatkozás') }}</a> |</li>
                             {% endif %}
                             
-                            <li id="menu-shop"><a href="{{ url_for('shop/index') }}">{{ _('Beans to your house') }}</a> |</li>
+                            <li id="menu-shop"><a href="{{ url_for('shop/index') }}">{{ _('Products') }}</a> |</li>
                             
                             {% if language == 'en_US' %}
                                 <li id="menu-cafe"> <a href="/page/cafe/">{{ _('Café') }}</a> |</li>
@@ -84,8 +84,8 @@
                         </p>
                         <p>
                             opening hours:<br>
-                            m-f: 9-19h<br>
-                            sat: 11-16h
+                            m-f: 8:30-19h<br>
+                            sat: 9:30-17h
                         </p>
                         ')
                     }}
@@ -93,13 +93,26 @@
                 
                 <div id="language">
                     <ul>
-                        <li>| <a href="/?lang=hu_HU">HU</a></li>
-                        <li>| <a href="/?lang=en_US">ENG</a> |</li>
+                        <li>| <a href="?lang=hu_HU">HU</a></li>
+                        <li>| <a href="?lang=en_US">ENG</a> |</li>
                     </ul>
                 </div>
             </div>
             <div id="content_sub">
                 {% block content %}{% endblock %}
+                
+                <div id="fb-root"></div>
+                <script>
+                  window.fbAsyncInit = function() {
+                    FB.init({appId: '158238200885960', status: true, cookie: true, xfbml: true});
+                  };
+                  (function() {
+                    var e = document.createElement('script'); e.async = true;
+                    e.src = document.location.protocol +
+                      '//connect.facebook.net/en_US/all.js';
+                    document.getElementById('fb-root').appendChild(e);
+                  }());
+                </script>
             </div>
         </div>
         {% block js %}

@@ -10,7 +10,9 @@ import logging
 
 from google.appengine.api import taskqueue
 
-from tipfy import RequestHandler, Response, abort, cached_property, redirect, url_for, redirect_to
+from werkzeug.utils import cached_property
+
+from tipfy import RequestHandler, Response, abort, redirect, url_for, redirect_to
 from tipfy.ext.auth import MultiAuthMixin, login_required, user_required
 from tipfy.ext.auth.facebook import FacebookMixin
 from tipfy.ext.auth.google import GoogleMixin
@@ -85,8 +87,9 @@ class LoginHandler(AuthHandler):
         if self.auth_current_user:
             return redirect(redirect_url)
         opts = {'continue': self.redirect_path()}
+        form = self.form
         context = {
-            'form': self.form,
+            'form': form,
             'facebook_login_url': url_for('auth/facebook', **opts),
             'google_login_url': url_for('auth/google', **opts),
         }
@@ -96,11 +99,11 @@ class LoginHandler(AuthHandler):
         redirect_url = self.redirect_path()
         if self.auth_current_user:
             return redirect(redirect_url)
-        
-        if self.form.validate():
-            username = self.form.username.data
-            password = self.form.password.data
-            remember = self.form.remember.data
+        form = self.form
+        if form.validate():
+            username = form.username.data
+            password = form.password.data
+            remember = form.remember.data
             
             res = self.auth_login_with_form(username, password, remember)
             if res:
@@ -111,8 +114,8 @@ class LoginHandler(AuthHandler):
     
     @cached_property
     def form(self):
-        language = self.get_locale()
-        return LoginForm(self.request)
+        form = LoginForm(self.request)
+        return form
 
 
 class LogoutHandler(AuthHandler):
@@ -278,7 +281,6 @@ class VerifyProfileHandler(AuthHandler):
     
     def get(self, verification_code):
         verify = Profile.verify_code(verification_code)
-        logging.info(verify)
         if verify == "verified" or "already_verified":
             return redirect_to('user/profile')
         else:

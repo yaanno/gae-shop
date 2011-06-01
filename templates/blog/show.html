@@ -17,16 +17,15 @@
         {{ post.content }}
     </div>
     {% if post.tags %}
-    <div class="tags">
-        <p>
-            {{ _('Tags') }}:
-        </p>
-        <ul>
+    <div style="margin-bottom: 10px">
+        <strong style="float:left;margin-right:5px;display:block">{{ _('Tags') }}:</strong>
+        <ul class="tags">
         {% for tag in post.tags %}
             <li><a href="/news/tag/{{ tag }}/">{{ tag }}</a></li>
         {% endfor %}
         </ul>
     </div>
     {% endif %}
+    <fb:like href="" send="false" width="450" show_faces="true" font=""></fb:like>
 </div>
 {% endblock %}

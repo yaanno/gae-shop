@@ -12,6 +12,7 @@ from google.appengine.ext import db
 from tipfy.ext.db import SlugProperty
 from tipfy.ext.auth.model import User
 
+from apps.files.models import File
 from apps.tagging.models import Taggable
 from helpers import calculate_total_price, make_list_from_string, extract_ids_from_product_list
 
@@ -27,6 +28,7 @@ class Product(Taggable):
     created = db.DateTimeProperty(required=True, auto_now_add=True)
     modified = db.DateTimeProperty(required=True, auto_now=True)
     language = db.StringProperty(required=True)
+    photo = db.ReferenceProperty(File)
     
     @classmethod
     def get_promoted_product(self, language=None):
@@ -88,6 +90,7 @@ class Order(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
     delivered = db.BooleanProperty(default=False)
     notified = db.BooleanProperty(default=False)
+    delivery_area = db.StringProperty()
     delivery_method = db.TextProperty(required=True)
     delivery_address = db.StringProperty()
     delivery_city = db.StringProperty()
@@ -95,8 +98,54 @@ class Order(db.Model):
     delivery_info = db.TextProperty()
     
     @classmethod
+    def get_id(self, id):
+        query = self.get_by_id(id)
+        logging.warn(query)
+        items = make_list_from_string(query.items)
+        total = calculate_total_price(items)
+        order = {
+            'id': query.key().id(),
+            'products': items,
+            'total': total,
+            'delivery': self.get_formatted_address(query),
+            'posted': query.date,
+            'area': query.delivery_area,
+        }
+        order_info = [
+            query, order
+        ]
+        
+        return order_info
+    
+    @classmethod
+    def get_undelivered_orders(self):
+        query = self.all()
+        query.filter('delivered =', False)
+        query.order('-date')
+        result = query.fetch(100)
+        if result is None:
+            return []
+        
+        orders = []
+        order_item = {}
+        
+        for order in result:
+            items = make_list_from_string(order.items)
+            total = calculate_total_price(items)
+            order_item = {
+                'id': order.key().id(),
+                'products': items,
+                'total': total,
+                'posted': order.date,
+            }
+            orders.append(order_item)
+        logging.warn(orders)
+        return orders
+    
+    @classmethod
     def get_orders_by_user(self, user_key=None):
         query = self.all()
+        query.order('-date')
         query.filter('user =', user_key)
         result = query.fetch(10)
         if result is None:
@@ -121,5 +170,7 @@ class Order(db.Model):
     
     @classmethod
     def get_formatted_address(self, order):
+        if order.delivery_address is None:
+            return ""
         address = "%s-%s %s" % (order.delivery_zip, order.delivery_city, order.delivery_address)
         return address

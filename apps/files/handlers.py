@@ -19,10 +19,8 @@ from models import File
 class FileServe(RequestHandler, BlobstoreDownloadMixin):
     
     def get(self, **kwargs):
-        logging.warn(kwargs.get('resource'))
         blob_info = blobstore.BlobInfo.get(kwargs.get('resource'))
-        
-        return self.send_blob(blob_info)
+        return self.send_blob(blob_info, content_type=blob_info.content_type)
 
 
 class ImageBrowser(RequestHandler):
@@ -42,7 +40,7 @@ class ImageBrowser(RequestHandler):
         for image in images:
             logging.warn(image.file_data)
             logging.warn(dir(image.file_data))
-            image_list.append([str(image.title), str("file/%s" % image.file_data.key())])
+            image_list.append([str(image.title), str("/file/%s" % image.file_data.key())])
         
         image_list = "var tinyMCEImageList = %s" % str(image_list)
         

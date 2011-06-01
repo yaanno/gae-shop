@@ -18,7 +18,5 @@ class File(db.Model):
     @classmethod
     def get_latest_files(self, format=None, count=10):
         query = self.all()
-        if format is not None:
-            query.filter('content_type =', format)
         results = query.fetch(count)
         return results

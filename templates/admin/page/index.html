@@ -2,7 +2,7 @@
 {% block title %}
     {{ _('Manage pages') }}
 {% endblock %}
-{% block content %}
+{% block subcontent %}
     
     <nav>
         <ul>
@@ -24,7 +24,7 @@
                 {% for page in pages %}
                 <tr>
                     <td><a href="/admin/page/edit/{{ page.key().id() }}/">{{ page.title }}</a></td>
-                    <td><input type="checkbox" {% if page.live %}checked{% endif %} name="" value=""></td>
+                    <td>{{ page.language }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
