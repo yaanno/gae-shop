@@ -1,0 +1,62 @@
+<!-- 
+items = db.StringProperty(required=True)
+user = db.ReferenceProperty(User, required=True)
+comment = db.TextProperty()
+date = db.DateTimeProperty(auto_now_add=True)
+delivered = db.BooleanProperty(default=False)
+notified = db.BooleanProperty(default=False)
+delivery_method = db.TextProperty(required=True)
+delivery_address = db.StringProperty()
+delivery_city = db.StringProperty()
+delivery_zip = db.StringProperty()
+delivery_info = db.TextProperty()
+-->
+{% from 'form_macros.html' import form_field %}
+<ul>
+    
+    <li>
+        <p>
+            <strong>{{ _('Products') }}:</strong>
+        </p>
+        <ul>
+            {% for product in info.products %}
+                <li>
+                    {{ product.product_name }}, {{ product.product_quantity }} {{ product.product_unit }}
+                </li>
+            {% endfor %}
+        </ul>
+    </li>
+    
+    <li>
+        <label>
+            {{ _('Order delivered') }}
+            <input type="checkbox" name="delivered">
+        </label>
+    </li>
+    <li>
+        {{ form.delivery_method }}
+    </li>
+    <li>Location (district): {{ form.delivery_area.data }}
+        {{ form.delivery_area }}
+    </li>
+    <li>
+        {{ form.delivery_city }}
+    </li>
+    <li>
+        {{ form.delivery_address }}
+    </li>
+    <li>
+        {{ form.delivery_zip }}
+    </li>
+    <li>
+        {{ form.delivery_info }}
+    </li>
+    <li>
+        {{ form.comment }}
+    </li>
+    
+    <input type="hidden" name="order_id" value="{{ info.id }}">
+    
+</ul>
+
+

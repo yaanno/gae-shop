@@ -1,0 +1,14 @@
+{% for product in info.products %}
+{{ product.product_name }} {% if product.product_unit == "gram" -%} ({{ product.product_quantity }} {{ _('grams') }}): {{ format_currency( ( (product.product_quantity / 250) * product.product_price), 'HUF', locale=language) }} {% elif product.product_unit == "piece" %} ({{ product.product_quantity }} {{ _('piece') }}): {{ format_currency( ( product.product_quantity * product.product_price), 'HUF', locale=language) }}
+{%- endif %}{% endfor %}
+----------------------------------
+{% if info.area == '' -%}
+{{ _('Discount') }}: {{ format_currency( info.total / 10, 'HUF', locale=language) }}
+{{ _('Total') }} = {{ format_currency( (info.total - info.total / 10), 'HUF', locale=language) }}
+{% elif info.area == 'Hungary' %}
+{{ _('Delivery fee') }}: {{ format_currency( 1200, 'HUF', locale=language) }}
+{{ _('Total') }} = {{ format_currency( (info.total + 1200) , 'HUF', locale=language) }}
+{% else %}
+{{ _('Delivery fee') }}: {{ format_currency( 800, 'HUF', locale=language) }}
+{{ _('Total') }} = {{ format_currency( (info.total + 800), 'HUF', locale=language) }}
+{%- endif %}

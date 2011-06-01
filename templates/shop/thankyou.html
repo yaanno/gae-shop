@@ -1,0 +1,30 @@
+{% extends "shop/shop_base.html" %}
+
+{% block title %}
+    {{ _('Thank you for your order!') }} | {{ super() }}
+{% endblock %}
+
+{% block pageclass %}{{ super() }} shop-product{% endblock %}
+
+{% block pagecontent %}
+<div id="pagecontent">
+    <h1><a href="{{ url_for('shop/index') }}">{{ _('Products') }}</a> > {{ _('Thank you for your order!') }}</h1>
+    
+    <div>
+        <h2>
+            {{ _('Thank you for your order!') }}
+        </h2>
+        <p>
+            {{ _('We will notify you when your order is ready to ship.') }}
+        </p>
+        <p>
+            {{ _('You can overview your orders on <a href="/your/">your profile page</a>.') }}
+        </p>
+    </div>
+    
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}
+    {{ _('Edit order state') }} | {{ super() }}
+{% endblock %}
+
+{% block subcontent %}
+
+        <h1>{{ _('Edit order state') }}</h1>
+        <form method="post" action="" enctype="multipart/form-data" class="tipfy-form">
+            <ul>
+                {% include "admin/orders/_form.html" %}
+            </ul>
+            <input type="submit" name="submit" value="Update order" class="submit"> or <a href="{{ url_for('admin/orders/index') }}">cancel</a>
+        </form>
+
+    
+{% endblock %}

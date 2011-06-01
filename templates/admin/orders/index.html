@@ -1,0 +1,45 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}
+    {{ _('Orders') }} | {{ _('Shop') }} | {{ super() }}
+{% endblock %}
+{% block subcontent %}
+
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('admin/index') }}">Administration main page</a></li>
+            </ul>
+        </nav>
+        <h1>{{ _('Manage Orders') }}</h1>
+
+        {% if orders %}
+            <table>
+                <caption>Products</caption>
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Date Posted</th>
+                        <th>Total Price</th>
+                        <th>Products</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td><a href="/admin/shop/orders/{{ order.id }}/">{{ _('Edit order state') }}</a></td>
+                        <td>{{ format_datetime(order.posted, 'short', 'hu', 'Europe/Budapest') }}</td>
+                        <td>{{ order.total }} HUF</td>
+                        <td>
+                            {% for product in order.products %}
+                                {{ product.product_name }}, {{ product.product_quantity }} {{ product.product_unit }}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>{{ _('No current orders.') }}</p>
+        {% endif %}
+    
+    
+{% endblock %}

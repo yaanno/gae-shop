@@ -1,0 +1,16 @@
+{% from 'form_macros.html' import form_field %}
+<ul>
+    <li>{{ form_field(form.language, required='true') }}</li>
+    <li>{{ form_field(form.title, required='true') }}</li>
+    <li>{{ form_field(form.promoted) }}</li>
+    <li>
+        <select name="photo">
+            {% for photo in files %}
+                <option {% if offer_photo == photo.id  %}selected='selected'{% endif %} value="{{ photo.id }}">{{ photo.title }}</option>
+            {% endfor %}
+        </select>
+    </li>
+    <li>{{ form_field(form.intro, class='mceEditor') }}</li>
+    <li>{{ form_field(form.content, class='mceEditor') }}</li>
+    <li>{{ form_field(form.live) }}</li>
+</ul>

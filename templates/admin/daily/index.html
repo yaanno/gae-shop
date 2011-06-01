@@ -1,0 +1,38 @@
+{% extends "admin/admin_base.html" %}
+{% block title %}
+    {{ _('Daily Offers') }} | {{ super() }}
+{% endblock %}
+{% block subcontent %}
+    
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('admin/index') }}">Administration main page</a></li>
+            <li><a href="{{ url_for('admin/daily/new') }}" title="">Create new offer</a></li>
+        </ul>
+    </nav>
+    <h1>{{ _('Manage Daily Offers') }}</h1>
+    {% if offers %}
+        <table>
+            <caption>Daily Offers</caption>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Language</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for offer in offers %}
+                <tr>
+                    <td><a title="{{ offer.intro|escape }}" href="/admin/daily/edit/{{ offer.key().id() }}/">{{ offer.title }}</a></td>
+                    <td>{{ format_datetime(offer.modified, 'short', 'hu', 'Europe/Budapest') }}</td>
+                    <td>{{ offer.language }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>{{ _('No daily offers yet.') }}</p>
+    {% endif %}
+    
+{% endblock %}
